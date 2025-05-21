@@ -16,10 +16,45 @@ import { RouterLink, RouterView } from 'vue-router'
           <li class="dropdown">
             <a href="#">Hiệu ứng ▾</a>
             <ul class="dropdown-menu">
-              <li><RouterLink to="">Hover</RouterLink></li>
-              <li><RouterLink to="">Animation</RouterLink></li>
-              <li><RouterLink to="">Scroll</RouterLink></li>
-              <li><RouterLink to="">3D</RouterLink></li>
+              <li><RouterLink to="/effect/hover">Hover</RouterLink></li>
+              <li><RouterLink to="/effect/animate">Animation</RouterLink></li>
+              <li><RouterLink to="/effect/scroll">Scroll</RouterLink></li>
+              <li><RouterLink to="/effect/3d">3D</RouterLink></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Giao diện ▾</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-1">
+                <a href="#">Layout ▾</a>
+                <ul class="dropdown-menu-1">
+                  <li><RouterLink to="">Header</RouterLink></li>
+                  <li><RouterLink to="">Footer</RouterLink></li>
+                  <li><RouterLink to="">Sidebar</RouterLink></li>
+                  <li><RouterLink to="">HeroBanner</RouterLink></li>
+                </ul>
+              </li>
+              <li class="dropdown-2">
+                <a href="#">UI ▾</a>
+                <ul class="dropdown-menu-2">
+                  <li><RouterLink to="">Card</RouterLink></li>
+                  <li><RouterLink to="">Button</RouterLink></li>
+                  <li><RouterLink to="">InputField</RouterLink></li>
+                  <li><RouterLink to="">DropDownMenu</RouterLink></li>
+                  <li><RouterLink to="">SearchBar</RouterLink></li>
+                  <li><RouterLink to="">Pagination</RouterLink></li>
+                  <li><RouterLink to="">Dashboard</RouterLink></li>
+                  <li><RouterLink to="">ErrorPage (404)</RouterLink></li>
+                </ul>
+              </li>
+              <li class="dropdown-3">
+                <a href="#">From ▾</a>
+                <ul class="dropdown-menu-3">
+                  <li><RouterLink to="">LoginForm</RouterLink></li>
+                  <li><RouterLink to="">RegisterForm</RouterLink></li>
+                  <li><RouterLink to="">PasswordResetForm</RouterLink></li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
@@ -100,6 +135,7 @@ nav .logo {
 
 .router-link-active {
   border: 1px green solid;
+  background-color: #797bea98;
 }
 
 .dropdown-menu {
@@ -139,8 +175,37 @@ nav .logo {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
-
+.dropdown-1 .dropdown-menu-1{
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dropdown-1:hover .dropdown-menu-1{
+  display: block;
+  opacity: 1;
+}
+.dropdown-2 .dropdown-menu-2{
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dropdown-2:hover .dropdown-menu-2{
+  display: block;
+  opacity: 1;
+}
+.dropdown-3 .dropdown-menu-3{
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dropdown-3:hover .dropdown-menu-3{
+  display: block;
+  opacity: 1;
+}
 main {
   padding-top: 80px;
+  background-color: #6c4de782;
+  color: black;
+  height: 100%;
 }
 </style>
