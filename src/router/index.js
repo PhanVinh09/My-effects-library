@@ -6,6 +6,7 @@ import EffectsAnimate from '@/components/effects/EffectsAnimate.vue'
 import EffectsScroll from '@/components/effects/EffectsScroll.vue'
 import Effects3D from '@/components/effects/Effects3D.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
