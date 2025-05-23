@@ -1,12 +1,9 @@
 <template>
+
+  <h1>{{ effect.id }}. {{ effect.title }}</h1>
   <div>
     <div class="tabs">
-      <button
-        v-for="tab in tabs"
-        :key="tab"
-        @click="activeTab = tab"
-        :class="{ active: activeTab === tab }"
-      >
+      <button v-for="tab in tabs" :key="tab" @click="activeTab = tab" :class="{ active: activeTab === tab }">
         {{ tab.toUpperCase() }}
       </button>
     </div>
@@ -20,7 +17,7 @@
     <div v-else-if="activeTab === 'js'" class="tab-content">
       <pre><code class="language-js">{{ effect.js }}</code></pre>
     </div>
-    <div v-else class="tab-content">
+    <div v-else class="tab-content_result">
       <iframe :srcdoc="generatedPreview" />
     </div>
   </div>
@@ -29,6 +26,7 @@
 <script>
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css' // hoặc theme khác
+import { effect } from 'vue';
 
 export default {
   props: {
@@ -101,7 +99,18 @@ export default {
 }
 
 .tab-content {
-  background: #fff;
+  background: #0d1117;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0 0 6px 6px;
+  min-height: 200px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  overflow-x: auto;
+}
+
+.tab-content_result {
+  background: #f6f6f6;
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 0 0 6px 6px;
