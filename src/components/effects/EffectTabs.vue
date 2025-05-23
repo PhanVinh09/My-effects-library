@@ -12,10 +12,10 @@
       <pre><code class="language-html">{{ effect.html }}</code></pre>
     </div>
     <div v-else-if="activeTab === 'css'" class="tab-content">
-      <pre><code class="language-css">{{ effect.css }}</code></pre>
+      <pre><code class="language-css" v-html="formatCode(effect.css)"></code></pre>
     </div>
     <div v-else-if="activeTab === 'js'" class="tab-content">
-      <pre><code class="language-js">{{ effect.js }}</code></pre>
+      <pre><code class="language-js" v-html="formatCode(effect.js)"></code></pre>
     </div>
     <div v-else class="tab-content_result">
       <iframe :srcdoc="generatedPreview" />
@@ -27,6 +27,11 @@
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css' // hoặc theme khác
 import { effect } from 'vue';
+import prettier from 'prettier';
+import parserHtml from 'prettier/parser-html';
+import parserCss from 'prettier/parser-postcss';
+import parserBabel from 'prettier/parser-babel';
+
 
 export default {
   props: {
@@ -69,7 +74,15 @@ export default {
           hljs.highlightElement(block);
         });
       });
-    }
+    },
+  formatCode(code) {
+  return code
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/;/g, ';\n')
+    .replace(/{/g, '{\n')
+    .replace(/}/g, '}\n');
+}
   }
 };
 </script>
