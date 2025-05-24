@@ -257,6 +257,9 @@ export default {
 }
 
 .tab-content_result {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
   background: #f6f6f6;
   padding: 15px;
   border: 1px solid #ccc;
@@ -269,8 +272,10 @@ export default {
 
 iframe {
   width: 100%;
-  height: 200px;
+  max-width: 800px; 
+  height: 200px; 
   border: none;
+  display: block;
 }
 
 .toast {
