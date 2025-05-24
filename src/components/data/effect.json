@@ -5,7 +5,7 @@
       {
         "id": 1,
         "title": "Hover Scale",
-        "html": "<div class='box'>Hover me</div>",
+        "html": "<div class='container'><div class='box'>Hover me</div></div>",
         "css": ".box { transition: 0.3s; } .box:hover { transform: scale(1.2); }",
         "js": ""
       },
