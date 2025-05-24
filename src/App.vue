@@ -68,6 +68,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 html,
 body {
   margin: 0;
@@ -77,8 +78,10 @@ body {
 
 .layout {
   width: 100vw;
-  min-height: 200vh;
+  min-height: 100vh;
   margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
 }
 
 header {
@@ -203,7 +206,7 @@ nav .logo {
   opacity: 1;
 }
 main {
-  padding-top: 80px;
+  padding-top: 10px;
   background-color: #6c4de782;
   color: black;
   height: 100%;

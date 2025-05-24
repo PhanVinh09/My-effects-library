@@ -58,6 +58,9 @@
 </script>
 
 <style scoped>
+.about{
+  padding: 80px 20px;
+}
 .container {
   max-width: 960px;
   margin: 0 auto;
