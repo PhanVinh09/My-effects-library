@@ -40,16 +40,16 @@ export default {
     }
   },
   computed: {
-      tabs() {
-        const baseTabs = []
-        if (this.effect.html?.trim()) baseTabs.push('html')
-        if (this.effect.css?.trim()) baseTabs.push('css')
-        if (this.effect.js?.trim()) baseTabs.push('js')
-        baseTabs.push('result')
-        return baseTabs
-      },
-      generatedPreview() {
-        return `
+    tabs() {
+      const baseTabs = []
+      if (this.effect.html?.trim()) baseTabs.push('html')
+      if (this.effect.css?.trim()) baseTabs.push('css')
+      if (this.effect.js?.trim()) baseTabs.push('js')
+      baseTabs.push('result')
+      return baseTabs
+    },
+    generatedPreview() {
+      return `
         <html>
           <head>${this.effect.link ?? ''}<style>${this.effect.css}</style></head>
           <body>
@@ -58,40 +58,120 @@ export default {
           </body>
         </html>
       `
-      },
     },
-    mounted() {
+  },
+  mounted() {
+    this.highlightCode()
+  },
+  updated() {
+    this.highlightCode()
+  },
+  watch: {
+    activeTab() {
       this.highlightCode()
     },
-    updated() {
-      this.highlightCode()
-    },
-    watch: {
-      activeTab() {
-        this.highlightCode()
-      },
-    },
-    methods: {
-      highlightCode() {
-        this.$nextTick(() => {
-          document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightElement(block)
-          })
+  },
+  methods: {
+    highlightCode() {
+      this.$nextTick(() => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightElement(block)
         })
-      },
-      formatCode(code) {
-        // Format CSS/JS với indent và xuống dòng hợp lý
+      })
+    },
+    formatCode(code) {
+      // Format CSS/JS với indent và xuống dòng hợp lý
+      let indentLevel = 0
+      const indentSize = 2
+
+      // Escape HTML để hiển thị đúng trên trang
+      const escaped = code
+        .replace(/&/g, '&amp;')  // thêm escape &
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+
+      // Tách thành các phần kết thúc bằng {, }, hoặc ;
+      const lines = escaped.match(/[^{};]+[{};]?/g) || []
+
+      return lines
+        .map((line) => {
+          line = line.trim()
+
+          if (line.endsWith('}')) indentLevel--
+
+          const indentation = ' '.repeat(indentLevel * indentSize)
+          const formattedLine = indentation + line
+
+          if (line.endsWith('{')) indentLevel++
+
+          return formattedLine
+        })
+        .join('\n')
+    },
+    formatHtmlCode(code) {
+      // Escape để hiển thị an toàn
+      const escaped = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+
+      // Cắt chuỗi thành từng thẻ hoặc nội dung giữa thẻ
+      const tokens = escaped.split(/(&lt;[^&]+&gt;)/).filter(token => token.trim() !== '')
+
+      let indentLevel = 0
+      const indentSize = 2
+
+      return tokens.map(token => {
+        const trimmed = token.trim()
+
+        // Nếu là thẻ đóng (</div>) => giảm indent trước
+        if (/^&lt;\/[^>]+&gt;$/.test(trimmed)) indentLevel--
+
+        const indentation = ' '.repeat(indentLevel * indentSize)
+        const line = indentation + trimmed
+
+        // Nếu là thẻ mở mà không phải tự đóng => tăng indent sau
+        if (
+          /^&lt;[^\/!][^&]*[^\/]&gt;$/.test(trimmed) &&
+          !/^&lt;(input|img|br|hr|meta|link)[^&]*\/?&gt;$/.test(trimmed)
+        ) {
+          indentLevel++
+        }
+
+        return line
+      }).join('\n')
+    },
+    formatPlainCode(code) {
+      if (this.activeTab === 'html') {
+        // HTML: Format có indent và xuống dòng nhưng KHÔNG escape
+        const tokens = code.split(/(<[^>]+>)/).filter(token => token.trim() !== '')
+
         let indentLevel = 0
         const indentSize = 2
 
-        // Escape HTML để hiển thị đúng trên trang
-        const escaped = code
-          .replace(/&/g, '&amp;')  // thêm escape &
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
+        return tokens.map(token => {
+          const trimmed = token.trim()
 
-        // Tách thành các phần kết thúc bằng {, }, hoặc ;
-        const lines = escaped.match(/[^{};]+[{};]?/g) || []
+          if (/^<\/[^>]+>$/.test(trimmed)) indentLevel--
+
+          const indentation = ' '.repeat(indentLevel * indentSize)
+          const line = indentation + trimmed
+
+          if (
+            /^<[^/!][^>]*>$/.test(trimmed) &&
+            !/^<(input|img|br|hr|meta|link)[^>]*\/?>$/.test(trimmed)
+          ) {
+            indentLevel++
+          }
+
+          return line
+        }).join('\n')
+      } else {
+        // CSS / JS thì giữ nguyên logic cũ
+        let indentLevel = 0
+        const indentSize = 2
+
+        const lines = code.match(/[^{};]+[{};]?/g) || []
 
         return lines
           .map((line) => {
@@ -107,120 +187,40 @@ export default {
             return formattedLine
           })
           .join('\n')
-      },
-      formatHtmlCode(code) {
-        // Escape để hiển thị an toàn
-        const escaped = code
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-
-        // Cắt chuỗi thành từng thẻ hoặc nội dung giữa thẻ
-        const tokens = escaped.split(/(&lt;[^&]+&gt;)/).filter(token => token.trim() !== '')
-
-        let indentLevel = 0
-        const indentSize = 2
-
-        return tokens.map(token => {
-          const trimmed = token.trim()
-
-          // Nếu là thẻ đóng (</div>) => giảm indent trước
-          if (/^&lt;\/[^>]+&gt;$/.test(trimmed)) indentLevel--
-
-          const indentation = ' '.repeat(indentLevel * indentSize)
-          const line = indentation + trimmed
-
-          // Nếu là thẻ mở mà không phải tự đóng => tăng indent sau
-          if (
-            /^&lt;[^\/!][^&]*[^\/]&gt;$/.test(trimmed) &&
-            !/^&lt;(input|img|br|hr|meta|link)[^&]*\/?&gt;$/.test(trimmed)
-          ) {
-            indentLevel++
-          }
-
-          return line
-        }).join('\n')
-      },
-      formatPlainCode(code) {
-        if (this.activeTab === 'html') {
-          // HTML: Format có indent và xuống dòng nhưng KHÔNG escape
-          const tokens = code.split(/(<[^>]+>)/).filter(token => token.trim() !== '')
-
-          let indentLevel = 0
-          const indentSize = 2
-
-          return tokens.map(token => {
-            const trimmed = token.trim()
-
-            if (/^<\/[^>]+>$/.test(trimmed)) indentLevel--
-
-            const indentation = ' '.repeat(indentLevel * indentSize)
-            const line = indentation + trimmed
-
-            if (
-              /^<[^/!][^>]*>$/.test(trimmed) &&
-              !/^<(input|img|br|hr|meta|link)[^>]*\/?>$/.test(trimmed)
-            ) {
-              indentLevel++
-            }
-
-            return line
-          }).join('\n')
-        } else {
-          // CSS / JS thì giữ nguyên logic cũ
-          let indentLevel = 0
-          const indentSize = 2
-
-          const lines = code.match(/[^{};]+[{};]?/g) || []
-
-          return lines
-            .map((line) => {
-              line = line.trim()
-
-              if (line.endsWith('}')) indentLevel--
-
-              const indentation = ' '.repeat(indentLevel * indentSize)
-              const formattedLine = indentation + line
-
-              if (line.endsWith('{')) indentLevel++
-
-              return formattedLine
-            })
-            .join('\n')
-        }
-      },
-      showToast(message) {
-        this.toastMessage = message
-        setTimeout(() => {
-          this.toastMessage = ''
-        }, 3000)
-      },
-      copyToClipboard() {
-        let content = ''
-
-        if (this.activeTab === 'html') {
-          content = this.formatPlainCode(this.effect.html)
-        } else if (this.activeTab === 'css') {
-          content = this.formatPlainCode(this.effect.css)
-        } else if (this.activeTab === 'js') {
-          content = this.formatPlainCode(this.effect.js)
-        } else {
-          this.showToast('Chỉ có thể copy HTML, CSS hoặc JS')
-          return
-        }
-
-        navigator.clipboard
-          .writeText(content)
-          .then(() => {
-            this.showToast(`Đã copy ${this.activeTab.toUpperCase()} thành công!`)
-          })
-          .catch((err) => {
-            this.showToast('Lỗi khi copy!')
-            console.error(err)
-          })
-      },
+      }
     },
-  }
+    showToast(message) {
+      this.toastMessage = message
+      setTimeout(() => {
+        this.toastMessage = ''
+      }, 3000)
+    },
+    copyToClipboard() {
+      let content = ''
+
+      if (this.activeTab === 'html') {
+        content = this.formatPlainCode(this.effect.html)
+      } else if (this.activeTab === 'css') {
+        content = this.formatPlainCode(this.effect.css)
+      } else if (this.activeTab === 'js') {
+        content = this.formatPlainCode(this.effect.js)
+      } else {
+        this.showToast('Chỉ có thể copy HTML, CSS hoặc JS')
+        return
+      }
+
+      navigator.clipboard
+        .writeText(content)
+        .then(() => {
+          this.showToast(`Đã copy ${this.activeTab.toUpperCase()} thành công!`)
+        })
+        .catch((err) => {
+          this.showToast('Lỗi khi copy!')
+          console.error(err)
+        })
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -258,30 +258,50 @@ export default {
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 0 0 6px 6px;
-  min-height: 200px;
+  min-height: 300px;
+  max-height: 300px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   overflow-x: auto;
 }
 
 .tab-content_result {
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   background: #f6f6f6;
-  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 0 0 6px 6px;
-  min-height: 200px;
+  min-height: 300px;
+  max-height: 300px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   overflow-x: auto;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to top,#330867 0%, #30cfd0 100% );
+}
+
 iframe {
   width: 100%;
-  max-width: 800px;
-  height: 200px;
+  max-width: 900px;
+  height: 250px;
   border: none;
   display: block;
 }
