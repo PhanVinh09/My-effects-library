@@ -1,5 +1,16 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+
+const isLayoutOpen = ref(false)
+const isUIOpen = ref(false)
+const isFormOpen = ref(false)
+
+const toggleMenu = (menu) => {
+  if (menu === 'layout') isLayoutOpen.value = !isLayoutOpen.value
+  if (menu === 'ui') isUIOpen.value = !isUIOpen.value
+  if (menu === 'form') isFormOpen.value = !isFormOpen.value
+}
 </script>
 
 <template>
@@ -22,12 +33,12 @@ import { RouterLink, RouterView } from 'vue-router'
               <li><RouterLink to="/effect/3d">3D</RouterLink></li>
             </ul>
           </li>
-          <li class="dropdown">
+         <li class="dropdown">
             <a href="#">Giao diện ▾</a>
             <ul class="dropdown-menu">
               <li class="dropdown-1">
-                <a href="#">Layout ▾</a>
-                <ul class="dropdown-menu-1">
+                <a href="#" @click.prevent="toggleMenu('layout')">Layout ▾</a>
+                <ul class="dropdown-menu-1" v-show="isLayoutOpen">
                   <li><RouterLink to="">Header</RouterLink></li>
                   <li><RouterLink to="">Footer</RouterLink></li>
                   <li><RouterLink to="">Sidebar</RouterLink></li>
@@ -35,8 +46,8 @@ import { RouterLink, RouterView } from 'vue-router'
                 </ul>
               </li>
               <li class="dropdown-2">
-                <a href="#">UI ▾</a>
-                <ul class="dropdown-menu-2">
+                <a href="#" @click.prevent="toggleMenu('ui')">UI ▾</a>
+                <ul class="dropdown-menu-2" v-show="isUIOpen">
                   <li><RouterLink to="">Card</RouterLink></li>
                   <li><RouterLink to="">Button</RouterLink></li>
                   <li><RouterLink to="">InputField</RouterLink></li>
@@ -48,8 +59,8 @@ import { RouterLink, RouterView } from 'vue-router'
                 </ul>
               </li>
               <li class="dropdown-3">
-                <a href="#">From ▾</a>
-                <ul class="dropdown-menu-3">
+                <a href="#" @click.prevent="toggleMenu('form')">Form ▾</a>
+                <ul class="dropdown-menu-3" v-show="isFormOpen">
                   <li><RouterLink to="">LoginForm</RouterLink></li>
                   <li><RouterLink to="">RegisterForm</RouterLink></li>
                   <li><RouterLink to="">PasswordResetForm</RouterLink></li>
@@ -69,18 +80,19 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .layout {
   width: 100vw;
   min-height: 100vh;
   margin: 0;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #1e3c72, #2a5298);
 }
 
@@ -121,13 +133,14 @@ nav .logo {
   position: relative;
 }
 
-.nav-links li a {
+.nav-links li > a,
+.nav-links li > .router-link-active {
   color: white;
   text-decoration: none;
   font-size: 16px;
   padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  border-radius: 6px;
+  transition: all 0.3s ease;
   display: inline-block;
 }
 
@@ -141,19 +154,34 @@ nav .logo {
   background-color: #797bea98;
 }
 
-.dropdown-menu {
+/* Dropdown menu */
+.dropdown-menu,
+.dropdown-menu-1,
+.dropdown-menu-2,
+.dropdown-menu-3 {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: white;
+  background-color: #fff;
   list-style: none;
-  padding: 4px 0;
+  padding: 8px 0;
   margin: 0;
-  min-width: 180px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  min-width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   z-index: 999;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .dropdown-menu li {
@@ -162,53 +190,73 @@ nav .logo {
 
 .dropdown-menu li a {
   display: block;
-  color: #333;
-  text-decoration: none;
-  padding: 10px 16px;
+  padding: 12px 18px;
   font-size: 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s;
+  font-weight: 500;
+  color: #222;
+  text-decoration: none;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .dropdown-menu li a:hover {
-  background-color: blue;
-  color: black;
+  background-color: #f5f5f5;
+  color: #007bff;
+  transform: translateX(4px);
 }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
+.dropdown-menu li > a::after {
+  content: '▸';
+  float: right;
+  color: #aaa;
+  transition: transform 0.3s ease;
 }
-.dropdown-1 .dropdown-menu-1{
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+
+.dropdown-menu li a:hover::after {
+  transform: translateX(4px);
+  color: #007bff;
 }
-.dropdown-1:hover .dropdown-menu-1{
-  display: block;
-  opacity: 1;
+
+.dropdown-1 ul,
+.dropdown-2 ul,
+.dropdown-3 ul {
+  margin-left: 10px;
+  margin-top: 4px;
+  border-left: 2px solid #eee;
+  padding-left: 10px;
 }
-.dropdown-2 .dropdown-menu-2{
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.dropdown-2:hover .dropdown-menu-2{
-  display: block;
-  opacity: 1;
-}
-.dropdown-3 .dropdown-menu-3{
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.dropdown-3:hover .dropdown-menu-3{
+
+.dropdown-menu-1,
+.dropdown-menu-2,
+.dropdown-menu-3 {
+  position: relative;
   display: block;
   opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  background-color: #fdfdfd;
+  box-shadow: none;
+  margin-top: 5px;
+  border-radius: 8px;
 }
+
+.dropdown-menu-1 li a,
+.dropdown-menu-2 li a,
+.dropdown-menu-3 li a {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+ul {
+  list-style: none;
+}
+
 main {
-  padding-top: 10px;
+  padding-top: 80px;
   background-color: #6c4de782;
   color: black;
   height: 100%;
 }
 </style>
+
