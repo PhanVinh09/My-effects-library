@@ -5,6 +5,17 @@
       {
         "id": 1,
         "author": "PhanVinh",
+        "type" : "Text",
+        "title": "Hover Scale",
+        "link": "",
+        "html": "<div><div class='box'>Hover me</div></div>",
+        "css": ".box { transition: 0.3s; } .box:hover { transform: scale(1.2); }",
+        "js": ""
+      },
+      {
+        "id": 1,
+        "author": "PhanVinh",
+        "type" : "Button",
         "title": "Hover Scale",
         "link": "",
         "html": "<div><div class='box'>Hover me</div></div>",
