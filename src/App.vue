@@ -253,7 +253,7 @@ ul {
 }
 
 main {
-  padding-top: 80px;
+  padding-top: 50px;
   background-color: #6c4de782;
   color: black;
   height: 100%;
