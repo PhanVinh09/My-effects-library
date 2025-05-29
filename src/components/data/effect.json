@@ -5,21 +5,111 @@
       {
         "id": 1,
         "author": "PhanVinh",
-        "type" : "Text",
-        "title": "Hover Scale",
+        "type": "Text",
+        "title": "Hover line",
         "link": "",
-        "html": "<div><div class='box'>Hover me</div></div>",
-        "css": ".box { transition: 0.3s; } .box:hover { transform: scale(1.2); }",
+        "html": "<span class='text'>Hover Me</span>",
+        "css": ".text{ position: relative; font-size: 40px; cursor: pointer; display: inline-block; } .text::before{ content: ''; position: absolute; background: linear-gradient(red, blue); height: 3px; width: 0px; left: 0%; right: 0%; bottom: 0%; transition: 0.2s linear; } .text:hover::before{ width: 100%; }",
         "js": ""
       },
       {
-        "id": 1,
+        "id": 2,
         "author": "PhanVinh",
-        "type" : "Button",
+        "type": "Text",
+        "title": "Hover Underline Expand ",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { position: relative; font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text::after{ content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background-color: blue; transition: all 0.3s ease; } .text:hover::after { left: 0%; width: 100%; }",
+        "js": ""
+      },
+      {
+        "id": 3,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover Jump",
+        "link": "",
+        "html": "<span class='text'> <span>H</span><span>o</span><span>v</span><span>e</span><span>r</span> <span>M</span><span>e</span> </span>",
+        "css": ".text { position: relative; font-size: 40px; cursor: pointer; } .text span { display: inline-block; } @keyframes jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } } .text:hover span { animation: jump 1s ease infinite; } .text:hover span:nth-child(1) { animation-delay: 0s; } .text:hover span:nth-child(2) { animation-delay: 0.05s; } .text:hover span:nth-child(3) { animation-delay: 0.1s; } .text:hover span:nth-child(4) { animation-delay: 0.15s; } .text:hover span:nth-child(5) { animation-delay: 0.2s; } .text:hover span:nth-child(6) { animation-delay: 0.25s; } .text:hover span:nth-child(7) { animation-delay: 0.3s; }",
+        "js": ""
+      },
+      {
+        "id": 4,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover letter spacing",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ letter-spacing: 10px; }",
+        "js": ""
+      },
+      {
+        "id": 5,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover filter blur",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ filter: blur(2px); }",
+        "js": ""
+      },
+      {
+        "id": 6,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover multi-layer",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ text-shadow: 1px 1px 0px red, 2px 2px 0px blue, 3px 3px 0px black; }",
+        "js": ""
+      },
+      {
+        "id": 7,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "hover linear-gradient",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { font-size: 40px; font-weight: bold; background: linear-gradient(90deg, red, rgb(251, 0, 255), red); background-size: 200%; background-position: left; -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: 0.5s ease; cursor: pointer; } .text:hover { animation: moveGradient 1s infinite linear alternate-reverse; } @keyframes moveGradient { 0% { background-position: 100%; } 100% { background-position: 0%; } }",
+        "js": ""
+      },
+      {
+        "id": 8,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover blink",
+        "link": "",
+        "html": "<span class='text'> Hover Me </span>",
+        "css": ".text { font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text:hover{ animation: blink 0.8s ease infinite; } @keyframes blink { 0%,100%{ opacity: 0.1; color: gold; } 50%{ opacity: 1; color: red; } }",
+        "js": ""
+      },
+      {
+        "id": 9,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover shadow ",
+        "link": "",
+        "html": "<span class='text'>Hover Me</span>",
+        "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; } .text::before { content: 'Hover Me'; position: absolute; transition: 0.5s linear; top: 0%; transform: rotateX(0deg); opacity: 0; } .text:hover::before{ opacity: 0.5; top: 60%; transform: rotateX(180deg); }",
+        "js": ""
+      },
+      {
+        "id": 10,
+        "author": "PhanVinh",
+        "type": "Text",
+        "title": "Hover Glow Effect",
+        "link": "",
+        "html": "<span class='text'>Hover Me</span>",
+        "css": ".text { position: relative; font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text:hover{ color: white; text-shadow: 2px 2px 5px violet; }",
+        "js": ""
+      },
+      {
+        "id": 100,
+        "author": "PhanVinh",
+        "type": "Button",
         "title": "Hover Scale",
         "link": "",
-        "html": "<div><div class='box'>Hover me</div></div>",
-        "css": ".box { transition: 0.3s; } .box:hover { transform: scale(1.2); }",
+        "html": "",
+        "css": "",
         "js": ""
       }
     ]

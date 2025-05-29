@@ -31,7 +31,7 @@ export default {
     return {
       selectedType: '',
       effectRefs: {},
-      sidebarOpen: false // Trạng thái mở/đóng sidebar
+      sidebarOpen: false 
     };
   },
   computed: {
@@ -67,7 +67,7 @@ export default {
     },
     setSelectedType(type) {
       this.selectedType = type;
-      this.sidebarOpen = false; // Auto đóng sidebar khi chọn loại
+      this.sidebarOpen = false; 
       if (type === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
