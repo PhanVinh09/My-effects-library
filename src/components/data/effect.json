@@ -6,7 +6,7 @@
         "id": 1,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover line",
+        "title": "Hover-text: line",
         "link": "",
         "html": "<span class='text'>Hover Me</span>",
         "css": ".text{ position: relative; font-size: 40px; cursor: pointer; display: inline-block; } .text::before{ content: ''; position: absolute; background: linear-gradient(red, blue); height: 3px; width: 0px; left: 0%; right: 0%; bottom: 0%; transition: 0.2s linear; } .text:hover::before{ width: 100%; }",
@@ -16,7 +16,7 @@
         "id": 2,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover Underline Expand ",
+        "title": "Hover-text: Underline Expand ",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { position: relative; font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text::after{ content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background-color: blue; transition: all 0.3s ease; } .text:hover::after { left: 0%; width: 100%; }",
@@ -26,7 +26,7 @@
         "id": 3,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover Jump",
+        "title": "Hover-text: Jump",
         "link": "",
         "html": "<span class='text'> <span>H</span><span>o</span><span>v</span><span>e</span><span>r</span> <span>M</span><span>e</span> </span>",
         "css": ".text { position: relative; font-size: 40px; cursor: pointer; } .text span { display: inline-block; } @keyframes jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } } .text:hover span { animation: jump 1s ease infinite; } .text:hover span:nth-child(1) { animation-delay: 0s; } .text:hover span:nth-child(2) { animation-delay: 0.05s; } .text:hover span:nth-child(3) { animation-delay: 0.1s; } .text:hover span:nth-child(4) { animation-delay: 0.15s; } .text:hover span:nth-child(5) { animation-delay: 0.2s; } .text:hover span:nth-child(6) { animation-delay: 0.25s; } .text:hover span:nth-child(7) { animation-delay: 0.3s; }",
@@ -36,7 +36,7 @@
         "id": 4,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover letter spacing",
+        "title": "Hover-text: letter spacing",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ letter-spacing: 10px; }",
@@ -46,7 +46,7 @@
         "id": 5,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover filter blur",
+        "title": "Hover-text: filter blur",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ filter: blur(2px); }",
@@ -56,7 +56,7 @@
         "id": 6,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover multi-layer",
+        "title": "Hover-text: multi-layer",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; transition: 0.3s ease; } .text:hover{ text-shadow: 1px 1px 0px red, 2px 2px 0px blue, 3px 3px 0px black; }",
@@ -66,7 +66,7 @@
         "id": 7,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "hover linear-gradient",
+        "title": "Hover-text: linear-gradient",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { font-size: 40px; font-weight: bold; background: linear-gradient(90deg, red, rgb(251, 0, 255), red); background-size: 200%; background-position: left; -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: 0.5s ease; cursor: pointer; } .text:hover { animation: moveGradient 1s infinite linear alternate-reverse; } @keyframes moveGradient { 0% { background-position: 100%; } 100% { background-position: 0%; } }",
@@ -76,7 +76,7 @@
         "id": 8,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover blink",
+        "title": "Hover-text: blink",
         "link": "",
         "html": "<span class='text'> Hover Me </span>",
         "css": ".text { font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text:hover{ animation: blink 0.8s ease infinite; } @keyframes blink { 0%,100%{ opacity: 0.1; color: gold; } 50%{ opacity: 1; color: red; } }",
@@ -86,7 +86,7 @@
         "id": 9,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover shadow ",
+        "title": "Hover-text: shadow ",
         "link": "",
         "html": "<span class='text'>Hover Me</span>",
         "css": ".text { position: relative; font-size: 40px; cursor: pointer; display: inline-block; } .text::before { content: 'Hover Me'; position: absolute; transition: 0.5s linear; top: 0%; transform: rotateX(0deg); opacity: 0; } .text:hover::before{ opacity: 0.5; top: 60%; transform: rotateX(180deg); }",
@@ -96,22 +96,256 @@
         "id": 10,
         "author": "PhanVinh",
         "type": "Text",
-        "title": "Hover Glow Effect",
+        "title": "Hover-text: Glow Effect",
         "link": "",
         "html": "<span class='text'>Hover Me</span>",
         "css": ".text { position: relative; font-size: 40px; font-weight: bold; cursor: pointer; display: inline-block; } .text:hover{ color: white; text-shadow: 2px 2px 5px violet; }",
         "js": ""
       },
+
+
+
+
+
+
+
+
+
+
+
+
       {
-        "id": 100,
+        "id": 30,
         "author": "PhanVinh",
         "type": "Button",
-        "title": "Hover Scale",
+        "title": "Hover-btn: Basic",
+        "link": "",
+        "html": "<button class='btn'>Hover Me</button>",
+        "css": ".btn { padding: 10px; font-size: 20px; cursor: pointer; transition: 0.3s ease; } .btn:hover{ background-color: black; color: white; }",
+        "js": ""
+      },
+      {
+        "id": 31,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: background runs to the right",
+        "link": "",
+        "html": "<button class='btn' >Hover Me</button>",
+        "css": ".btn { position: relative; padding: 10px; font-size: 20px; color: black; background-color: transparent; border: 2px solid black; overflow: hidden; z-index: 1; cursor: pointer; } .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(to right, #00f, #0ff); z-index: -1; transition: left 0.5s ease; } .btn:hover::before { left: 0; }",
+        "js": ""
+      },
+      {
+        "id": 32,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: Border scale",
+        "link": "",
+        "html": "<button class='btn'>Hover Me</button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; position: relative; transition: 0.5s ease; } .btn::before, .btn::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scale(0); border: 1px solid blue; transition: 0.5s ease; } .btn:hover { border: 1px solid blue; color: blue; box-shadow: inset 0px 0px 10px 1px blue; } .btn:hover::before { transform: scale(0.8); border: 1px solid blue; } .btn:hover::after { transform: scale(0.6); border: 1px solid blue; }",
+        "js": ""
+      },
+      {
+        "id": 33,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: light",
+        "link": "",
+        "html": "<button class='btn'>Hover Me</button>",
+        "css": ".btn { position: relative; padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 2px solid #fff; cursor: pointer; overflow: hidden; z-index: 1; } .btn::before { content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%; background: linear-gradient( 120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100% ); transform: skewX(-20deg); transition: none; } .btn:hover::before { animation: shine 1s forwards; } @keyframes shine { from { left: -75%; } to { left: 125%; } }",
+        "js": ""
+      },
+      {
+        "id": 34,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: fly ",
+        "link": "",
+        "html": "<button class='btn'>Hover Me</button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; transition: 0.3s ease; } .btn:hover{ transform: translateY(-10px); box-shadow: 0px 10px 10px 5px black; }",
+        "js": ""
+      },
+      
+      {
+        "id": 35,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: Scale",
+        "link": "",
+        "html": " <button class='btn'>Hover Me</button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; transition: 0.3s ease; } .btn:hover{ transform: scale(1.1); }",
+        "js": ""
+      },
+
+      {
+        "id": 36,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: text rotation",
+        "link": "",
+        "html": "<button class='btn'> <span class='face front'>Hover Me</span> <span class='face back'>Click Me</span> </button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; position: relative; width: 100px; height: 50px; } .face{ position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 0.3s ease; } .face.front{ transform: rotateY(0deg); } .face.back{ transform: rotateY(180deg); } .btn:hover .front{ transform: rotateY(180deg); } .btn:hover .back{ transform: rotateY(0deg); }",
+        "js": ""
+      },
+      {
+        "id": 37,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: background rotation",
+        "link": "",
+        "html": "<button class='btn'> <span class='face front'>Hover Me</span> <span class='face back'>Click Me</span> </button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; cursor: pointer; position: relative; border: none; width: 100px; height: 50px; } .face{ position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 0.3s ease; } .face.front{ background-color: black; color: white; border: 1px solid #fff; transform: rotateY(0deg); } .face.back{ background-color: white; color: black; border: 1px solid #000; transform: rotateY(180deg); } .btn:hover .front{ transform: rotateY(180deg); } .btn:hover .back{ transform: rotateY(0deg); }",
+        "js": ""
+      },
+      {
+        "id": 38,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: Text slides to the left",
+        "link": "",
+        "html": "<button class='btn'> <span class='face front'>Hover Me</span> <span class='face back'>Click Me</span> </button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; position: relative; width: 100px; height: 50px; } .face{ position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; transition: 0.5s ease; } .face.front{ transform: translateX(0px); } .face.back{ transform: translateX(100px); } .btn:hover .front{ transform: translateX(-100px); } .btn:hover .back{ transform: translateX(0px); }",
+        "js": ""
+      },
+      {
+        "id": 39,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: Text running off screen",
+        "link": "",
+        "html": "<button class='btn'> <span class='face front'>Hover Me</span> <span class='face back'>Click Me</span> </button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; position: relative; width: 100px; height: 50px; overflow: hidden; perspective: 800px; } .face{ position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; transition: 0.5s ease; } .face.front{ transform: translateZ(0px); } .face.back{ transform: translateZ(1000px); } .btn:hover .front{ transform: translateZ(1000px); } .btn:hover .back{ transform: translateZ(0px); }",
+        "js": ""
+      },
+      {
+        "id": 40,
+        "author": "PhanVinh",
+        "type": "Button",
+        "title": "Hover-btn: Text running on screen",
+        "link": "",
+        "html": "<button class='btn'> <span class='face front'>Hover Me</span> <span class='face back'>Click Me</span> </button>",
+        "css": ".btn { padding: 12px 30px; font-size: 20px; color: white; background-color: black; border: 1px solid #fff; cursor: pointer; position: relative; width: 100px; height: 50px; overflow: hidden; perspective: 800px; } .face { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; transition: 0.5s ease; } .face.front { transform: translateZ(0px); opacity: 1; } .face.back { transform: translateZ(-10000px); opacity: 0; } .btn:hover .front { transform: translateZ(-10000px); opacity: 0; } .btn:hover .back { transform: translateZ(0px); opacity: 1; }",
+        "js": ""
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      {
+        "id": 51,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 52,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 53,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 54,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 55,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 56,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 57,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      },
+      {
+        "id": 58,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
         "link": "",
         "html": "",
         "css": "",
         "js": ""
       }
+      ,
+      {
+        "id": 59,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      }
+      ,
+      {
+        "id": 60,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img:",
+        "link": "",
+        "html": "",
+        "css": "",
+        "js": ""
+      }
+      
     ]
   }
 ]
