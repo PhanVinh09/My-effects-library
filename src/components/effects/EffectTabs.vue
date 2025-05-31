@@ -54,6 +54,15 @@ export default {
           <head>${this.effect.link ?? ''}<style>${this.effect.css}</style></head>
           <body>
             ${this.effect.html}
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  document.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', (e) => {
+                      e.preventDefault(); // Ngăn load lại trang
+                    });
+                  });
+                });
+             <\/script>
             <script>${this.effect.js}<\/script>
           </body>
         </html>
@@ -130,7 +139,6 @@ export default {
         const indentation = ' '.repeat(indentLevel * indentSize)
         const line = indentation + trimmed
 
-        // Nếu là thẻ mở mà không phải tự đóng => tăng indent sau
         if (
           /^&lt;[^\/!][^&]*[^\/]&gt;$/.test(trimmed) &&
           !/^&lt;(input|img|br|hr|meta|link)[^&]*\/?&gt;$/.test(trimmed)
@@ -295,7 +303,7 @@ export default {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-image: linear-gradient(to top,#330867 0%, #30cfd0 100% );
+  background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
 }
 
 iframe {

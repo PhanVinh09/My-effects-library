@@ -242,96 +242,103 @@
 
 
 
-      
+      {
+        "id": 50,
+        "author": "PhanVinh",
+        "type": "Image",
+        "title": "Hover-img: Scale",
+        "link": "",
+        "html": "<div class='container-img'> <a href='#'><img src='/public/images/grap_2.jpg' alt='Grap Image' class='hover-img'/> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background: #222; } .hover-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; cursor: pointer; } .hover-img:hover { transform: scale(1.2); }",
+        "js": ""
+      },
       {
         "id": 51,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Change the image",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a class='hover-img' href='#'> <img src='/public/images/kizaru_1.jpg' alt='Kizaru Normal'> <img src='/public/images/kizaru_2.jpg' alt='Kizaru Hover' class='hover'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background: #222; } .hover-img { display: block; width: 100%; height: 100%; position: relative; } .hover-img img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; position: absolute; top: 0; left: 0; } .hover-img img.hover { opacity: 0; } .hover-img:hover img.hover { opacity: 1; }",
         "js": ""
       },
       {
         "id": 52,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Display name",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/aokiji_2.jpg' alt='kuzan' class='hover-img'> </a> <div class='name-image'> Aokiji Kuzan </div> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background: #222; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.3s ease; } .name-image { position: absolute; width: 40%; height: 10%; color: white; display: flex; justify-content: center; align-items: center; font-size: 10px; bottom: -10%; left: 30%; border-radius: 5px; background-color: gray; transition: all 0.3s ease; } .container-img:hover .name-image { transform: scale(1.4); bottom: 10px; } .hover-img:hover { filter: blur(1px); }",
         "js": ""
       },
       {
         "id": 53,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Filter-stature",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/akainu_2.jpg' alt='akainu' class='hover-img'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background: #222; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.5s ease; filter: saturate(100%); } .hover-img:hover { filter: saturate(200%); }",
         "js": ""
       },
       {
         "id": 54,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Filter-grayscale",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/grap_2.jpg' alt='grap' class='hover-img'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background: #222; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.5s ease; filter: grayscale(100%); } .hover-img:hover { filter: grayscale(0%); }",
         "js": ""
       },
       {
         "id": 55,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Filter-Brightness & drop-shadow",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/akainu_2.jpg' alt='akainu' class='hover-img'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.5s ease; filter: brightness(100%) drop-shadow(5px 5px 5px gray); } .hover-img:hover { filter: brightness(150%) drop-shadow(15px 10px 5px gray); transform: translateX(-10px); }",
         "js": ""
       },
       {
         "id": 56,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: 3D",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#' class='img-link'> <img src='/public/images/aokiji_2-BackgroundRemove.png' alt='Aokiji Foreground' class='hover-img foreground'> <img src='/public/images/Background_aokiji.png' alt='Aokiji Background' class='hover-img background'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; perspective: 800px; } .img-link { display: block; width: 100%; height: 100%; position: relative; transform-style: preserve-3d; } .hover-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; transition: transform 0.5s ease; } .hover-img.foreground { transform: translateZ(0px); z-index: 2; } .hover-img.background { transform: translateZ(0px); z-index: 1; } .container-img:hover .hover-img.background { transform: scale(1.2) translateY(30px) rotateX(30deg) translateZ(-40px); } .container-img:hover .hover-img.foreground { transform: translateY(-30px) translateZ(30px); }",
         "js": ""
-      },
-      {
+      },{
         "id": 57,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: clip-path + scale + saturate",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/aokiji_2.jpg' alt='aokiji' class='hover-img'> </a> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background-color: #222; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.3s ease; clip-path: circle(80% at 50% 50%); } .hover-img:hover { filter: saturate(150%); clip-path: circle(40% at 50% 50%); transform: scale(1.1); }",
         "js": ""
       },
       {
         "id": 58,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Scale + grayscale + rotate",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'> <img src='/public/images/akainu_2.jpg' alt='akainu' class='hover-img'> </a> <div class='type-img'> Đô Đốc Hải Quân </div> <div class='name-img'> Akainu </div> </div>",
+        "css": ".container-img { position: relative; width: 200px; height: 250px; margin: auto; border-radius: 5px; overflow: hidden; background-color: #222; } .hover-img { position: absolute; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: all 0.3s ease; } .type-img { position: absolute; height: 10%; top: -15%; left: 50%; transform: translateX(-50%); font-size: 13px; border-radius: 5px; font-weight: bold; color: red; transition: all 0.3s ease; } .name-img { position: absolute; height: 10%; bottom: -15%; left: 50%; transform: translateX(-50%); border-radius: 5px; padding: 5px 10px 0px 10px; background-color: transparent; font-weight: bold; border: 1px solid red; color: red; transition: all 0.3s ease; } .container-img:hover .type-img { top: 10%; } .container-img:hover .name-img { bottom: 10%; } .hover-img:hover { transform: scale(1.5) rotate(30deg); filter: grayscale(100%); }",
         "js": ""
-      }
-      ,
+      },
       {
         "id": 59,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+        "title": "Hover-img: Zoom in",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'><img src='/public/images/akainu_1.jpg' alt='akainu' class='hover-img'></a> <a href='#'><img src='/public/images/aokiji_1.jpg' alt='aokiji' class='hover-img'></a> <a href='#'><img src='/public/images/grap_1.jpg' alt='grap' class='hover-img'></a> <a href='#'><img src='/public/images/fujitora_1.jpg' alt='fujitora' class='hover-img'></a> <a href='#'><img src='/public/images/kizaru_1.jpg' alt='kizaru' class='hover-img'></a> </div>",
+        "css": ".container-img { width: 500px; max-width: 1000px; height: 300px; display: flex; margin: auto; gap: 4px; } .container-img a { flex: 1; transition: flex 0.3s ease; background-color: #222; } .container-img .hover-img { width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; } .container-img:hover a .hover-img { filter: blur(2px); } .container-img a:hover { flex: 2; } .container-img a:hover .hover-img { transform: translateY(-10px); filter: blur(0); }",
         "js": ""
       }
       ,
@@ -339,13 +346,12 @@
         "id": 60,
         "author": "PhanVinh",
         "type": "Image",
-        "title": "Hover-img:",
+         "title": "Hover-img: Zoom in 2",
         "link": "",
-        "html": "",
-        "css": "",
+        "html": "<div class='container-img'> <a href='#'><img src='/public/images/akainu_1.jpg' alt='akainu' class='hover-img'></a> <a href='#'><img src='/public/images/aokiji_1.jpg' alt='aokiji' class='hover-img'></a> <a href='#'><img src='/public/images/grap_1.jpg' alt='grap' class='hover-img'></a> <a href='#'><img src='/public/images/fujitora_1.jpg' alt='fujitora' class='hover-img'></a> <a href='#'><img src='/public/images/kizaru_1.jpg' alt='kizaru' class='hover-img'></a> </div>",
+        "css": ".container-img { width: 500px; max-width: 1000px; height: 300px; display: flex; margin: 50px auto; gap: 4px; } .container-img a { flex: 1; transition: flex 0.3s ease; background-color: #222; } a:nth-child(1), a:nth-child(3), a:nth-child(5) { transform: translateY(0px); } a:nth-child(2), a:nth-child(4){ transform: translateY(-20px); } .container-img .hover-img { width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; } .container-img:hover a .hover-img { filter: blur(2px); } .container-img a:hover { flex: 2; } .container-img a:hover .hover-img { filter: blur(0); }",
         "js": ""
       }
-      
     ]
   }
 ]
