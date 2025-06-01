@@ -340,8 +340,7 @@
         "html": "<div class='container-img'> <a href='#'><img src='/public/images/akainu_1.jpg' alt='akainu' class='hover-img'></a> <a href='#'><img src='/public/images/aokiji_1.jpg' alt='aokiji' class='hover-img'></a> <a href='#'><img src='/public/images/grap_1.jpg' alt='grap' class='hover-img'></a> <a href='#'><img src='/public/images/fujitora_1.jpg' alt='fujitora' class='hover-img'></a> <a href='#'><img src='/public/images/kizaru_1.jpg' alt='kizaru' class='hover-img'></a> </div>",
         "css": ".container-img { width: 500px; max-width: 1000px; height: 300px; display: flex; margin: auto; gap: 4px; } .container-img a { flex: 1; transition: flex 0.3s ease; background-color: #222; } .container-img .hover-img { width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; } .container-img:hover a .hover-img { filter: blur(2px); } .container-img a:hover { flex: 2; } .container-img a:hover .hover-img { transform: translateY(-10px); filter: blur(0); }",
         "js": ""
-      }
-      ,
+      },
       {
         "id": 60,
         "author": "PhanVinh",
@@ -350,6 +349,42 @@
         "link": "",
         "html": "<div class='container-img'> <a href='#'><img src='/public/images/akainu_1.jpg' alt='akainu' class='hover-img'></a> <a href='#'><img src='/public/images/aokiji_1.jpg' alt='aokiji' class='hover-img'></a> <a href='#'><img src='/public/images/grap_1.jpg' alt='grap' class='hover-img'></a> <a href='#'><img src='/public/images/fujitora_1.jpg' alt='fujitora' class='hover-img'></a> <a href='#'><img src='/public/images/kizaru_1.jpg' alt='kizaru' class='hover-img'></a> </div>",
         "css": ".container-img { width: 500px; max-width: 1000px; height: 300px; display: flex; margin: 50px auto; gap: 4px; } .container-img a { flex: 1; transition: flex 0.3s ease; background-color: #222; } a:nth-child(1), a:nth-child(3), a:nth-child(5) { transform: translateY(0px); } a:nth-child(2), a:nth-child(4){ transform: translateY(-20px); } .container-img .hover-img { width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; } .container-img:hover a .hover-img { filter: blur(2px); } .container-img a:hover { flex: 2; } .container-img a:hover .hover-img { filter: blur(0); }",
+        "js": ""
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ,
+      {
+        "id": 80,
+        "author": "PhanVinh",
+        "type": "???",
+         "title": "Hover-???:",
+        "link": "",
+        "html": "",
+        "css": "",
         "js": ""
       }
     ]

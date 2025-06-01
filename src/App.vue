@@ -39,7 +39,7 @@ const toggleMenu = (menu) => {
               <li class="dropdown-1">
                 <a href="#" @click.prevent="toggleMenu('layout')">Layout ▾</a>
                 <ul class="dropdown-menu-1" v-show="isLayoutOpen">
-                  <li><RouterLink to="">Header</RouterLink></li>
+                  <li><RouterLink to="/layouts/header">Header</RouterLink></li>
                   <li><RouterLink to="">Footer</RouterLink></li>
                   <li><RouterLink to="">Sidebar</RouterLink></li>
                   <li><RouterLink to="">HeroBanner</RouterLink></li>
