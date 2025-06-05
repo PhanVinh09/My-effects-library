@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: relative;
+            height: 100px;
+        }
+
+        nav {
+            position: absolute;
+            inset: 0;
+            background-color: gray;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .nav-logo {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-logo a {
+            font-size: 30px;
+            color: gold;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-list {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-item {
+            background-color: aquamarine;
+            padding: 5px 10px;
+            transition: 0.3s ease;
+        }
+
+        .nav-link {
+            font-size: 20px;
+            color: black;
+            transition: 0.3s ease;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-item:hover .nav-link {
+            color: gold;
+        }
+
+        .dropdown {
+            position: relative;
+            background-color: aquamarine;
+            padding: 5px 10px;
+            perspective: 800px;
+        }
+
+        .dropdown .dropdown-title {
+            font-size: 20px;
+            color: black;
+        }
+
+        .dropdown .dropdown-menu {
+            position: absolute;
+            margin-top: 5px;
+            left: 0;
+            width: 100%;
+            background-color: gray;
+            visibility: hidden;
+            opacity: 0;
+            transform-style: preserve-3d;
+            transition: 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .dropdown-menu .dropdown-item {
+            margin: 3px;
+            padding: 5px 10px;
+            background-color: green;
+            transition: 0.3s ease;
+        }
+
+        .dropdown-link {
+            color: black;
+        }
+
+        .dropdown-item:hover {
+            transform: translateZ(20px);
+            background-color: blue;
+        }
+
+        .dropdown-item:hover .dropdown-link {
+            color: gold;
+        }
+        .btn-login{
+            background-color: aquamarine;
+            padding: 5px 10px;
+            font-size: 20px;
+            color: black;
+            transition: 0.3s ease;
+        }
+        .btn-login:hover{
+            transform: scale(1.1);
+            color: gold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-logo"><a href="">Logo</a></div>
+            <ul class="nav-list">
+                <li class="nav-item"><a class="nav-link" href="">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="">About</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-title" href="#">Dropdown ▾</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a class="dropdown-link" href="">Option 1</a></li>
+                        <li class="dropdown-item"><a class="dropdown-link" href="">Option 2</a></li>
+                        <li class="dropdown-item"><a class="dropdown-link" href="">Option 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a class="btn-login" href="">login</a>
+        </nav>
+    </header>
+</body>
+
+</html>

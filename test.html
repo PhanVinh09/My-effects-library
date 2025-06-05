@@ -1,28 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gradient Text Animation</title>
+  <title>CSS Filter Examples</title>
   <style>
-    .text {
-      position: relative;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      display: inline-block;
-      
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
     }
-    .text:hover{
-      color: white;
-      text-shadow: 2px 2px 5px violet;
+
+    h1 {
+      text-align: center;
     }
+
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .filter-box {
+      width: 200px;
+      text-align: center;
+    }
+
+    .filter-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .filter-blur img { filter: blur(3px); }
+    .filter-brightness img { filter: brightness(150%); }
+    .filter-contrast img { filter: contrast(200%); }
+    .filter-grayscale img { filter: grayscale(100%); }
+    .filter-sepia img { filter: sepia(100%); }
+    .filter-saturate img { filter: saturate(300%); }
+    .filter-hue img { filter: hue-rotate(120deg); }
+    .filter-invert img { filter: invert(100%); }
+    .filter-opacity img { filter: opacity(50%); }
+    .filter-drop-shadow img { filter: drop-shadow(5px 5px 5px gray); }
   </style>
 </head>
-
 <body>
-  <span class="text">Hover Me</span>
-</body>
 
+  <h1>CSS Filter Examples</h1>
+
+  <div class="filter-container">
+    <div class="filter-box filter-blur">
+      <img src="./public/images/aokiji_2.jpg" alt="Blur">
+      <p>blur(3px)</p>
+    </div>
+    <div class="filter-box filter-brightness">
+      <img src="./public/images/aokiji_2.jpg" alt="Brightness">
+      <p>brightness(150%)</p>
+    </div>
+    <div class="filter-box filter-contrast">
+      <img src="./public/images/aokiji_2.jpg" alt="Contrast">
+      <p>contrast(200%)</p>
+    </div>
+    <div class="filter-box filter-grayscale">
+      <img src="./public/images/grap_2.jpg" alt="Grayscale">
+      <p>grayscale(100%)</p>
+    </div>
+    <div class="filter-box filter-sepia">
+      <img src="./public/images/aokiji_2.jpg" alt="Sepia">
+      <p>sepia(100%)</p>
+    </div>
+    <div class="filter-box filter-saturate">
+      <img src="./public/images/aokiji_2.jpg" alt="Saturate">
+      <p>saturate(300%)</p>
+    </div>
+    <div class="filter-box filter-hue">
+      <img src="./public/images/aokiji_2.jpg" alt="Hue Rotate">
+      <p>hue-rotate(120deg)</p>
+    </div>
+    <div class="filter-box filter-invert">
+      <img src="./public/images/aokiji_2.jpg" alt="Invert">
+      <p>invert(100%)</p>
+    </div>
+    <div class="filter-box filter-opacity">
+      <img src="./public/images/aokiji_2.jpg" alt="Opacity">
+      <p>opacity(50%)</p>
+    </div>
+    <div class="filter-box filter-drop-shadow">
+      <img src="./public/images/aokiji_2.jpg" alt="Drop Shadow">
+      <p>drop-shadow(5px 5px 5px gray)</p>
+    </div>
+  </div>
+
+</body>
 </html>
