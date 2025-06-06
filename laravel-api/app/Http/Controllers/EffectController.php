@@ -17,7 +17,7 @@ class EffectController extends Controller
     public function index()
     {
         $effects = Effect::all();
-        return view('admin.effect.effect', compact('effects'));
+        return view('admin.management_list.effect', compact('effects'));
     }
 
     public function show($id)

@@ -87,10 +87,10 @@
     <div class="sidebar">
         <h2>Admin</h2>
         <a href="{{route('admin.dashboard')}}" class="nav-link">Dashboard</a>
-        <a href="#" class="nav-link">Users</a>
-        <a href="#" class="nav-link">Managers</a>
-        <a href="#" class="nav-link">Effects</a>
-        <a href="#" class="nav-link">Layouts</a>
+        <a href="" class="nav-link">Users</a>
+        <a href="" class="nav-link">Managers</a>
+        <a href="{{route('effects.index')}}" class="nav-link">Effects</a>
+        <a href="{{route('layouts.index')}}" class="nav-link">Layouts</a>
         <a href="#" class="nav-link">Forms</a>
         <a href="#" class="nav-link">UI</a>
         <a href="{{route('admin.index')}}" class="nav-link"> Back «</a>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('use_interfaces', function (Blueprint $table) {
             $table->id();
             $table->string('author', 100);
-            $table->string('effect_name', 100);
+            $table->string('ui_name', 100);
             $table->string('type', 100);
             $table->string('title', 255);
             $table->text('link') -> nullable();

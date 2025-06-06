@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Layout extends Model
+class Form extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'author',
-        'layout_name',
+        'form_name',
         'type',
         'title',
         'link',

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EffectController;
+use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
@@ -15,6 +16,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::view('/admin', 'admin.admin_index')->name('admin.index');
     Route::view('/admin/dashboard', 'admin.admin_dashboard')->name('admin.dashboard');
     Route::get('/admin/effects', [EffectController::class, 'index'])->name('effects.index');
+    Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');
 });
 Route::post('/logout', function () {
     Auth::logout();
