@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 const isLayoutOpen = ref(false)
 const isUIOpen = ref(false)
@@ -23,7 +24,7 @@ const toggleMenu = (menu) => {
         <ul class="nav-links">
           <li><RouterLink to="/">Trang chủ</RouterLink></li>
           <li><RouterLink to="/about">Giới thiệu</RouterLink></li>
-          <li><RouterLink to="/effect/list">EffectList</RouterLink></li>
+          <li><a :href="`${backendUrl}/admin/effects`" target="_blank">Admin</a></li>
 
           <li class="dropdown">
             <a href="#">Hiệu ứng ▾</a>

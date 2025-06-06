@@ -7,6 +7,8 @@ import EffectsScroll from '@/components/effects/EffectsScroll.vue'
 import Effects3D from '@/components/effects/Effects3D.vue'
 import LayoutHeader from '@/components/layouts/Header.vue'
 import EffectList from '@/components/effects/EffectList.vue'
+
+import EffectManager from '@/components/admin/EffectManager.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -18,6 +20,8 @@ const router = createRouter({
     { path: '/effect/3d', component: Effects3D },
     { path: '/layouts/header', component: LayoutHeader },
     { path: '/effect/list', component: EffectList },
+
+     { path: '/admin/effect', component: EffectManager },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

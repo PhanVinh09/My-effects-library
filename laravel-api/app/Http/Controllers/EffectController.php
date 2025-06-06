@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 class EffectController extends Controller
 {
-     public function index()
+    // Hàm trả về JSON cho API (giữ nguyên)
+    public function apiIndex()
     {
         return response()->json(Effect::all());
+    }
+
+    // Hàm trả view blade và truyền dữ liệu
+    public function index()
+    {
+        $effects = Effect::all();
+        return view('admin.effect.effect', compact('effects'));
     }
 
     public function show($id)
