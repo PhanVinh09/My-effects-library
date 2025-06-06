@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('layouts', function (Blueprint $table) {
             $table->id();
-            $table->string('author', 50);
+            $table->string('author', 100);
+            $table->string('effect_name', 100);
             $table->string('type', 100);
             $table->string('title', 255);
             $table->text('link') -> nullable();

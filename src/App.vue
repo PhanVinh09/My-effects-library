@@ -23,6 +23,7 @@ const toggleMenu = (menu) => {
         <ul class="nav-links">
           <li><RouterLink to="/">Trang chủ</RouterLink></li>
           <li><RouterLink to="/about">Giới thiệu</RouterLink></li>
+          <li><RouterLink to="/effect/list">EffectList</RouterLink></li>
 
           <li class="dropdown">
             <a href="#">Hiệu ứng ▾</a>

@@ -6,7 +6,7 @@ import EffectsAnimate from '@/components/effects/EffectsAnimate.vue'
 import EffectsScroll from '@/components/effects/EffectsScroll.vue'
 import Effects3D from '@/components/effects/Effects3D.vue'
 import LayoutHeader from '@/components/layouts/Header.vue'
-
+import EffectList from '@/components/effects/EffectList.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -17,6 +17,7 @@ const router = createRouter({
     { path: '/effect/scroll', component: EffectsScroll },
     { path: '/effect/3d', component: Effects3D },
     { path: '/layouts/header', component: LayoutHeader },
+    { path: '/effect/list', component: EffectList },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
