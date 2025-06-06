@@ -12,6 +12,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::view('/admin', 'admin.admin_index')->name('admin.index');
     Route::view('/admin/dashboard', 'admin.admin_dashboard')->name('admin.dashboard');
     Route::get('/admin/effects', [EffectController::class, 'index'])->name('effects.index');
 });

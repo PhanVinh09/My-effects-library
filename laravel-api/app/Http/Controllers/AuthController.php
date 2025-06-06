@@ -30,7 +30,7 @@ class AuthController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect()->route('admin.dashboard')->with('message', 'Xin chào Admin ' . $user->name . '!');
+            return redirect()->route('admin.index')->with('message', 'Xin chào Admin ' . $user->name . '!');
         }
         return back()->withErrors([
             'login_input' => 'Sai tài khoản hoặc mật khẩu.',
