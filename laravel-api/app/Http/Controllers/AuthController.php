@@ -3,62 +3,57 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showLoginForm()
     {
-        //
+        return view('admin.auth.login');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function login(Request $request)
     {
-        //
+        $login_type = 'name';
+
+        $user = User::where($login_type, $request->name)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+            $request->session()->regenerate();
+
+            return redirect()->route('effects.index')->with('success', 'Đăng nhập thành công!');
+        }
+
+        // Nếu sai
+        return back()->withErrors([
+            'login_input' => 'Sai tài khoản hoặc mật khẩu.'
+        ])->with('login', 'Sai tài khoản hoặc mật khẩu.');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function showRegisterForm()
     {
-        //
+        return view('admin.auth.register');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function register(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|string|min:6|max:100|unique:users,name',
+            'password' => 'required|string|min:6|max:30|confirmed',
+        ], [
+            'name.required' => 'Tài khoản là bắt buộc.',
+            'name.unique'   => 'Tài khoản đã tồn tại.',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $isFirstUser = User::count() === 0;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $name = User::create([
+            'name' => $request->name,
+            'password'  => Hash::make($request->password),
+            'role'     => $isFirstUser ? 'admin' : 'user'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('auth.login')->with('message', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
 }

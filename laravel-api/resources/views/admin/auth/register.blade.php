@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>register</title>
   <style>
     * {
       margin: 0;
@@ -106,16 +106,26 @@
 
 <body>
   <div class="container">
-    <form class="register_form" action="">
+    <form class="register_form" action="{{ route('auth.register') }}" method="POST">
+      @csrf 
       <h1 class="title">Đăng Ký</h1>
+
+      @if ($errors->any())
+      <ul style="color: red; font-size: 14px; margin-bottom: 10px;">
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+      @endif
+
       <label for="name">Tạo Tài Khoản</label>
       <input type="text" name="name" id="name" placeholder="Nhập tài khoản..." required maxlength="100">
       <label for="password">Tạo Mật Khẩu</label>
       <input type="password" name="password" id="password" placeholder="Mật khẩu..." required>
       <label for="rePassword">Nhập Lại Mật Khẩu</label>
-      <input type="password" name="rePassword" id="rePassword" placeholder="Nhập lại mật khẩu..." required>
+      <input type="password" name="password_confirmation" id="rePassword" placeholder="Nhập lại mật khẩu..." required>
       <input type="submit" value="Đăng ký">
-      <a class="link_login" href="">« Quay lại </a>
+      <a class="link_login" href="{{ route('formLogin') }}">« Quay lại </a>
     </form>
   </div>
 

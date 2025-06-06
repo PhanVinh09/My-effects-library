@@ -182,5 +182,3 @@
       <a class="btn-login" href="#">Login</a>
     </nav>
   </header>
-</body>
-</html>
