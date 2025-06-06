@@ -17,20 +17,24 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $login_type = 'name';
-
+        $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
+        ], [
+            'name.required' => 'Tài khoản là bắt buộc.',
+            'password.required' => 'Mật khẩu là bắt buộc.',
+        ]);
         $user = User::where($login_type, $request->name)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect()->route('effects.index')->with('success', 'Đăng nhập thành công!');
+            return redirect()->route('admin.dashboard')->with('message', 'Xin chào Admin ' . $user->name . '!');
         }
-
-        // Nếu sai
         return back()->withErrors([
-            'login_input' => 'Sai tài khoản hoặc mật khẩu.'
-        ])->with('login', 'Sai tài khoản hoặc mật khẩu.');
+            'login_input' => 'Sai tài khoản hoặc mật khẩu.',
+        ])->withInput(); 
     }
     public function showRegisterForm()
     {
@@ -43,15 +47,21 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|max:30|confirmed',
         ], [
             'name.required' => 'Tài khoản là bắt buộc.',
+            'name.min' => 'Tài khoản tối thiểu là 6 ký tự.',
+            'name.max' => 'Tài khoản tối đa là 100 ký tự.',
             'name.unique'   => 'Tài khoản đã tồn tại.',
+            'password.required' => 'Mật khẩu là bắt buộc.',
+            'password.min' => 'Mật khẩu tối thiểu là 6 ký tự.',
+            'password.max' => 'Mật khẩu tối đa là 30 ký tự.',
+            'password.confirmed' => 'Mật khẩu nhập lại không khớp.',
         ]);
 
         $isFirstUser = User::count() === 0;
 
-        $name = User::create([
+        $user = User::create([
             'name' => $request->name,
-            'password'  => Hash::make($request->password),
-            'role'     => $isFirstUser ? 'admin' : 'user'
+            'password' => Hash::make($request->password),
+            'role' => $isFirstUser ? 'admin' : 'user',
         ]);
 
         return redirect()->route('auth.login')->with('message', 'Đăng ký thành công! Vui lòng đăng nhập.');

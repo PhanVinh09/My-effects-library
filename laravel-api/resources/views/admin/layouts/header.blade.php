@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Modern Navigation</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     * {
       margin: 0;
@@ -163,10 +165,23 @@
     }
   </style>
 </head>
+
 <body>
+  @if (session('message'))
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Thành công!',
+      text: '{{ session("message") }}',
+      confirmButtonText: 'OK',
+      timer: 2000,
+      timerProgressBar: true,
+    });
+  </script>
+  @endif
   <header>
     <nav>
-      <div class="nav-logo"><a href="#">Logo</a></div>
+      <div class="nav-logo"><a href="#">PTV</a></div>
       <ul class="nav-list">
         <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#">About</a></li>
@@ -179,6 +194,16 @@
           </ul>
         </li>
       </ul>
-      <a class="btn-login" href="#">Login</a>
+      @auth
+      <div class="nav-item" style="color: white;">
+        Xin chào, {{ Auth::user()->name }}
+      </div>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn-login" style="background-color: crimson;">Logout</button>
+      </form>
+      @else
+      <a class="btn-login" href="{{ route('formLogin') }}">Login</a>
+      @endauth
     </nav>
   </header>

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Login</title>
     <style>
         * {
@@ -93,34 +94,40 @@
 
 <body>
     <div class="container">
-        <form class="login_form" action="{{ route('auth.login') }}" method="POST">
+        @if (session('message'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session("message") }}',
+                confirmButtonText: 'OK',
+                timer: 2000,
+                timerProgressBar: true
+            });
+        </script>
+        @endif
+        @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonText: 'OK'
+            });
+        </script>
+        @endif
+        <form class="login_form" id="loginForm" action="{{ route('auth.login') }}" method="POST">
             @csrf
             <h1 class="title">Đăng Nhập</h1>
-
-            @if ($errors->any())
-            <ul style="color: red; font-size: 14px; margin-bottom: 10px;">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            @endif
-
-            @if (session('error'))
-            <div style="color: red; font-size: 14px; margin-bottom: 10px;">
-                {{ session('error') }}
-            </div>
-            @endif
-
             <label for="name">Tài Khoản</label>
-            <input type="text" name="name" id="name" placeholder="Nhập tài khoản..." required maxlength="100">
+            <input type="text" name="name" id="name" placeholder="Nhập tài khoản..." value="{{ old('name') }}" required maxlength="100">
             <label for="password">Mật Khẩu</label>
             <input type="password" name="password" id="password" placeholder="Mật khẩu..." required>
-            <a class="link_register" href="{{ route('formRegister') }}">Chưa Có Tài Khoản?</a>
+            <a class="link_register" href="{{ route('register') }}">Chưa Có Tài Khoản?</a>
             <input type="submit" value="Đăng nhập">
         </form>
 
     </div>
-
 </body>
 
 </html>
