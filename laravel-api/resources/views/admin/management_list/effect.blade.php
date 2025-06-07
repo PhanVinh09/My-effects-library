@@ -6,6 +6,7 @@
         <div class="table-header">
             <a class="btn-add" href="#">Thêm hiệu ứng</a>
         </div>
+
         <table>
             <thead>
                 <tr>
@@ -13,32 +14,88 @@
                     <th>Author</th>
                     <th>Effect Name</th>
                     <th>Type</th>
+                    <th>Title</th>
                     <th>Link</th>
                     <th>HTML</th>
                     <th>CSS</th>
-                    <th>JSS</th>
+                    <th>JS</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($effects as $effect)
                 <tr>
-                    <td>{{ $effect->id }}</td>
+                    <td>{{ $effect->id_effect }}</td>
                     <td>{{ $effect->author }}</td>
                     <td>{{ $effect->effect_name }}</td>
                     <td>{{ $effect->type }}</td>
-                    <td>{{ $effect->link ? : 'Null' }}</td>
-                    <td>{{ $effect->html ? : 'Null'}}</td>
-                    <td>{{ $effect->css ? : 'Null'}}</td>
-                    <td>{{ $effect->js ? : 'Null'}}</td>
+                    <td>{{ $effect->title }}</td>
+                    <td>{{ $effect->link ?: 'Null' }}</td>
+                    <td>{{ $effect->html ?: 'Null' }}</td>
+                    <td>{{ $effect->css ?: 'Null' }}</td>
+                    <td>{{ $effect->js ?: 'Null' }}</td>
                     <td>
-                        <button class="action-btn btn-delete" data-id="{{ $effect->id }}"><i class="bi bi-trash3"></i></button>
-                        <button class="action-btn btn-edit" data-id="{{ $effect->id }}"><i class="bi bi-gear-fill"></i></button>
+                        <!-- Nút Xóa -->
+                        <form action="" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-btn btn-delete"><i class="bi bi-trash3"></i></button>
+                        </form>
+
+                        <!-- Nút Sửa -->
+                        <button class="action-btn btn-edit" data-target="#editModal-{{ $effect->id_effect }}"><i class="bi bi-gear-fill"></i></button>
                     </td>
                 </tr>
+
+                <!-- Modal Edit -->
+                <div id="editModal-{{ $effect->id_effect }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn" data-close="editModal-{{ $effect->id_effect }}">&times;</span>
+                        <h2>Sửa hiệu ứng</h2>
+                        <form action="{{ route('effects.update', $effect->id_effect) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <label>Author</label>
+                            <input type="text" name="author" value="{{ $effect->author }}" />
+
+                            <label>Effect Name</label>
+                            <input type="text" list="effects_name" name="effect_name" value="{{ $effect->effect_name }}" />
+                            <datalist id="effects_name">
+                                @foreach ($effects_name as $effect_name)
+                                <option value="{{ $effect_name }}">
+                                @endforeach
+                            </datalist>
+
+                            <label>Type</label>
+                            <input type="text" list="effect-types" name="type" value="{{ $effect->type }}" />
+                            <datalist id="effect-types">
+                                @foreach ($types as $type)
+                                <option value="{{ $type }}">
+                                @endforeach
+                            </datalist>
+
+                            <label>Title</label>
+                            <input type="text" name="title" value="{{ $effect->title }}" />
+
+                            <label>Link</label>
+                            <input type="text" name="link" value="{{ $effect->link }}" />
+
+                            <label>HTML</label>
+                            <input type="text" name="html" value="{{ $effect->html }}" />
+
+                            <label>CSS</label>
+                            <input type="text" name="css" value="{{ $effect->css }}" />
+
+                            <label>JS</label>
+                            <input type="text" name="js" value="{{ $effect->js }}" />
+
+                            <button type="submit" class="action-btn">Lưu</button>
+                        </form>
+                    </div>
+                </div>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 
@@ -47,52 +104,51 @@
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
             <h2>Thêm hiệu ứng mới</h2>
-            <form>
+            <form action="{{ route('effects.store') }}" method="POST">
+                @csrf
+                @auth
                 <label>Author</label>
-                <input type="text" placeholder="Tên người làm..." value=""/>
-                <label>Effect Name</label>
-                <input type="text" placeholder="Tên hiệu ứng..." />
-                <label>Type</label>
-                <input type="text" placeholder="Loại hiệu ứng..." />
-                <label>Link</label>
-                <input type="text" placeholder="Link CDN(nếu có)" />
-                <label>HTML</label>
-                <input type="text" placeholder="HTML..." />
-                <label>CSS</label>
-                <input type="text" placeholder="CSS..." />
-                <label>JS</label>
-                <input type="text" placeholder="JS..." />
-                <button type="submit" class="action-btn">Lưu</button>
-            </form>
-        </div>
-    </div>
+                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" />
+                @endauth
 
-    <!-- Edit Modal -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="editModal">&times;</span>
-            <h2>Sửa hiệu ứng</h2>
-            <form id="editForm">
-                <label>Author</label>
-                <input type="text" name="author" />
                 <label>Effect Name</label>
-                <input type="text" name="effect" />
+                <input type="text" name="effect_name" list="effects_name" value="{{ old('effect_name') }}" placeholder="Tên hiệu ứng..." />
+                <datalist id="effects_name">
+                    @foreach ($effects_name as $effect_name)
+                    <option value="{{ $effect_name }}">
+                    @endforeach
+                </datalist>
+
                 <label>Type</label>
-                <input type="text" name="type" />
+                <input type="text" list="effect-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." />
+                <datalist id="effect-types">
+                    @foreach ($types as $type)
+                    <option value="{{ $type }}">
+                    @endforeach
+                </datalist>
+
+                <label>Title</label>
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." />
+
                 <label>Link</label>
-                <input type="text" name="link" />
+                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" />
+
                 <label>HTML</label>
-                <input type="text" name="html" />
+                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." />
+
                 <label>CSS</label>
-                <input type="text" name="css" />
+                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." />
+
                 <label>JS</label>
-                <input type="text" name="js" />
+                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." />
+
                 <button type="submit" class="action-btn">Lưu</button>
             </form>
         </div>
     </div>
 </div>
 
+<!-- JS mở / đóng modal -->
 <script>
     // Mở modal Thêm
     const addModal = document.getElementById("addModal");
@@ -101,26 +157,12 @@
         addModal.style.display = "flex";
     });
 
-    // Mở modal Sửa
-    const editModal = document.getElementById("editModal");
-    const editForm = document.getElementById("editForm");
-
+    // Mở modal Edit
     document.querySelectorAll(".btn-edit").forEach((btn) => {
-        btn.addEventListener("click", function() {
-            const row = this.closest("tr");
-            const cells = row.querySelectorAll("td");
-
-            // Lấy dữ liệu từ dòng được chọn
-            editForm.author.value = cells[1].innerText;
-            editForm.effect.value = cells[2].innerText;
-            editForm.type.value = cells[3].innerText;
-            editForm.link.value = cells[4].innerText;
-            editForm.html.value = cells[5].innerText;
-            editForm.css.value = cells[6].innerText;
-            editForm.js.value = cells[7].innerText;
-
-            // Hiển thị modal sửa
-            editModal.style.display = "flex";
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            const targetModalId = this.getAttribute('data-target');
+            document.querySelector(targetModalId).style.display = "flex";
         });
     });
 
@@ -128,14 +170,12 @@
     document.querySelectorAll(".close-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             const targetId = btn.getAttribute("data-close");
-            document.getElementById(targetId).style.display = "none";
+            const modal = document.getElementById(targetId);
+            const form = modal.querySelector("form");
+            if (form) {
+                form.reset();
+            }
+            modal.style.display = "none";
         });
-    });
-
-    // Đóng khi bấm ra ngoài
-    window.addEventListener("click", function(e) {
-        if (e.target.classList.contains("modal")) {
-            e.target.style.display = "none";
-        }
     });
 </script>

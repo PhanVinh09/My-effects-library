@@ -17,16 +17,59 @@ class EffectController extends Controller
     public function index()
     {
         $effects = Effect::all();
-        return view('admin.management_list.effect', compact('effects'));
+        $effects_name = Effect::select('effect_name')->distinct()->pluck('effect_name');
+        $types = Effect::select('type')->distinct()->pluck('type');
+        return view('admin.management_list.effect', compact('effects', 'types', 'effects_name'));
     }
 
-    public function show($id)
-    {
-        $effect = Effect::findOrFail($id);
-        return response()->json($effect);
-    }
+    public function show($id) {}
 
     public function store(Request $request)
+    {
+        //kiểm tra dữ liệu nhập vào
+        $request->validate([
+            'author' => 'required|string|max:100',
+            'effect_name' => 'required|string|max:100',
+            'type' => 'required|string|max:100',
+            'title' => 'required|string|max:255',
+            'link' => 'nullable|string',
+            'html' => 'nullable|string',
+            'css' => 'nullable|string',
+            'js' => 'nullable|string'
+        ], [
+            'author.max' => 'Author tối đa là 100 ký tự',
+            'effect_name.required' => 'Effect_name không được để trống',
+            'effect_name.max' => 'Effect_name tối đa là 100 ký tự',
+            'type.required' => 'Type không được để trống',
+            'type.max' => 'Type tối đa là 100 ký tự',
+            'title.required' => 'title tối đa là 255 ký tự',
+            'author.required' => 'Author tối đa là 100 ký tự',
+            'author.required' => 'Author tối đa là 100 ký tự',
+            'author.required' => 'Author tối đa là 100 ký tự',
+
+        ]);
+
+        Effect::create([
+            'author' => $request->author,
+            'effect_name' => $request->effect_name,
+            'type' => $request->type,
+            'title' => $request->title,
+            'link' => $request->link,
+            'html' => $request->html,
+            'css' => $request->css,
+            'js' => $request->js
+        ]);
+
+        return redirect()->route('effects.index')->with('success', 'Thêm hiệu ứng thành công');
+    }
+
+    public function edit($id)
+    {
+        $effect = Effect::findOrFail($id);
+        return view('admin.management_list.effect', compact('effect'));
+    }
+
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'author' => 'required|string|max:100',
@@ -36,20 +79,13 @@ class EffectController extends Controller
             'link' => 'nullable|string',
             'html' => 'nullable|string',
             'css' => 'nullable|string',
-            'js' => 'nullable|string',
+            'js' => 'nullable|string'
         ]);
 
-        $effect = Effect::create($validated);
-        return response()->json($effect, 201);
-    }
-
-    public function update(Request $request, $id)
-    {
         $effect = Effect::findOrFail($id);
+        $effect->update($validated);
 
-        $effect->update($request->all());
-
-        return response()->json($effect);
+        return redirect()->route('effect.index')->with('success', 'Sửa Hiệu Ứng Thành Công!');
     }
 
     public function destroy($id)

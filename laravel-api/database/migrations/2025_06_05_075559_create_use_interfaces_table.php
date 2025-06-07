@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('use_interfaces', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_UI');
             $table->string('author', 100);
             $table->string('ui_name', 100);
             $table->string('type', 100);

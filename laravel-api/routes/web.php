@@ -15,7 +15,18 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::view('/admin', 'admin.admin_index')->name('admin.index');
     Route::view('/admin/dashboard', 'admin.admin_dashboard')->name('admin.dashboard');
+
+    // CRUD cho Effect
     Route::get('/admin/effects', [EffectController::class, 'index'])->name('effects.index');
+    // Thêm
+    Route::post('/effects/add', [EffectController::class, 'store'])->name('effects.store');
+    // Sửa
+    Route::get('/effects/{id}/edit', [EffectController::class, 'edit'])->name('effects.edit');
+    Route::put('/effects/{id}', [EffectController::class, 'update'])->name('effects.update');
+    // Xoá
+    Route::delete('/effects/{id}', [EffectController::class, 'destroy']);
+
+
     Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');
 });
 Route::post('/logout', function () {
@@ -27,8 +38,4 @@ Route::post('/logout', function () {
 
 Route::prefix('api')->group(function () {
     Route::get('/effects', [EffectController::class, 'apiIndex']);
-    Route::post('/effects', [EffectController::class, 'store']);
-    Route::get('/effects/{id}', [EffectController::class, 'show']);
-    Route::put('/effects/{id}', [EffectController::class, 'update']);
-    Route::delete('/effects/{id}', [EffectController::class, 'destroy']);
 });
