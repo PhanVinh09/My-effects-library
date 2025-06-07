@@ -100,7 +100,7 @@
             <div class="box-content">
                 <div class="title">Effect</div>
                 <div class="quantity">Số Lượng</div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('effects.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-brush"></i>
@@ -110,7 +110,7 @@
             <div class="box-content">
                 <div class="title">Layout</div>
                 <div class="quantity">Số Lượng</div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('layouts.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-layout-wtf"></i>

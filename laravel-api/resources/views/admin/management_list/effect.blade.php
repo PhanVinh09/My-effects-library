@@ -49,7 +49,7 @@
             <h2>Thêm hiệu ứng mới</h2>
             <form>
                 <label>Author</label>
-                <input type="text" placeholder="Tên người làm..." />
+                <input type="text" placeholder="Tên người làm..." value=""/>
                 <label>Effect Name</label>
                 <input type="text" placeholder="Tên hiệu ứng..." />
                 <label>Type</label>
