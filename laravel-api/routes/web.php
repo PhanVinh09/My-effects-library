@@ -21,7 +21,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Thêm
     Route::post('/effects/add', [EffectController::class, 'store'])->name('effects.store');
     // Sửa
-    Route::get('/effects/{id}/edit', [EffectController::class, 'edit'])->name('effects.edit');
     Route::put('/effects/{id}', [EffectController::class, 'update'])->name('effects.update');
     // Xoá
     Route::delete('/effects/{id}', [EffectController::class, 'destroy']);

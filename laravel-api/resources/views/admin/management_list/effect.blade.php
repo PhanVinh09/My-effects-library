@@ -29,7 +29,7 @@
                     <td>{{ $effect->author }}</td>
                     <td>{{ $effect->effect_name }}</td>
                     <td>{{ $effect->type }}</td>
-                    <td>{{ $effect->title }}</td>
+                    <td>{{ $effect->title ?: 'Null' }}</td>
                     <td>{{ $effect->link ?: 'Null' }}</td>
                     <td>{{ $effect->html ?: 'Null' }}</td>
                     <td>{{ $effect->css ?: 'Null' }}</td>

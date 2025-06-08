@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('author', 100);
             $table->string('effect_name', 100);
             $table->string('type', 100);
-            $table->string('title', 255);
+            $table->string('title', 255) -> nullable();
             $table->text('link') -> nullable();
             $table->text('html') -> nullable();
             $table->text('css') -> nullable();
