@@ -36,7 +36,7 @@
                     <td>{{ $effect->js ?: 'Null' }}</td>
                     <td>
                         <!-- Nút Xóa -->
-                        <form action="" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                        <form action="{{ route('effects.destroy', $effect->id_effect) }}" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="action-btn btn-delete"><i class="bi bi-trash3"></i></button>
@@ -64,7 +64,7 @@
                             <datalist id="effects_name">
                                 @foreach ($effects_name as $effect_name)
                                 <option value="{{ $effect_name }}">
-                                @endforeach
+                                    @endforeach
                             </datalist>
 
                             <label>Type</label>
@@ -72,7 +72,7 @@
                             <datalist id="effect-types">
                                 @foreach ($types as $type)
                                 <option value="{{ $type }}">
-                                @endforeach
+                                    @endforeach
                             </datalist>
 
                             <label>Title</label>
@@ -116,7 +116,7 @@
                 <datalist id="effects_name">
                     @foreach ($effects_name as $effect_name)
                     <option value="{{ $effect_name }}">
-                    @endforeach
+                        @endforeach
                 </datalist>
 
                 <label>Type</label>
@@ -124,7 +124,7 @@
                 <datalist id="effect-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
-                    @endforeach
+                        @endforeach
                 </datalist>
 
                 <label>Title</label>
@@ -178,4 +178,23 @@
             modal.style.display = "none";
         });
     });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(event, form) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Bạn có muốn xoá không ?',
+            text: "Hành động này không thể hoàn tác!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonText: 'Huỷ',
+            confirmButtonText: 'Xoá!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
 </script>

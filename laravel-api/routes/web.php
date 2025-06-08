@@ -23,7 +23,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Sửa
     Route::put('/effects/{id}', [EffectController::class, 'update'])->name('effects.update');
     // Xoá
-    Route::delete('/effects/{id}', [EffectController::class, 'destroy']);
+    Route::delete('/effects/{id}', [EffectController::class, 'destroy'])->name('effects.destroy');;
 
 
     Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');

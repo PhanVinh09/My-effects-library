@@ -92,7 +92,8 @@ class EffectController extends Controller
 
     public function destroy($id)
     {
-        Effect::destroy($id);
-        return response()->json(null, 204);
+        $effect = Effect::FindOrFail($id);
+        $effect -> delete();
+        return redirect()->route('effects.index')->with('success', 'Xoá hiệu ứng thành công');
     }
 }
