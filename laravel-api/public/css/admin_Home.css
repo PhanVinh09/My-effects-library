@@ -1,3 +1,4 @@
+/* Reset cơ bản */
 * {
     margin: 0;
     padding: 0;
@@ -29,6 +30,17 @@ nav {
     border-bottom-right-radius: 12px;
 }
 
+/* Nút hamburger menu */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Links */
 a {
     text-decoration: none;
 }
@@ -93,6 +105,8 @@ li {
     visibility: hidden;
     opacity: 0;
     transition: 0.3s ease;
+    min-width: 160px;
+    z-index: 10;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -127,6 +141,8 @@ li {
     color: #2c3e50;
     border-radius: 8px;
     transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-login:hover {
@@ -137,8 +153,12 @@ li {
 
 /* DASHBOARD MAIN */
 .container {
-    margin-left: 250px; /* nếu có sidebar cố định */
-    padding: 40px;
+    max-width: 960px; /* giới hạn chiều rộng */
+    margin: 50px auto 60px; /* margin trên đủ để tránh nav, căn giữa */
+    padding: 20px 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .container h1 {
@@ -152,6 +172,7 @@ li {
     line-height: 1.6;
     color: #333;
     max-width: 800px;
+    margin-bottom: 40px;
 }
 
 .dashboard-section {
@@ -172,18 +193,68 @@ li {
 /* RESPONSIVE */
 @media screen and (max-width: 768px) {
     nav {
-        flex-direction: column;
-        gap: 20px;
-        height: auto;
+        position: relative;
+        flex-wrap: nowrap;
+        padding: 20px 30px;
     }
 
+    /* Hiện nút hamburger */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Ẩn menu nav-list mặc định */
     .nav-list {
+        display: none;
         flex-direction: column;
-        gap: 10px;
+        position: absolute;
+        top: 100%; /* bên dưới thanh nav */
+        left: 0;
+        right: 0;
+        background: linear-gradient(to right, #2c3e50, #3498db);
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        padding: 15px 0;
+        z-index: 999;
+    }
+
+    /* Khi menu mở */
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    /* Dropdown menu trong mobile */
+    .dropdown-menu {
+        position: static;
+        margin: 10px 0 0 0;
+        box-shadow: none;
+        background-color: transparent;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .dropdown-item {
+        padding: 8px 20px;
+    }
+
+    .dropdown-link {
+        color: white;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(255,255,255,0.1);
     }
 
     .container {
-        margin-left: 0;
-        padding: 20px;
+        margin: 10px 15px 40px;
+        padding: 15px 20px;
+        max-width: 100%;
+        border-radius: 8px;
     }
 }

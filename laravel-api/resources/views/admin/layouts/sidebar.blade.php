@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Manager</title>
     <style>
@@ -21,6 +21,22 @@
             background-color: #f4f4f4;
         }
 
+        /* Nút hamburger ẩn mặc định */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1100;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            font-size: 28px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
         .sidebar {
             width: 250px;
             background: linear-gradient(180deg, #2c3e50, #34495e);
@@ -30,6 +46,9 @@
             flex-direction: column;
             gap: 25px;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease-in-out;
+            position: relative;
+            z-index: 1000;
         }
 
         .sidebar h2 {
@@ -59,47 +78,65 @@
             padding: 50px;
         }
 
+        /* MEDIA QUERIES */
+
         @media screen and (max-width: 768px) {
             body {
                 flex-direction: column;
             }
 
-            .sidebar {
-                width: 100%;
-                height: auto;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 10px;
-                gap: 10px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                scrollbar-width: none;
-                /* Firefox */
+            /* Hiện nút hamburger */
+            .menu-toggle {
+                display: block;
             }
 
-            .sidebar::-webkit-scrollbar {
-                display: none;
-                /* Chrome, Safari */
+            /* Sidebar mặc định ẩn, trượt ngoài màn hình trái */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -260px; /* ẩn sang trái */
+                height: 100vh;
+                width: 250px;
+                padding-top: 60px;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 20px;
+                overflow-y: auto;
+                box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+                transition: left 0.3s ease-in-out;
+                z-index: 1050;
+                background: linear-gradient(180deg, #2c3e50, #34495e);
+            }
+
+            /* Khi active (mở menu) */
+            .sidebar.active {
+                left: 0;
             }
 
             .sidebar h2 {
                 display: none;
             }
 
-            .nav-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 10px 14px;
-                font-size: 14px;
-                white-space: nowrap;
-                border-radius: 6px;
+            /* Thêm lớp overlay */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 1040;
+            }
+
+            .overlay.active {
+                display: block;
             }
 
             .content {
                 padding: 20px;
+                margin-left: 0;
             }
         }
     </style>
@@ -118,7 +155,7 @@
         });
     </script>
     @endif
-    @if(session('warning'))
+    @if (session('warning'))
     <script>
         Swal.fire({
             icon: 'warning',
@@ -138,6 +175,10 @@
         });
     </script>
     @endif
+
+    <!-- Nút menu hamburger -->
+    <button class="menu-toggle" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+
     <div class="sidebar">
         <h2>Admin</h2>
         <a href="{{route('admin.dashboard')}}" class="nav-link"><i class="bi bi-house-gear"></i> Dashboard</a>
@@ -149,6 +190,27 @@
         <a href="#" class="nav-link"><i class="bi bi-input-cursor"></i> Forms</a>
         <a href="{{route('admin.index')}}" class="nav-link"><i class="bi bi-door-open"></i> Back «</a>
     </div>
+
+    <!-- Overlay mờ khi sidebar mở -->
+    <div class="overlay"></div>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        // Mở / đóng sidebar
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        // Click overlay đóng sidebar
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    </script>
 </body>
 
 </html>

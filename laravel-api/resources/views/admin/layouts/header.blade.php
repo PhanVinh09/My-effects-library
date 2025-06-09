@@ -7,6 +7,7 @@
   <title>Manager Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="{{ asset('css/admin_Home.css') }}">
 </head>
 
@@ -26,6 +27,8 @@
   <header>
     <nav>
       <div class="nav-logo"><a href="#">PTV</a></div>
+      <!-- Nút menu hamburger -->
+      <button class="menu-toggle" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
       <ul class="nav-list">
         <li class="nav-item"><a class="nav-link" href="{{route('admin.dashboard')}}">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="#">About</a></li>
@@ -51,3 +54,18 @@
       @endauth
     </nav>
   </header>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navList = document.querySelector('.nav-list');
+
+    menuToggle.addEventListener('click', () => {
+      navList.classList.toggle('active');
+    });
+
+    // Nếu muốn đóng menu khi click vào 1 mục (tuỳ chọn)
+    navList.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navList.classList.remove('active');
+      });
+    });
+  </script>
