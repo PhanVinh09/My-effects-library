@@ -5,6 +5,17 @@
     <div class="table-container">
         <div class="table-header">
             <a class="btn-add" href="#">Thêm hiệu ứng</a>
+            <div class="search-bar">
+                <form action="{{ route('effects.index') }}" method="GET">
+                    <input type="text" list="effects_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm Effect Name..." />
+                    <datalist id="effects_name">
+                        @foreach ($effects_name as $effect_name)
+                        <option value="{{ $effect_name }}">
+                            @endforeach
+                    </datalist>
+                    <button type="submit"><i class="bi bi-search"></i> Tìm</button>
+                </form>
+            </div>
         </div>
 
         <table>
@@ -97,8 +108,15 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
+        <!-- PHÂN TRANG -->
+        <div>
+            {{ $effects->appends(request()->query())->links('pagination::bootstrap-5') }}
+        </div>
+        <div class="status-summary">
+            <span>Đang hiển thị {{ $effects->count() }} hiệu ứng, tổng cộng {{ $effects->total() }} hiệu ứng</span>
+        </div>
 
+    </div>
     <!-- Add Modal -->
     <div id="addModal" class="modal">
         <div class="modal-content">

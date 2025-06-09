@@ -14,11 +14,22 @@ class EffectController extends Controller
     }
 
     // Hàm trả view blade và truyền dữ liệu
-    public function index()
+    public function index(Request $request)
     {
-        $effects = Effect::all();
+        $query = Effect::query();
+
+        //tìm thấy
+        if ($request->has('search') && $request->search != '') {
+            $query->where('Effect_name', 'like', '%' . $request->search . '%');
+        }
+        $effects = $query->orderBy('id_effect', 'desc')->paginate(10);
         $effects_name = Effect::select('effect_name')->distinct()->pluck('effect_name');
         $types = Effect::select('type')->distinct()->pluck('type');
+
+        //tìm không thấy
+        if ($request->has('search') && $request->search != '' && $effects->isEmpty()) {
+            return redirect()->route('effects.index')->with('warning', 'Không tìm thấy hiệu ứng nào với từ khoá "' . $request->search . '"');
+        }
         return view('admin.management_list.effect', compact('effects', 'types', 'effects_name'));
     }
 
@@ -93,7 +104,7 @@ class EffectController extends Controller
     public function destroy($id)
     {
         $effect = Effect::FindOrFail($id);
-        $effect -> delete();
+        $effect->delete();
         return redirect()->route('effects.index')->with('success', 'Xoá hiệu ứng thành công');
     }
 }

@@ -60,11 +60,28 @@
         }
 
         @media screen and (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
             .sidebar {
                 width: 100%;
+                height: auto;
                 flex-direction: row;
-                justify-content: space-around;
-                padding: 20px 10px;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 10px;
+                gap: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                scrollbar-width: none;
+                /* Firefox */
+            }
+
+            .sidebar::-webkit-scrollbar {
+                display: none;
+                /* Chrome, Safari */
             }
 
             .sidebar h2 {
@@ -72,8 +89,13 @@
             }
 
             .nav-link {
-                padding: 10px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 10px 14px;
                 font-size: 14px;
+                white-space: nowrap;
+                border-radius: 6px;
             }
 
             .content {
@@ -93,6 +115,16 @@
             confirmButtonText: 'OK',
             timer: 2000,
             timerProgressBar: true
+        });
+    </script>
+    @endif
+    @if(session('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Không tìm thấy!',
+            text: '{{ session("warning") }}',
+            confirmButtonText: 'OK'
         });
     </script>
     @endif
