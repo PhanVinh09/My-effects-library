@@ -6,6 +6,7 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\UserManagementController;
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
@@ -25,8 +26,9 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Xoá
     Route::delete('/effects/{id}', [EffectController::class, 'destroy'])->name('effects.destroy');;
 
-
     Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');
+
+    Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
 });
 Route::post('/logout', function () {
     Auth::logout();

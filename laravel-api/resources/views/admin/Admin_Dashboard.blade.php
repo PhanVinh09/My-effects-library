@@ -80,7 +80,7 @@
             <div class="box-content">
                 <div class="title">Người Dùng</div>
                 <div class="quantity">Số Lượng</div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('users.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-people"></i>

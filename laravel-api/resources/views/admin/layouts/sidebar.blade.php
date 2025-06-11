@@ -182,7 +182,7 @@
     <div class="sidebar">
         <h2>Admin</h2>
         <a href="{{route('admin.dashboard')}}" class="nav-link"><i class="bi bi-house-gear"></i> Dashboard</a>
-        <a href="" class="nav-link"><i class="bi bi-people"></i> Users</a>
+        <a href="{{route('users.index')}}" class="nav-link"><i class="bi bi-people"></i> Users</a>
         <a href="" class="nav-link"><i class="bi bi-person-lock"></i> Managers</a>
         <a href="{{route('effects.index')}}" class="nav-link"><i class="bi bi-brush"></i> Effects</a>
         <a href="{{route('layouts.index')}}" class="nav-link"><i class="bi bi-layout-wtf"></i> Layouts</a>
