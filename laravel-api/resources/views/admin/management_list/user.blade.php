@@ -36,7 +36,7 @@
                     <td>{{$user->membership_level}}</td>
                     <td>
                         <!-- Nút Xóa -->
-                        <form action="" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
+                        <form action="{{route('users.destroy',$user->id)}}" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="action-btn btn-delete"><i class="bi bi-trash3"></i></button>
