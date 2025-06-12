@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm Người Dùng</a>
             <div class="search-bar">
                 <form action="" method="GET">
-                    <input type="text" name="search" value="" placeholder="Tìm kiếm Effect Name..." />
+                    <input type="text" name="search" value="" placeholder="Tìm kiếm Name..." />
                     <button type="submit"><i class="bi bi-search"></i> Tìm</button>
                 </form>
             </div>
@@ -52,18 +52,18 @@
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{$user->id}}">&times;</span>
                         <h2>Sửa hiệu ứng</h2>
-                        <form action="" method="POST">
+                        <form action="{{route('users.update', $user->id)}}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            <input type="text" name="id" value="{{$user->id}}" maxlength="100" hidden />
                             <label>Name</label>
-                            <input type="text" name="name" value="{{$user->name}}" maxlength="100" required />
+                            <input type="text" name="name" value="{{$user->name}}" maxlength="100" disabled />
 
                             <label>Email</label>
-                            <input type="email" name="email" value="{{$user->email}}" maxlength="100" required />
+                            <input type="email" name="email" value="{{$user->email}}" maxlength="100" disabled />
 
                             <label>Password</label>
-                            <input type="text" name="password" value="{{$user->password}}" maxlength="100" required />
+                            <input type="text" name="password" value="{{$user->password}}" maxlength="100" disabled />
 
                             <label>Role</label>
                             <select name="role" id="role">
@@ -78,7 +78,7 @@
                             </select>
                             <button type="submit" class="action-btn">Lưu</button>
                         </form>
-                    </div>a
+                    </div>
                 </div>
                 @endforeach
             </tbody>

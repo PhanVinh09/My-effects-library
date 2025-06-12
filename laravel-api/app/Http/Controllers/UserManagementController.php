@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User_Management;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -45,23 +46,30 @@ class UserManagementController extends Controller
         return redirect()->route('users.index')->with('success', 'Thêm người dùng thành công');
     }
 
-    public function show(User_Management $user_Management)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'role' => 'required|string|in:admin,user',
+                'membership_level' => 'required|string|in:VIP,Normal',
+            ], [
+                'role.required' => 'Role không được để trống',
+                'role.in' => 'Role không tồn tại',
+                'membership_level.required' => 'membership_level không được để trống',
+                'membership_level.in' => 'membership_level không tồn tại',
+            ]);
+            $user_Management = User_Management::findOrFail($id);
+            $user_Management->update($validated);
+            return redirect()->route('users.index')->with('success', 'Cập nhật người dùng thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('users.index')->with('error', 'Cập nhật người dùng không thành công');
+        }
     }
 
-    public function edit(User_Management $user_Management)
+    public function destroy($id)
     {
-        //
-    }
-
-    public function update(Request $request, User_Management $user_Management)
-    {
-        //
-    }
-
-    public function destroy(User_Management $user_Management)
-    {
-        //
+        $user_Management = User_Management::findOrFail($id);
+        $user_Management->delete();
+        return redirect()->route('users.index')->with('success', 'Xoá người dùng thành côn');
     }
 }
