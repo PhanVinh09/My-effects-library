@@ -145,7 +145,7 @@ tr:hover {
   }
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"], select {
   width: 100%;
   padding: 8px;
   margin-top: 6px;

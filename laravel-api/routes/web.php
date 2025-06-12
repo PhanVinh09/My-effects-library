@@ -29,6 +29,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');
 
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
+
+     Route::post('/user/add', [UserManagementController::class, 'store'])->name('users.store');
 });
 Route::post('/logout', function () {
     Auth::logout();

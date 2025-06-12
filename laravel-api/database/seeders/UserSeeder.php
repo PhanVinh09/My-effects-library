@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'email' => '',
             'password' => Hash::make('123456'),
             'role' => 'user',
-            'membership_level' => 'normal'
+            'membership_level' => 'Normal'
         ]);
     }
 }

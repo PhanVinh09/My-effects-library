@@ -66,14 +66,19 @@
                             <input type="text" name="password" value="{{$user->password}}" maxlength="100" required />
 
                             <label>Role</label>
-                            <input type="text" name="role" value="{{$user->role}}" maxlength="255" required />
+                            <select name="role" id="role">
+                                <option value="user" {{$user->role === 'user' ? 'selected' : ''}}>User</option>
+                                <option value="admin" {{$user->role === 'admin' ? 'selected' : ''}}>Admin</option>
+                            </select>
 
                             <label>Membership_level</label>
-                            <input type="text" name="membership_level" value="{{$user->membership_level}}" maxlength="60000" />
-
+                            <select name="membership_level" id="membership_level">
+                                <option value="VIP" {{$user->membership_level === 'VIP' ? 'selected' : ''}}>VIP</option>
+                                <option value="Normal" {{$user->membership_level === 'Normal' ? 'selected' : ''}}>Normal</option>
+                            </select>
                             <button type="submit" class="action-btn">Lưu</button>
                         </form>
-                    </div>
+                    </div>a
                 </div>
                 @endforeach
             </tbody>
@@ -91,24 +96,29 @@
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
             <h2>Thêm hiệu ứng mới</h2>
-            <form action="" method="POST">
+            <form action="{{route('users.store')}}" method="POST">
                 @csrf
-                @auth
-                <label>Author</label>
-                <input type="text" name="author" placeholder="Tên người làm..." value="" maxlength="100" required />
-                @endauth
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Nhập tên..." value="{{ old('name')}}" maxlength="100" required />
 
-                <label>Effect Name</label>
-                <input type="text" name="effect_name" value="" placeholder="Tên hiệu ứng..." maxlength="100" required />
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Nhập email..." value="{{ old('email')}}" />
 
-                <label>Type</label>
-                <input type="text" name="type" value="" placeholder="Hiệu ứng cho ..." maxlength="100" required />
+                <label>Password</label>
+                <input type="text" name="password" placeholder="Nhập Mật khẩu" value="{{ old('password')}}" minlength="6" maxlength="30" required />
 
-                <label>Title</label>
-                <input type="text" name="title" value="" placeholder="Mô tả hiệu ứng..." maxlength="255" required />
+                <label>Role</label>
+                <select name="role" id="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
 
-                <label>Link</label>
-                <input type="text" name="link" value="" placeholder="Link CDN(nếu có)" maxlength="60000" />
+                <label>Membership_level</label>
+                <select name="membership_level" id="membership_level">
+                    <option value="Normal">Normal</option>
+                    <option value="VIP">VIP</option>
+                </select>
+
 
                 <button type="submit" class="action-btn">Lưu</button>
             </form>
