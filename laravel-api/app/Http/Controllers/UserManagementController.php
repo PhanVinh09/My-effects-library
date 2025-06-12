@@ -70,6 +70,6 @@ class UserManagementController extends Controller
     {
         $user_Management = User_Management::findOrFail($id);
         $user_Management->delete();
-        return redirect()->route('users.index')->with('success', 'Xoá người dùng thành côn');
+        return redirect()->route('users.index')->with('success', 'Xoá người dùng thành công');
     }
 }
