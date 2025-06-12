@@ -30,7 +30,9 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
 
-     Route::post('/user/add', [UserManagementController::class, 'store'])->name('users.store');
+    Route::post('/user/add', [UserManagementController::class, 'store'])->name('users.store');
+
+    Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('users.update');
 });
 Route::post('/logout', function () {
     Auth::logout();
