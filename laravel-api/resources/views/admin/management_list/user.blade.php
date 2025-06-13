@@ -6,8 +6,8 @@
         <div class="table-header">
             <a class="btn-add" href="#">Thêm Người Dùng</a>
             <div class="search-bar">
-                <form action="" method="GET">
-                    <input type="text" name="search" value="" placeholder="Tìm kiếm Name..." />
+                <form action="{{ route('users.index') }}" method="GET">
+                    <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm Name..." />
                     <button type="submit"><i class="bi bi-search"></i> Tìm</button>
                 </form>
             </div>
@@ -85,10 +85,10 @@
         </table>
         <!-- PHÂN TRANG -->
         <div>
-
+            {{ $users->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-
+            <span>Đang hiển thị {{ $users->count() }} người dùng, tổng cộng {{ $users->total() }} người dùng</span>
         </div>
     </div>
     <!-- Add Modal -->

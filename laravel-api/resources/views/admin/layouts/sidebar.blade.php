@@ -160,7 +160,7 @@
         Swal.fire({
             icon: 'warning',
             title: 'Không tìm thấy!',
-            text: '{{ session("warning") }}',
+            text: `{!! session("warning") !!}`,
             confirmButtonText: 'OK'
         });
     </script>
