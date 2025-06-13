@@ -17,12 +17,15 @@ class UserManagementController extends Controller
     public function index(Request $request)
     {
         $query = User_Management::query();
+
+        $query->where('role', 'user');
+        
         if ($request->has('search') && $request->search != '') {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(10);
-        if ($request->has('search') && $request->search != '' && $users -> isEmpty()) {
+        if ($request->has('search') && $request->search != '' && $users->isEmpty()) {
             return redirect()->route('users.index')->with('warning', 'Không tìm thấy người dùng nào với có tên là "' . $request->search . '"');
         }
         return view('admin.management_list.user', compact('users'));
