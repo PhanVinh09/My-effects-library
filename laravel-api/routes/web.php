@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\AdminManagementController;
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
@@ -29,10 +30,14 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/layouts', [LayoutController::class, 'index'])->name('layouts.index');
 
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
-
     Route::post('/user/add', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('users.update');
     Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/admin/admins', [AdminManagementController::class, 'index'])->name('admins.index');
+    Route::post('/admin/add', [AdminManagementController::class, 'store'])->name('admins.store');
+    Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admins.update');
+    Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admins.destroy');
 });
 Route::post('/logout', function () {
     Auth::logout();
