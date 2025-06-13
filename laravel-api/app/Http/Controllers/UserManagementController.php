@@ -7,14 +7,24 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UserManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User_Management::all();
+        $query = User_Management::query();
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        if ($request->has('search') && $request->search != '' && $users -> isEmpty()) {
+            return redirect()->route('users.index')->with('warning', 'Không tìm thấy người dùng nào với có tên là "' . $request->search . '"');
+        }
         return view('admin.management_list.user', compact('users'));
     }
 
