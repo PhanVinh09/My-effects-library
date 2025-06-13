@@ -60,10 +60,10 @@
                             <input type="text" name="name" value="{{$user->name}}" maxlength="100" disabled />
 
                             <label>Email</label>
-                            <input type="email" name="email" value="{{$user->email}}" maxlength="100" disabled />
+                            <input type="email" name="email" value="{{$user->email}}"  disabled />
 
                             <label>Password</label>
-                            <input type="text" name="password" value="{{$user->password}}" maxlength="100" disabled />
+                            <input type="text" name="password" value="{{$user->password}}" minlength="6" maxlength="30" disabled />
 
                             <label>Role</label>
                             <select name="role" id="role">
