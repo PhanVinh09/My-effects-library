@@ -36,10 +36,13 @@
                     <td>{{$admin->membership_level}}</td>
                     <td>
                         <!-- Nút Xóa -->
-                        <form action="{{route('admins.destroy',$admin->id)}}" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
+                        <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" class="form-delete" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="action-btn btn-delete"><i class="bi bi-trash3"></i></button>
+                            <input type="hidden" name="code" class="auth-code-input"> 
+                            <button type="submit" class="action-btn btn-delete">
+                                <i class="bi bi-trash3"></i>
+                            </button>
                         </form>
 
                         <!-- Nút Sửa -->
@@ -76,6 +79,9 @@
                                 <option value="VIP" {{$admin->membership_level === 'VIP' ? 'selected' : ''}}>VIP</option>
                                 <option value="Normal" {{$admin->membership_level === 'Normal' ? 'selected' : ''}}>Normal</option>
                             </select>
+
+                            <label>Mã xác thực:</label>
+                            <input type="password" name="code" required placeholder="Nhập mã ...">
                             <button type="submit" class="action-btn">Lưu</button>
                         </form>
                     </div>
@@ -119,7 +125,6 @@
                     <option value="VIP">VIP</option>
                 </select>
 
-
                 <button type="submit" class="action-btn">Lưu</button>
             </form>
         </div>
@@ -158,21 +163,39 @@
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    function confirmDelete(event, form) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Bạn có muốn xoá không ?',
-            text: "Hành động này không thể hoàn tác!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonText: 'Huỷ',
-            confirmButtonText: 'Xoá!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.form-delete').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Xác nhận xoá',
+                html: `
+                    <p>Vui lòng nhập mã xác thực:</p>
+                    <input style="width: 200px" type="password" id="auth-code" class="swal2-input" placeholder="Nhập mã xác thực">
+                `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xoá',
+                cancelButtonText: 'Huỷ',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const code = Swal.getPopup().querySelector('#auth-code').value;
+                    if (!code) {
+                        Swal.showValidationMessage('Bạn phải nhập mã');
+                    }
+                    return code;
+                }
+            }).then(result => {
+                if (result.isConfirmed) {
+                    const codeInput = form.querySelector('.auth-code-input');
+                    codeInput.value = result.value; 
+                    form.submit();
+                }
+            });
         });
-    }
+    });
+});
 </script>

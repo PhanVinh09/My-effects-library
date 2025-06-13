@@ -56,6 +56,9 @@ class AdminManagementController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($request->input('code') !== '1010') {
+            return redirect()->back()->with('errorCode', 'Có phải admin không đấy !!');
+        }
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:100|unique:users,name,' . $id,
@@ -83,8 +86,11 @@ class AdminManagementController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if ($request->input('code') !== '1010') {
+            return redirect()->back()->with('errorCode', 'Có phải admin không đấy !!');
+        }
         $admin_Management = admin_Management::findOrFail($id);
         $admin_Management->delete();
         return redirect()->route('admins.index')->with('success', 'Xoá admin thành công');

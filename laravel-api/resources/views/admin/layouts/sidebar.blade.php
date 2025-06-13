@@ -94,7 +94,8 @@
             .sidebar {
                 position: fixed;
                 top: 0;
-                left: -260px; /* ẩn sang trái */
+                left: -260px;
+                /* ẩn sang trái */
                 height: 100vh;
                 width: 250px;
                 padding-top: 60px;
@@ -165,12 +166,22 @@
         });
     </script>
     @endif
-     @if (session('error'))
+    @if (session('error'))
     <script>
         Swal.fire({
             icon: 'error',
-            title: 'Không tìm thấy!',
+            title: 'Lỗi Rồi !',
             text: '{{ session("error") }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
+    @if (session('errorCode'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '-_-',
+            text: '{{ session("errorCode") }}',
             confirmButtonText: 'OK'
         });
     </script>

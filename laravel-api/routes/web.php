@@ -5,7 +5,9 @@ use App\Http\Controllers\EffectController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Middleware\AdminMiddleware;
+
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AdminManagementController;
 
@@ -36,6 +38,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/admin/admins', [AdminManagementController::class, 'index'])->name('admins.index');
     Route::post('/admin/add', [AdminManagementController::class, 'store'])->name('admins.store');
+
     Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admins.update');
     Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admins.destroy');
 });
