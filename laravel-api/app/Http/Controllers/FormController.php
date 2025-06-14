@@ -79,6 +79,8 @@ class FormController extends Controller
 
     public function destroy($id)
     {
-        //
+        $forms = Form::findOrFail($id);
+        $forms->delete();
+        return redirect()->route('forms.index')->with('success', 'Xoá form thành công');
     }
 }
