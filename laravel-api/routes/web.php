@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\EffectController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\FormController;
+
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +29,12 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('/layouts/add', [LayoutController::class, 'store'])->name('layouts.store');
     Route::put('/layouts/{id}', [LayoutController::class, 'update'])->name('layouts.update');
     Route::delete('/layouts/{id}', [LayoutController::class, 'destroy'])->name('layouts.destroy');
+
+     // CRUD cho Form
+    Route::get('/admin/forms', [FormController::class, 'index'])->name('forms.index');
+    Route::post('/forms/add', [FormController::class, 'store'])->name('forms.store');
+    Route::put('/forms/{id}', [FormController::class, 'update'])->name('forms.update');
+    Route::delete('/forms/{id}', [FormController::class, 'destroy'])->name('forms.destroy');
 
     // CRUD cho User
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');

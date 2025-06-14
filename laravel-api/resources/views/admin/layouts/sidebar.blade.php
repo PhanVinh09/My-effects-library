@@ -208,7 +208,7 @@
         <a href="{{route('effects.index')}}" class="nav-link"><i class="bi bi-brush"></i> Effects</a>
         <a href="{{route('layouts.index')}}" class="nav-link"><i class="bi bi-layout-wtf"></i> Layouts</a>
         <a href="#" class="nav-link"><i class="bi bi-window"></i> UI</a>
-        <a href="#" class="nav-link"><i class="bi bi-input-cursor"></i> Forms</a>
+        <a href="{{route('forms.index')}}" class="nav-link"><i class="bi bi-input-cursor"></i> Forms</a>
         <a href="{{route('admin.index')}}" class="nav-link"><i class="bi bi-door-open"></i> Back «</a>
     </div>
 
