@@ -7,11 +7,27 @@ use Illuminate\Http\Request;
 
 class LayoutController extends Controller
 {
-    public function index()
+    public function apiIndex()
     {
-        $layouts = Layout::all();
+        return response()->json(Layout::all());
+    }
+
+    public function index(Request $request)
+    {
+        $query = Layout::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('layout_name', 'like', '%' . $request->search . '%');
+        }
+
+        $layouts = $query->orderBy('created_at', 'desc')->paginate(10);
         $layouts_name = Layout::select('layout_name')->distinct()->pluck('layout_name');
         $types = Layout::select('type')->distinct()->pluck('type');
+
+
+        if ($request->has('search') && $request->search != '' && $layouts->isEmpty()) {
+            return redirect()->route('layouts.index')->with('warning', 'Không tìm thấy layout nào với từ khoá "' . $request->search . '"');
+        }
         return view('admin.management_list.layout', compact('layouts', 'layouts_name', 'types'));
     }
 
@@ -76,7 +92,8 @@ class LayoutController extends Controller
         return redirect()->route('layouts.index')->with('success', 'Cập nhật Layout thành công');
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $layout = Layout::findOrFail($id);
         $layout->delete();
         return redirect()->route('layouts.index')->with('success', 'Xoá Layout thành công');

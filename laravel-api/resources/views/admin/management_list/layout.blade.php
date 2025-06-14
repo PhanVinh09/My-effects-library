@@ -71,7 +71,7 @@
                             <input type="text" name="author" value="{{ $layout->author }}" maxlength="100" required />
 
                             <label>layout Name</label>
-                            <input type="text" list="layouts_name" name="layout_name" value="{{ $layout->layout_name }}" maxlength="100" required  />
+                            <input type="text" list="layouts_name" name="layout_name" value="{{ $layout->layout_name }}" maxlength="100" required />
                             <datalist id="layouts_name">
                                 @foreach ($layouts_name as $layout_name)
                                 <option value="{{ $layout_name }}">
@@ -79,7 +79,7 @@
                             </datalist>
 
                             <label>Type</label>
-                            <input type="text" list="layout-types" name="type" value="{{ $layout->type }}" maxlength="100" required  />
+                            <input type="text" list="layout-types" name="type" value="{{ $layout->type }}" maxlength="100" required />
                             <datalist id="layout-types">
                                 @foreach ($types as $type)
                                 <option value="{{ $type }}">
@@ -87,19 +87,19 @@
                             </datalist>
 
                             <label>Title</label>
-                            <input type="text" name="title" value="{{ $layout->title }}" maxlength="255" required/>
+                            <input type="text" name="title" value="{{ $layout->title }}" maxlength="255" required />
 
                             <label>Link</label>
-                            <input type="text" name="link" value="{{ $layout->link }}" maxlength="60000"/>
+                            <input type="text" name="link" value="{{ $layout->link }}" maxlength="60000" />
 
                             <label>HTML</label>
-                            <input type="text" name="html" value="{{ $layout->html }}" maxlength="60000"/>
+                            <input type="text" name="html" value="{{ $layout->html }}" maxlength="60000" />
 
                             <label>CSS</label>
-                            <input type="text" name="css" value="{{ $layout->css }}" maxlength="60000"/>
+                            <input type="text" name="css" value="{{ $layout->css }}" maxlength="60000" />
 
                             <label>JS</label>
-                            <input type="text" name="js" value="{{ $layout->js }}" maxlength="60000"/>
+                            <input type="text" name="js" value="{{ $layout->js }}" maxlength="60000" />
 
                             <button type="submit" class="action-btn">Lưu</button>
                         </form>
@@ -110,10 +110,10 @@
         </table>
         <!-- PHÂN TRANG -->
         <div>
-           
+            {{ $layouts->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-           
+            <span>Đang hiển thị {{ $layouts->count() }} layout, tổng cộng {{ $layouts->total() }} layout</span>
         </div>
 
     </div>
@@ -126,11 +126,11 @@
                 @csrf
                 @auth
                 <label>Author</label>
-                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required/>
+                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required />
                 @endauth
 
                 <label>layout Name</label>
-                <input type="text" name="layout_name" list="layouts_name" value="{{ old('layout_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required/>
+                <input type="text" name="layout_name" list="layouts_name" value="{{ old('layout_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required />
                 <datalist id="layouts_name">
                     @foreach ($layouts_name as $layout_name)
                     <option value="{{ $layout_name }}">
@@ -138,7 +138,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="layout-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required/>
+                <input type="text" list="layout-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required />
                 <datalist id="layout-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,19 +146,19 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required/>
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required />
 
                 <label>Link</label>
-                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000"/>
+                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000" />
 
                 <label>HTML</label>
-                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000"/>
+                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000" />
 
                 <label>CSS</label>
-                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000"/>
+                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000" />
 
                 <label>JS</label>
-                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000"/>
+                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
                 <button type="submit" class="action-btn">Lưu</button>
             </form>
