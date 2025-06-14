@@ -8,11 +8,20 @@ use Illuminate\Http\Request;
 class FormController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $forms = Form::all();
+        $query = Form::query();
+
+        if($request->has('search') && $request->search !=''){
+            $query->where('form_name', 'like', '%' . $request->search . '%');
+        }
+        $forms = $query->orderBy('created_at','desc')->paginate(1);
         $forms_name = Form::select('form_name')->distinct()->pluck('form_name');
         $types = Form::select('type')->distinct()->pluck('type');
+
+         if($request->has('search') && $request->search !='' && $forms->isEmpty()){
+             return redirect()->route('forms.index')->with('warning', 'Không tìm thấy form nào với từ khoá "' . $request->search . '"');
+        }
         return view('admin.management_list.form', compact('forms', 'types', 'forms_name'));
     }
 
