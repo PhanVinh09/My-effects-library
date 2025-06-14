@@ -76,5 +76,9 @@ class LayoutController extends Controller
         return redirect()->route('layouts.index')->with('success', 'Cập nhật Layout thành công');
     }
 
-    public function destroy($id) {}
+    public function destroy($id) {
+        $layout = Layout::findOrFail($id);
+        $layout->delete();
+        return redirect()->route('layouts.index')->with('success', 'Xoá Layout thành công');
+    }
 }
