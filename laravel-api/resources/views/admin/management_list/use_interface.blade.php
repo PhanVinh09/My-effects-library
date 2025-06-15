@@ -109,7 +109,12 @@
             </tbody>
         </table>
         <!-- PHÂN TRANG -->
-        
+        <div>
+            {{ $useInterfaces->appends(request()->query())->links('pagination::bootstrap-5') }}
+        </div>
+        <div class="status-summary">
+            <span>Đang hiển thị {{ $useInterfaces->count() }} ui, tổng cộng {{ $useInterfaces->total() }} ui</span>
+        </div>
 
     </div>
     <!-- Add Modal -->

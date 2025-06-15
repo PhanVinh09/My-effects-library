@@ -8,11 +8,18 @@ use Illuminate\Http\Request;
 class UseInterfaceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $query = UseInterface::query();
+        if($request->has('search') && $request->search != ''){
+            $query->where('ui_name', 'like', '%' . $request->search . '%');
+        }
         $uis_name = UseInterface::select('ui_name')->distinct()->pluck('ui_name');
         $types = UseInterface::select('type')->distinct()->pluck('type');
-        $useInterfaces = UseInterface::all();
+        $useInterfaces = $query->orderBy('created_at','desc')->paginate(10);
+        if($request->has('search') && $request->search != '' && $useInterfaces->IsEmpty()){
+            return redirect()->route('useInterfaces.index')->with('warning', 'Không tìm thấy useInterface nào với từ khoá "' . $request->search . '"');
+        }
         return view('admin.management_list.use_interface', compact('useInterfaces', 'uis_name', 'types'));
     }
 
