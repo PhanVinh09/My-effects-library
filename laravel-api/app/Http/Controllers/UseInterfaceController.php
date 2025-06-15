@@ -78,5 +78,9 @@ class UseInterfaceController extends Controller
         return redirect()->route('useInterfaces.index')->with('success', 'Cập nhật useInterfaces thành công!!');
     }
 
-    public function destroy(UseInterface $useInterface) {}
+    public function destroy($id) {
+        $useInterfaces = UseInterface::findOrFail($id);
+        $useInterfaces->delete();
+        return redirect()->route('useInterfaces.index')->with('success', 'Xoá useInterfaces thành công!!');
+    }
 }
