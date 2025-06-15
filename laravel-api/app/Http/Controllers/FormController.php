@@ -15,7 +15,7 @@ class FormController extends Controller
         if($request->has('search') && $request->search !=''){
             $query->where('form_name', 'like', '%' . $request->search . '%');
         }
-        $forms = $query->orderBy('created_at','desc')->paginate(1);
+        $forms = $query->orderBy('created_at','desc')->paginate(10);
         $forms_name = Form::select('form_name')->distinct()->pluck('form_name');
         $types = Form::select('type')->distinct()->pluck('type');
 

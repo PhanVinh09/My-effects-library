@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EffectController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\UseInterfaceController;
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,12 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('/forms/add', [FormController::class, 'store'])->name('forms.store');
     Route::put('/forms/{id}', [FormController::class, 'update'])->name('forms.update');
     Route::delete('/forms/{id}', [FormController::class, 'destroy'])->name('forms.destroy');
+
+    // CRUD cho UI
+    Route::get('/admin/useInterfaces', [UseInterfaceController::class, 'index'])->name('useInterfaces.index');
+    Route::post('/useInterfaces/add', [UseInterfaceController::class, 'store'])->name('useInterfaces.store');
+    Route::put('/useInterfaces/{id}', [UseInterfaceController::class, 'update'])->name('useInterfaces.update');
+    Route::delete('/useInterfaces/{id}', [UseInterfaceController::class, 'destroy'])->name('useInterfaces.destroy');
 
     // CRUD cho User
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
