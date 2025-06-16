@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Effect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EffectController extends Controller
 {
@@ -20,6 +21,11 @@ class EffectController extends Controller
 
         //tìm thấy
         if ($request->has('search') && $request->search != '') {
+            $search = trim($request->search);
+            
+            if(Str::length($search) > 100){
+                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+            }
             $query->where('Effect_name', 'like', '%' . $request->search . '%');
         }
         $effects = $query->orderBy('id_effect', 'desc')->paginate(10);

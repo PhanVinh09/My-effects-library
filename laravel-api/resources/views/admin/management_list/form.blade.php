@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm form</a>
             <div class="search-bar">
                 <form action="{{ route('forms.index') }}" method="GET">
-                    <input type="text" list="forms_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm form Name..." />
+                    <input type="text" list="forms_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm form Name..." maxlength="100"/>
                     <datalist id="forms_name">
                         @foreach ($forms_name as $form_name)
                         <option value="{{ $form_name }}">

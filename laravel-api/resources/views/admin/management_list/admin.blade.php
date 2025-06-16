@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm Người Quản Lý</a>
             <div class="search-bar">
                 <form action="{{ route('admins.index') }}" method="GET">
-                    <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm Name..." />
+                    <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm Name..." maxlength="100"/>
                     <button type="submit"><i class="bi bi-search"></i> Tìm</button>
                 </form>
             </div>

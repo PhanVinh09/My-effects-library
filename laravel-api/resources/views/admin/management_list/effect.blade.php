@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm hiệu ứng</a>
             <div class="search-bar">
                 <form action="{{ route('effects.index') }}" method="GET">
-                    <input type="text" list="effects_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm Effect Name..." />
+                    <input type="text" list="effects_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm Effect Name..." maxlength="100"/>
                     <datalist id="effects_name">
                         @foreach ($effects_name as $effect_name)
                         <option value="{{ $effect_name }}">

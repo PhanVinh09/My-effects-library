@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -13,6 +14,11 @@ class FormController extends Controller
         $query = Form::query();
 
         if($request->has('search') && $request->search !=''){
+            $search = trim($request->search);
+            
+            if(Str::length($search) > 100){
+                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+            }
             $query->where('form_name', 'like', '%' . $request->search . '%');
         }
         $forms = $query->orderBy('created_at','desc')->paginate(10);

@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm Layout</a>
             <div class="search-bar">
                 <form action="{{ route('layouts.index') }}" method="GET">
-                    <input type="text" list="layouts_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm layout Name..." />
+                    <input type="text" list="layouts_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm layout Name..." maxlength="100"/>
                     <datalist id="layouts_name">
                         @foreach ($layouts_name as $layout_name)
                         <option value="{{ $layout_name }}">

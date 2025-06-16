@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm UI</a>
             <div class="search-bar">
                 <form action="{{ route('useInterfaces.index') }}" method="GET">
-                    <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui Name..." />
+                    <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui name..." maxlength="100"/>
                     <datalist id="ui_name">
                         @foreach ($useInterfaces as $ui_name)
                         <option value="{{ $ui_name }}">

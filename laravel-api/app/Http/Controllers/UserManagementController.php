@@ -6,22 +6,27 @@ use App\Models\User_Management;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isEmpty;
 
 class UserManagementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $query = User_Management::query();
 
         $query->where('role', 'user');
-        
+
         if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $search = trim($request->search);
+
+            if (Str::length($search) > 100) {
+                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+            }
+    
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(10);

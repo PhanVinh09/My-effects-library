@@ -6,6 +6,7 @@ use App\Models\admin_Management;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminManagementController extends Controller
 {
@@ -16,7 +17,13 @@ class AdminManagementController extends Controller
         $query->where('role', 'admin');
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $search = trim($request->search);
+
+            if (Str::length($search) > 100) {
+                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+            }
+
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
         $admins = $query->orderBy('created_at', 'desc')->paginate(10);
