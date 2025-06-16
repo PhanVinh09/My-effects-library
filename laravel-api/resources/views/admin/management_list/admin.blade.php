@@ -54,7 +54,7 @@
                 <div id="editModal-{{$admin->id}}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{$admin->id}}">&times;</span>
-                        <h2>Sửa hiệu ứng</h2>
+                        <h2>Sửa người quản lý </h2>
                         <form action="{{route('admins.update', $admin->id)}}" method="POST">
                             @csrf
                             @method('PUT')
@@ -82,7 +82,7 @@
 
                             <label>Mã xác thực:</label>
                             <input type="password" name="code" required placeholder="Nhập mã ...">
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm hiệu ứng mới</h2>
+            <h2>Thêm người quản lý mới</h2>
             <form action="{{route('admins.store')}}" method="POST">
                 @csrf
                 <label>Name</label>
@@ -125,7 +125,7 @@
                     <option value="VIP">VIP</option>
                 </select>
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>

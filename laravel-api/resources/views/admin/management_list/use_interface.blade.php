@@ -4,7 +4,7 @@
 <div class="content">
     <div class="table-container">
         <div class="table-header">
-            <a class="btn-add" href="#">Thêm hiệu ứng</a>
+            <a class="btn-add" href="#">Thêm UI</a>
             <div class="search-bar">
                 <form action="{{ route('useInterfaces.index') }}" method="GET">
                     <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui Name..." />
@@ -62,7 +62,7 @@
                 <div id="editModal-{{ $ui->id_UI }}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{ $ui->id_UI }}">&times;</span>
-                        <h2>Sửa hiệu ứng</h2>
+                        <h2>Sửa Use Interface</h2>
                         <form action="{{ route('useInterfaces.update', $ui->id_UI) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -101,7 +101,7 @@
                             <label>JS</label>
                             <input type="text" name="js" value="{{ $ui->js }}" maxlength="60000" />
 
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             {{ $useInterfaces->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-            <span>Đang hiển thị {{ $useInterfaces->count() }} ui, tổng cộng {{ $useInterfaces->total() }} ui</span>
+            <span>Đang hiển thị {{ $useInterfaces->count() }} dữ liệu, tổng cộng {{ $useInterfaces->total() }} dữ liệu</span>
         </div>
 
     </div>
@@ -121,7 +121,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm hiệu ứng mới</h2>
+            <h2>Thêm Use Interface mới</h2>
             <form action="{{ route('useInterfaces.store') }}" method="POST">
                 @csrf
                 @auth
@@ -130,7 +130,7 @@
                 @endauth
 
                 <label>UI Name</label>
-                <input type="text" name="ui_name" list="useInterfaces_name" value="{{ old('ui_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required />
+                <input type="text" name="ui_name" list="useInterfaces_name" value="{{ old('ui_name') }}" placeholder="Tên UI..." maxlength="100" required />
                 <datalist id="useInterfaces_name">
                     @foreach ($uis_name as $ui_name)
                     <option value="{{ $ui_name }}">
@@ -138,7 +138,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="ui-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required />
+                <input type="text" list="ui-types" name="type" value="{{ old('type') }}" placeholder="UI cho ..." maxlength="100" required />
                 <datalist id="ui-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,7 +146,7 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required />
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả UI..." maxlength="255" required />
 
                 <label>Link</label>
                 <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000" />
@@ -160,7 +160,7 @@
                 <label>JS</label>
                 <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>

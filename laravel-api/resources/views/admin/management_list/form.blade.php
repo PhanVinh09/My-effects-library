@@ -62,7 +62,7 @@
                 <div id="editModal-{{ $form->id_form }}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{ $form->id_form }}">&times;</span>
-                        <h2>Sửa hiệu ứng</h2>
+                        <h2>Sửa form</h2>
                         <form action="{{ route('forms.update', $form->id_form) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -101,7 +101,7 @@
                             <label>JS</label>
                             <input type="text" name="js" value="{{ $form->js }}" maxlength="60000"/>
 
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             {{ $forms->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-            <span>Đang hiển thị {{ $forms->count() }} forms, tổng cộng {{ $forms->total() }} forms</span>
+            <span>Đang hiển thị {{ $forms->count() }} dữ liệu, tổng cộng {{ $forms->total() }} dữ liệu</span>
         </div>
 
     </div>
@@ -121,7 +121,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm hiệu ứng mới</h2>
+            <h2>Thêm form mới</h2>
             <form action="{{ route('forms.store') }}" method="POST">
                 @csrf
                 @auth
@@ -130,7 +130,7 @@
                 @endauth
 
                 <label>Form Name</label>
-                <input type="text" name="form_name" list="forms_name" value="{{ old('form_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required/>
+                <input type="text" name="form_name" list="forms_name" value="{{ old('form_name') }}" placeholder="Tên form..." maxlength="100" required/>
                 <datalist id="forms_name">
                     @foreach ($forms_name as $form_name)
                     <option value="{{ $form_name }}">
@@ -138,7 +138,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="form-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required/>
+                <input type="text" list="form-types" name="type" value="{{ old('type') }}" placeholder="Form cho ..." maxlength="100" required/>
                 <datalist id="form-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,7 +146,7 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required/>
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả form..." maxlength="255" required/>
 
                 <label>Link</label>
                 <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000"/>
@@ -160,7 +160,7 @@
                 <label>JS</label>
                 <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000"/>
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>

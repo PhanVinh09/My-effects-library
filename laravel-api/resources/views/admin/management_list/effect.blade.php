@@ -101,7 +101,7 @@
                             <label>JS</label>
                             <input type="text" name="js" value="{{ $effect->js }}" maxlength="60000"/>
 
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             {{ $effects->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-            <span>Đang hiển thị {{ $effects->count() }} hiệu ứng, tổng cộng {{ $effects->total() }} hiệu ứng</span>
+            <span>Đang hiển thị {{ $effects->count() }} dữ liệu, tổng cộng {{ $effects->total() }} dữ liệu</span>
         </div>
 
     </div>
@@ -160,7 +160,7 @@
                 <label>JS</label>
                 <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000"/>
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>

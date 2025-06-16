@@ -51,7 +51,7 @@
                 <div id="editModal-{{$user->id}}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{$user->id}}">&times;</span>
-                        <h2>Sửa hiệu ứng</h2>
+                        <h2>Sửa người dùng</h2>
                         <form action="{{route('users.update', $user->id)}}" method="POST">
                             @csrf
                             @method('PUT')
@@ -76,7 +76,7 @@
                                 <option value="VIP" {{$user->membership_level === 'VIP' ? 'selected' : ''}}>VIP</option>
                                 <option value="Normal" {{$user->membership_level === 'Normal' ? 'selected' : ''}}>Normal</option>
                             </select>
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm hiệu ứng mới</h2>
+            <h2>Thêm người dùng mới</h2>
             <form action="{{route('users.store')}}" method="POST">
                 @csrf
                 <label>Name</label>
@@ -120,7 +120,7 @@
                 </select>
 
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>

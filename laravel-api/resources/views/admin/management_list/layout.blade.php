@@ -4,7 +4,7 @@
 <div class="content">
     <div class="table-container">
         <div class="table-header">
-            <a class="btn-add" href="#">Thêm hiệu ứng</a>
+            <a class="btn-add" href="#">Thêm Layout</a>
             <div class="search-bar">
                 <form action="{{ route('layouts.index') }}" method="GET">
                     <input type="text" list="layouts_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm layout Name..." />
@@ -62,7 +62,7 @@
                 <div id="editModal-{{ $layout->id_layout }}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{ $layout->id_layout }}">&times;</span>
-                        <h2>Sửa hiệu ứng</h2>
+                        <h2>Sửa layout</h2>
                         <form action="{{ route('layouts.update', $layout->id_layout) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -101,7 +101,7 @@
                             <label>JS</label>
                             <input type="text" name="js" value="{{ $layout->js }}" maxlength="60000" />
 
-                            <button type="submit" class="action-btn">Lưu</button>
+                            <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             {{ $layouts->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-            <span>Đang hiển thị {{ $layouts->count() }} layout, tổng cộng {{ $layouts->total() }} layout</span>
+            <span>Đang hiển thị {{ $layouts->count() }} dữ liệu, tổng cộng {{ $layouts->total() }} dữ liệu</span>
         </div>
 
     </div>
@@ -121,7 +121,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm hiệu ứng mới</h2>
+            <h2>Thêm layout mới</h2>
             <form action="{{ route('layouts.store') }}" method="POST">
                 @csrf
                 @auth
@@ -130,7 +130,7 @@
                 @endauth
 
                 <label>layout Name</label>
-                <input type="text" name="layout_name" list="layouts_name" value="{{ old('layout_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required />
+                <input type="text" name="layout_name" list="layouts_name" value="{{ old('layout_name') }}" placeholder="Tên layout..." maxlength="100" required />
                 <datalist id="layouts_name">
                     @foreach ($layouts_name as $layout_name)
                     <option value="{{ $layout_name }}">
@@ -138,7 +138,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="layout-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required />
+                <input type="text" list="layout-types" name="type" value="{{ old('type') }}" placeholder="Layout cho ..." maxlength="100" required />
                 <datalist id="layout-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,7 +146,7 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required />
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả layout..." maxlength="255" required />
 
                 <label>Link</label>
                 <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000" />
@@ -160,7 +160,7 @@
                 <label>JS</label>
                 <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
-                <button type="submit" class="action-btn">Lưu</button>
+                <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>
