@@ -24,6 +24,16 @@
     });
   </script>
   @endif
+  @if (session('error'))
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi Rồi !',
+      text: '{{ session("error") }}',
+      confirmButtonText: 'OK'
+    });
+  </script>
+  @endif
   <header>
     <nav>
       <div class="nav-logo"><a href="#">PTV</a></div>

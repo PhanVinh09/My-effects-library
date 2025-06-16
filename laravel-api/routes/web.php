@@ -74,3 +74,9 @@ Route::post('/logout', function () {
 Route::prefix('api')->group(function () {
     Route::get('/effects', [EffectController::class, 'apiIndex']);
 });
+
+
+// Xử lý sai url
+Route::fallback(function () {
+    return redirect()->back()->with('error', 'Trang không tồn tại!');
+});
