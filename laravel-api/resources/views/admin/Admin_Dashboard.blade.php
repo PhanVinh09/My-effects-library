@@ -79,7 +79,7 @@
         <div class="box">
             <div class="box-content">
                 <div class="title">Người Dùng</div>
-                <div class="quantity">Số Lượng</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $userCount }}</span></div>
                 <div class="detail"><a href="{{route('users.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
@@ -89,7 +89,7 @@
         <div class="box">
             <div class="box-content">
                 <div class="title">Quản Trị Viên</div>
-                <div class="quantity">Số Lượng</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $managerCount }}</span></div>
                 <div class="detail"><a href="">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
@@ -99,7 +99,7 @@
         <div class="box">
             <div class="box-content">
                 <div class="title">Effect</div>
-                <div class="quantity">Số Lượng</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $effectCount }}</span></div>
                 <div class="detail"><a href="{{route('effects.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
@@ -109,7 +109,7 @@
         <div class="box">
             <div class="box-content">
                 <div class="title">Layout</div>
-                <div class="quantity">Số Lượng</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $layoutCount }}</span></div>
                 <div class="detail"><a href="{{route('layouts.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
@@ -118,24 +118,23 @@
         </div>
         <div class="box">
             <div class="box-content">
-                <div class="title">Use Interface</div>
-                <div class="quantity">Số Lượng</div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
-            </div>
-            <div class="box-icon">
-                <i class="bi bi-window"></i>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-content">
                 <div class="title">Form</div>
-                <div class="quantity">Số Lượng</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $formCount }}</span></div>
                 <div class="detail"><a href="">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-input-cursor"></i>
             </div>
         </div>
-
+        <div class="box">
+            <div class="box-content">
+                <div class="title">Use Interface</div>
+                <div class="quantity">Số Lượng <span style="color: red;">{{ $uiCount }}</span></div>
+                <div class="detail"><a href="">Chi Tiết »</a></div>
+            </div>
+            <div class="box-icon">
+                <i class="bi bi-window"></i>
+            </div>
+        </div>
     </div>
 </div>

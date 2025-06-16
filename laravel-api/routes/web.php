@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\EffectController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormController;
@@ -17,7 +19,7 @@ use App\Http\Controllers\AdminManagementController;
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::view('/admin', 'admin.admin_index')->name('admin.index');
-    Route::view('/admin/dashboard', 'admin.admin_dashboard')->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // CRUD cho Effect
     Route::get('/admin/effects', [EffectController::class, 'index'])->name('effects.index');
