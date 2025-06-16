@@ -112,8 +112,12 @@ class FormController extends Controller
 
     public function destroy($id)
     {
-        $forms = Form::findOrFail($id);
-        $forms->delete();
-        return redirect()->route('forms.index')->with('success', 'Xoá form thành công');
+        try {
+            $forms = Form::findOrFail($id);
+            $forms->delete();
+            return redirect()->route('forms.index')->with('success', 'Xoá form thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('forms.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 }

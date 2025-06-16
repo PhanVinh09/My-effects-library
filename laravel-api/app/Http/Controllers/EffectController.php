@@ -113,7 +113,7 @@ class EffectController extends Controller
                 return redirect()->route('effects.index')->with('error', 'Cập nhật không thành công. Dữ liệu đã bị thay đổi bởi người khác.');
             }
             unset($validated['updated_at']);
-            
+
             $effect->update($validated);
             return redirect()->route('effects.index')->with('success', 'Cập nhật hiệu ứng thành công');
         } catch (ModelNotFoundException $e) {
@@ -123,8 +123,12 @@ class EffectController extends Controller
 
     public function destroy($id)
     {
-        $effect = Effect::FindOrFail($id);
-        $effect->delete();
-        return redirect()->route('effects.index')->with('success', 'Xoá hiệu ứng thành công');
+        try {
+            $effect = Effect::FindOrFail($id);
+            $effect->delete();
+            return redirect()->route('effects.index')->with('success', 'Xoá hiệu ứng thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('effects.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 }

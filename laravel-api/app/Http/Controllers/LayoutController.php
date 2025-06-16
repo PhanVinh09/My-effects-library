@@ -117,8 +117,12 @@ class LayoutController extends Controller
 
     public function destroy($id)
     {
-        $layout = Layout::findOrFail($id);
-        $layout->delete();
-        return redirect()->route('layouts.index')->with('success', 'Xoá Layout thành công');
+        try {
+            $layout = Layout::findOrFail($id);
+            $layout->delete();
+            return redirect()->route('layouts.index')->with('success', 'Xoá Layout thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('layouts.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 }

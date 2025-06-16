@@ -105,8 +105,12 @@ class UserManagementController extends Controller
 
     public function destroy($id)
     {
-        $user_Management = User_Management::findOrFail($id);
-        $user_Management->delete();
-        return redirect()->route('users.index')->with('success', 'Xoá người dùng thành công');
+        try {
+            $user_Management = User_Management::findOrFail($id);
+            $user_Management->delete();
+            return redirect()->route('users.index')->with('success', 'Xoá người dùng thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('users.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 }

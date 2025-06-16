@@ -109,8 +109,12 @@ class UseInterfaceController extends Controller
 
     public function destroy($id)
     {
-        $useInterfaces = UseInterface::findOrFail($id);
-        $useInterfaces->delete();
-        return redirect()->route('useInterfaces.index')->with('success', 'Xoá useInterfaces thành công!!');
+        try {
+            $useInterfaces = UseInterface::findOrFail($id);
+            $useInterfaces->delete();
+            return redirect()->route('useInterfaces.index')->with('success', 'Xoá useInterfaces thành công!!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('useInterfaces.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 }
