@@ -27,6 +27,12 @@ class LayoutController extends Controller
         }
 
         $layouts = $query->orderBy('created_at', 'desc')->paginate(10);
+        $page = $request->query('page');
+        if(!is_null($page)){
+            if(!ctype_digit($page) || $page < 1 || $page > $layouts->lastPage()){
+                return redirect()->route('layouts.index')->withInput()->with('error', 'Trang không tồn tại!');
+            }
+        }
         $layouts_name = Layout::select('layout_name')->distinct()->pluck('layout_name');
         $types = Layout::select('type')->distinct()->pluck('type');
 

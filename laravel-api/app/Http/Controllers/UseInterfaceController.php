@@ -22,6 +22,13 @@ class UseInterfaceController extends Controller
         $uis_name = UseInterface::select('ui_name')->distinct()->pluck('ui_name');
         $types = UseInterface::select('type')->distinct()->pluck('type');
         $useInterfaces = $query->orderBy('created_at','desc')->paginate(10);
+        $page = $request->query('page');
+        if(!is_null($page)){
+            if(!ctype_digit($page) || $page < 1 || $page > $useInterfaces->lastPage()){
+                return redirect()->route('useInterfaces.index')->withInput()->with('error', 'Trang không tồn tại!');
+            }
+        }
+
         if($request->has('search') && $request->search != '' && $useInterfaces->IsEmpty()){
             return redirect()->route('useInterfaces.index')->with('warning', 'Không tìm thấy useInterface nào với từ khoá "' . $request->search . '"');
         }

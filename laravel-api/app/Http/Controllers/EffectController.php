@@ -29,6 +29,12 @@ class EffectController extends Controller
             $query->where('Effect_name', 'like', '%' . $request->search . '%');
         }
         $effects = $query->orderBy('id_effect', 'desc')->paginate(10);
+        $page = $request->query('page');
+        if(!is_null($page)){
+            if(!ctype_digit($page) || $page < 1 || $page > $effects->lastPage()){
+                return redirect()->route('effects.index')->withInput()->with('error', 'Trang không tồn tại!');
+            }
+        }
         $effects_name = Effect::select('effect_name')->distinct()->pluck('effect_name');
         $types = Effect::select('type')->distinct()->pluck('type');
 

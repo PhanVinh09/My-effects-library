@@ -27,6 +27,12 @@ class AdminManagementController extends Controller
         }
 
         $admins = $query->orderBy('created_at', 'desc')->paginate(10);
+        $page = $request->query('page');
+        if (!is_null($page)) {
+            if (!ctype_digit($page) || $page < 1 || $page > $admins->lastPage()) {
+                return redirect()->route('admins.index')->withInput()->with('error', 'Trang không tồn tại!');
+            }
+        }
         if ($request->has('search') && $request->search != '' && $admins->isEmpty()) {
             return redirect()->route('admins.index')->with('warning', 'Không tìm thấy admin nào với có tên là "' . $request->search . '"');
         }

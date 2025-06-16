@@ -25,11 +25,18 @@ class UserManagementController extends Controller
             if (Str::length($search) > 100) {
                 return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
-    
+
             $query->where('name', 'like', '%' . $search . '%');
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        $page = $request->query('page');
+        if (!is_null($page)) {
+            if (!ctype_digit($page) || $page < 1 || $page > $users->lastPage()) {
+                return redirect()->route('users.index')->withInput()->with('error', 'Trang không tồn tại!');
+            }
+        }
+
         if ($request->has('search') && $request->search != '' && $users->isEmpty()) {
             return redirect()->route('users.index')->with('warning', 'Không tìm thấy người dùng nào với có tên là "' . $request->search . '"');
         }
