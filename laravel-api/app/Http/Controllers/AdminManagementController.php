@@ -20,7 +20,7 @@ class AdminManagementController extends Controller
             $search = trim($request->search);
 
             if (Str::length($search) > 100) {
-                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+                return redirect()->route('admins.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
 
             $query->where('name', 'like', '%' . $search . '%');

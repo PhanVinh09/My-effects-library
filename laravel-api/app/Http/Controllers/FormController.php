@@ -17,7 +17,7 @@ class FormController extends Controller
             $search = trim($request->search);
             
             if(Str::length($search) > 100){
-                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+                return redirect()->route('forms.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
             $query->where('form_name', 'like', '%' . $request->search . '%');
         }

@@ -24,7 +24,7 @@ class EffectController extends Controller
             $search = trim($request->search);
             
             if(Str::length($search) > 100){
-                return redirect()->route('users.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
+                return redirect()->route('effects.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
             $query->where('Effect_name', 'like', '%' . $request->search . '%');
         }
