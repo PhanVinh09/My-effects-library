@@ -59,6 +59,7 @@
                             @csrf
                             @method('PUT')
                             <input type="text" name="id" value="{{$admin->id}}" maxlength="100" hidden />
+                            <input type="hidden" name="updated_at" value="{{ $admin->updated_at }}">
                             <label>Name</label>
                             <input type="text" name="name" value="{{$admin->name}}" maxlength="100" />
 

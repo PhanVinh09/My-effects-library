@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm Layout</a>
             <div class="search-bar">
                 <form action="{{ route('layouts.index') }}" method="GET">
-                    <input type="text" list="layouts_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm layout Name..." maxlength="100"/>
+                    <input type="text" list="layouts_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm layout Name..." maxlength="100" />
                     <datalist id="layouts_name">
                         @foreach ($layouts_name as $layout_name)
                         <option value="{{ $layout_name }}">
@@ -66,7 +66,8 @@
                         <form action="{{ route('layouts.update', $layout->id_layout) }}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            <input type="text" name="id" value="{{$layout->id_layout}}" maxlength="100" hidden />
+                            <input type="hidden" name="updated_at" value="{{ $layout->updated_at}}">
                             <label>Author</label>
                             <input type="text" name="author" value="{{ $layout->author }}" maxlength="100" required />
 

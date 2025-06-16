@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\admin_Management;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -79,6 +80,7 @@ class AdminManagementController extends Controller
                 'password' => 'required|string|min:6',
                 'role' => 'required|string|in:admin,user',
                 'membership_level' => 'required|string|in:VIP,Normal',
+                'updated_at' => 'required'
             ], [
                 'name.required' => 'Name không được bỏ trống',
                 'name.max' => 'Name tối đa là 100 ký tự',
@@ -92,10 +94,17 @@ class AdminManagementController extends Controller
                 'membership_level.in' => 'membership_level không tồn tại',
             ]);
             $admin_Management = admin_Management::findOrFail($id);
+            
+            //lost update
+            $clientTimestamps = Carbon::parse($validated['updated_at']);
+            if(!$admin_Management->updated_at->equalTo($clientTimestamps)){
+                return redirect()->route('admins.index')->with('error', 'Cập nhật không thành công. Dữ liệu đã bị thay đổi bởi người khác.');
+            }
+
             $admin_Management->update($validated);
             return redirect()->route('admins.index')->with('success', 'Cập nhật admin thành công');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admins.index')->with('error', 'Cập nhật admin không thành công');
+            return redirect()->route('admins.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
         }
     }
 

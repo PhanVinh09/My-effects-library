@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm form</a>
             <div class="search-bar">
                 <form action="{{ route('forms.index') }}" method="GET">
-                    <input type="text" list="forms_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm form Name..." maxlength="100"/>
+                    <input type="text" list="forms_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm form Name..." maxlength="100" />
                     <datalist id="forms_name">
                         @foreach ($forms_name as $form_name)
                         <option value="{{ $form_name }}">
@@ -66,12 +66,14 @@
                         <form action="{{ route('forms.update', $form->id_form) }}" method="POST">
                             @csrf
                             @method('PUT')
+                            <input type="text" name="id" value="{{$form->id_form}}" maxlength="100" hidden />
+                            <input type="hidden" name="updated_at" value="{{ $form->updated_at}}">
 
                             <label>Author</label>
                             <input type="text" name="author" value="{{ $form->author }}" maxlength="100" required />
 
                             <label>Form Name</label>
-                            <input type="text" list="forms_name" name="form_name" value="{{ $form->form_name }}" maxlength="100" required  />
+                            <input type="text" list="forms_name" name="form_name" value="{{ $form->form_name }}" maxlength="100" required />
                             <datalist id="forms_name">
                                 @foreach ($forms_name as $form_name)
                                 <option value="{{ $form_name }}">
@@ -79,7 +81,7 @@
                             </datalist>
 
                             <label>Type</label>
-                            <input type="text" list="form-types" name="type" value="{{ $form->type }}" maxlength="100" required  />
+                            <input type="text" list="form-types" name="type" value="{{ $form->type }}" maxlength="100" required />
                             <datalist id="form-types">
                                 @foreach ($types as $type)
                                 <option value="{{ $type }}">
@@ -87,19 +89,19 @@
                             </datalist>
 
                             <label>Title</label>
-                            <input type="text" name="title" value="{{ $form->title }}" maxlength="255" required/>
+                            <input type="text" name="title" value="{{ $form->title }}" maxlength="255" required />
 
                             <label>Link</label>
-                            <input type="text" name="link" value="{{ $form->link }}" maxlength="60000"/>
+                            <input type="text" name="link" value="{{ $form->link }}" maxlength="60000" />
 
                             <label>HTML</label>
-                            <input type="text" name="html" value="{{ $form->html }}" maxlength="60000"/>
+                            <input type="text" name="html" value="{{ $form->html }}" maxlength="60000" />
 
                             <label>CSS</label>
-                            <input type="text" name="css" value="{{ $form->css }}" maxlength="60000"/>
+                            <input type="text" name="css" value="{{ $form->css }}" maxlength="60000" />
 
                             <label>JS</label>
-                            <input type="text" name="js" value="{{ $form->js }}" maxlength="60000"/>
+                            <input type="text" name="js" value="{{ $form->js }}" maxlength="60000" />
 
                             <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
@@ -126,11 +128,11 @@
                 @csrf
                 @auth
                 <label>Author</label>
-                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required/>
+                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required />
                 @endauth
 
                 <label>Form Name</label>
-                <input type="text" name="form_name" list="forms_name" value="{{ old('form_name') }}" placeholder="Tên form..." maxlength="100" required/>
+                <input type="text" name="form_name" list="forms_name" value="{{ old('form_name') }}" placeholder="Tên form..." maxlength="100" required />
                 <datalist id="forms_name">
                     @foreach ($forms_name as $form_name)
                     <option value="{{ $form_name }}">
@@ -138,7 +140,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="form-types" name="type" value="{{ old('type') }}" placeholder="Form cho ..." maxlength="100" required/>
+                <input type="text" list="form-types" name="type" value="{{ old('type') }}" placeholder="Form cho ..." maxlength="100" required />
                 <datalist id="form-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,19 +148,19 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả form..." maxlength="255" required/>
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả form..." maxlength="255" required />
 
                 <label>Link</label>
-                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000"/>
+                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000" />
 
                 <label>HTML</label>
-                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000"/>
+                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000" />
 
                 <label>CSS</label>
-                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000"/>
+                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000" />
 
                 <label>JS</label>
-                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000"/>
+                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
                 <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>

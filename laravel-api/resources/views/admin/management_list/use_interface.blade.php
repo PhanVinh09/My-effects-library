@@ -7,11 +7,11 @@
             <a class="btn-add" href="#">Thêm UI</a>
             <div class="search-bar">
                 <form action="{{ route('useInterfaces.index') }}" method="GET">
-                    <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui name..." maxlength="100"/>
+                    <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui name..." maxlength="100" />
                     <datalist id="ui_name">
                         @foreach ($useInterfaces as $ui_name)
                         <option value="{{ $ui_name }}">
-                        @endforeach
+                            @endforeach
                     </datalist>
                     <button type="submit"><i class="bi bi-search"></i> Tìm</button>
                 </form>
@@ -66,7 +66,8 @@
                         <form action="{{ route('useInterfaces.update', $ui->id_UI) }}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            <input type="text" name="id" value="{{$ui->id_UI}}" maxlength="100" hidden />
+                            <input type="hidden" name="updated_at" value="{{ $ui->updated_at}}">
                             <label>Author</label>
                             <input type="text" name="author" value="{{ $ui->author }}" maxlength="100" required />
 

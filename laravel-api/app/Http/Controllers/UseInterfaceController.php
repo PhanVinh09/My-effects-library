@@ -3,33 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\UseInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+
 class UseInterfaceController extends Controller
 {
 
     public function index(Request $request)
     {
         $query = UseInterface::query();
-        if($request->has('search') && $request->search != ''){
+        if ($request->has('search') && $request->search != '') {
             $search = trim($request->search);
-            
-            if(Str::length($search) > 100){
+
+            if (Str::length($search) > 100) {
                 return redirect()->route('useInterfaces.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
             $query->where('ui_name', 'like', '%' . $request->search . '%');
         }
         $uis_name = UseInterface::select('ui_name')->distinct()->pluck('ui_name');
         $types = UseInterface::select('type')->distinct()->pluck('type');
-        $useInterfaces = $query->orderBy('created_at','desc')->paginate(10);
+        $useInterfaces = $query->orderBy('created_at', 'desc')->paginate(10);
         $page = $request->query('page');
-        if(!is_null($page)){
-            if(!ctype_digit($page) || $page < 1 || $page > $useInterfaces->lastPage()){
+        if (!is_null($page)) {
+            if (!ctype_digit($page) || $page < 1 || $page > $useInterfaces->lastPage()) {
                 return redirect()->route('useInterfaces.index')->withInput()->with('error', 'Trang không tồn tại!');
             }
         }
 
-        if($request->has('search') && $request->search != '' && $useInterfaces->IsEmpty()){
+        if ($request->has('search') && $request->search != '' && $useInterfaces->IsEmpty()) {
             return redirect()->route('useInterfaces.index')->with('warning', 'Không tìm thấy useInterface nào với từ khoá "' . $request->search . '"');
         }
         return view('admin.management_list.use_interface', compact('useInterfaces', 'uis_name', 'types'));
@@ -47,15 +50,13 @@ class UseInterfaceController extends Controller
             'css' => 'nullable|string|max:60000',
             'js' => 'nullable|string|max:60000'
         ], [
+            'author.required' => 'Author tối đa là 100 ký tự',
             'author.max' => 'Author tối đa là 100 ký tự',
             'ui_name.required' => 'UI_name không được để trống',
             'ui_name.max' => 'UI_name tối đa là 100 ký tự',
             'type.required' => 'Type không được để trống',
             'type.max' => 'Type tối đa là 100 ký tự',
             'title.max' => 'title tối đa là 255 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
             'link.max' => 'Link tối đa là 60000 ký tự',
             'html.max' => 'HTML tối đa là 60000 ký tự',
             'css.max' => 'CSS tối đa là 60000 ký tự',
@@ -67,37 +68,47 @@ class UseInterfaceController extends Controller
 
     public function update(Request $request, $id)
     {
+        try {
+            $validated = $request->validate([
+                'author' => 'required|string|max:100',
+                'ui_name' => 'required|string|max:100',
+                'type' => 'required|string|max:100',
+                'title' => 'nullable|string|max:255',
+                'link' => 'nullable|string|max:60000',
+                'html' => 'nullable|string|max:60000',
+                'css' => 'nullable|string|max:60000',
+                'updated_at' => 'required'
+            ], [
+                'author.required' => 'Author tối đa là 100 ký tự',
+                'author.max' => 'Author tối đa là 100 ký tự',
+                'ui_name.required' => 'UI_name không được để trống',
+                'ui_name.max' => 'UI_name tối đa là 100 ký tự',
+                'type.required' => 'Type không được để trống',
+                'type.max' => 'Type tối đa là 100 ký tự',
+                'title.max' => 'title tối đa là 255 ký tự',
+                'link.max' => 'Link tối đa là 60000 ký tự',
+                'html.max' => 'HTML tối đa là 60000 ký tự',
+                'css.max' => 'CSS tối đa là 60000 ký tự',
+                'js.max' => 'Js tối đa là 60000 ký tự',
+            ]);
+            $useInterfaces = UseInterface::findOrFail($id);
 
-        $validated = $request->validate([
-            'author' => 'required|string|max:100',
-            'ui_name' => 'required|string|max:100',
-            'type' => 'required|string|max:100',
-            'title' => 'nullable|string|max:255',
-            'link' => 'nullable|string|max:60000',
-            'html' => 'nullable|string|max:60000',
-            'css' => 'nullable|string|max:60000',
-            'js' => 'nullable|string|max:60000'
-        ], [
-            'author.max' => 'Author tối đa là 100 ký tự',
-            'ui_name.required' => 'UI_name không được để trống',
-            'ui_name.max' => 'UI_name tối đa là 100 ký tự',
-            'type.required' => 'Type không được để trống',
-            'type.max' => 'Type tối đa là 100 ký tự',
-            'title.max' => 'title tối đa là 255 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'link.max' => 'Link tối đa là 60000 ký tự',
-            'html.max' => 'HTML tối đa là 60000 ký tự',
-            'css.max' => 'CSS tối đa là 60000 ký tự',
-            'js.max' => 'Js tối đa là 60000 ký tự',
-        ]);
-        $useInterfaces = UseInterface::findOrFail($id);
-        $useInterfaces->update($validated);
-        return redirect()->route('useInterfaces.index')->with('success', 'Cập nhật useInterfaces thành công!!');
+            //lost update
+            $clientTimestamp = Carbon::parse($validated['updated_at']);
+            if (!$useInterfaces->updated_at->equalTo($clientTimestamp)) {
+                return redirect()->route('useInterfaces.index')->with('error', 'Cập nhật không thành công. Dữ liệu đã bị thay đổi bởi người khác.');
+            }
+            unset($validated['updated_at']);
+
+            $useInterfaces->update($validated);
+            return redirect()->route('useInterfaces.index')->with('success', 'Cập nhật useInterfaces thành công!!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('useInterfaces.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $useInterfaces = UseInterface::findOrFail($id);
         $useInterfaces->delete();
         return redirect()->route('useInterfaces.index')->with('success', 'Xoá useInterfaces thành công!!');

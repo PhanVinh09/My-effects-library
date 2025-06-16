@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layout;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class LayoutController extends Controller
@@ -19,8 +21,8 @@ class LayoutController extends Controller
 
         if ($request->has('search') && $request->search != '') {
             $search = trim($request->search);
-            
-            if(Str::length($search) > 100){
+
+            if (Str::length($search) > 100) {
                 return redirect()->route('layouts.index')->withInput()->with('error', 'Ký tự giới hạn tìm kiếm là 100 !!');
             }
             $query->where('layout_name', 'like', '%' . $request->search . '%');
@@ -28,8 +30,8 @@ class LayoutController extends Controller
 
         $layouts = $query->orderBy('created_at', 'desc')->paginate(10);
         $page = $request->query('page');
-        if(!is_null($page)){
-            if(!ctype_digit($page) || $page < 1 || $page > $layouts->lastPage()){
+        if (!is_null($page)) {
+            if (!ctype_digit($page) || $page < 1 || $page > $layouts->lastPage()) {
                 return redirect()->route('layouts.index')->withInput()->with('error', 'Trang không tồn tại!');
             }
         }
@@ -55,15 +57,13 @@ class LayoutController extends Controller
             'css' => 'nullable|string|max:60000',
             'js' => 'nullable|string|max:60000'
         ], [
+            'author.required' => 'Author tối đa là 100 ký tự',
             'author.max' => 'Author tối đa là 100 ký tự',
             'layout_name.required' => 'Layout_name không được để trống',
             'layout_name.max' => 'Layout_name tối đa là 100 ký tự',
             'type.required' => 'Type không được để trống',
             'type.max' => 'Type tối đa là 100 ký tự',
             'title.max' => 'title tối đa là 255 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
             'link.max' => 'Link tối đa là 60000 ký tự',
             'html.max' => 'HTML tối đa là 60000 ký tự',
             'css.max' => 'CSS tối đa là 60000 ký tự',
@@ -75,33 +75,44 @@ class LayoutController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'author' => 'required|string|max:100',
-            'layout_name' => 'required|string|max:100',
-            'type' => 'required|string|max:100',
-            'title' => 'nullable|string|max:255',
-            'link' => 'nullable|string|max:60000',
-            'html' => 'nullable|string|max:60000',
-            'css' => 'nullable|string|max:60000',
-            'js' => 'nullable|string|max:60000'
-        ], [
-            'author.max' => 'Author tối đa là 100 ký tự',
-            'layout_name.required' => 'Layout_name không được để trống',
-            'layout_name.max' => 'Layout_name tối đa là 100 ký tự',
-            'type.required' => 'Type không được để trống',
-            'type.max' => 'Type tối đa là 100 ký tự',
-            'title.max' => 'title tối đa là 255 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'author.required' => 'Author tối đa là 100 ký tự',
-            'link.max' => 'Link tối đa là 60000 ký tự',
-            'html.max' => 'HTML tối đa là 60000 ký tự',
-            'css.max' => 'CSS tối đa là 60000 ký tự',
-            'js.max' => 'Js tối đa là 60000 ký tự',
-        ]);
-        $layout = Layout::findOrFail($id);
-        $layout->update($validated);
-        return redirect()->route('layouts.index')->with('success', 'Cập nhật Layout thành công');
+        try {
+            $validated = $request->validate([
+                'author' => 'required|string|max:100',
+                'layout_name' => 'required|string|max:100',
+                'type' => 'required|string|max:100',
+                'title' => 'nullable|string|max:255',
+                'link' => 'nullable|string|max:60000',
+                'html' => 'nullable|string|max:60000',
+                'css' => 'nullable|string|max:60000',
+                'js' => 'nullable|string|max:60000',
+                'updated_at' => 'required'
+            ], [
+                'author.required' => 'Author tối đa là 100 ký tự',
+                'author.max' => 'Author tối đa là 100 ký tự',
+                'layout_name.required' => 'Layout_name không được để trống',
+                'layout_name.max' => 'Layout_name tối đa là 100 ký tự',
+                'type.required' => 'Type không được để trống',
+                'type.max' => 'Type tối đa là 100 ký tự',
+                'title.max' => 'title tối đa là 255 ký tự',
+                'link.max' => 'Link tối đa là 60000 ký tự',
+                'html.max' => 'HTML tối đa là 60000 ký tự',
+                'css.max' => 'CSS tối đa là 60000 ký tự',
+                'js.max' => 'Js tối đa là 60000 ký tự',
+            ]);
+            $layout = Layout::findOrFail($id);
+
+            //lost update
+            $clientTimestamp = Carbon::parse($validated['updated_at']);
+            if (!$layout->updated_at->equalTo($clientTimestamp)) {
+                return redirect()->route('layouts.index')->with('error', 'Cập nhật không thành công. Dữ liệu đã bị thay đổi bởi người khác.');
+            }
+            unset($validated['updated_at']);
+
+            $layout->update($validated);
+            return redirect()->route('layouts.index')->with('success', 'Cập nhật Layout thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('layouts.index')->with('error', 'Dữ liệu không còn tồn tại (đã bị xoá).');
+        }
     }
 
     public function destroy($id)

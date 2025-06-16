@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm hiệu ứng</a>
             <div class="search-bar">
                 <form action="{{ route('effects.index') }}" method="GET">
-                    <input type="text" list="effects_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm Effect Name..." maxlength="100"/>
+                    <input type="text" list="effects_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm Effect Name..." maxlength="100" />
                     <datalist id="effects_name">
                         @foreach ($effects_name as $effect_name)
                         <option value="{{ $effect_name }}">
@@ -66,12 +66,13 @@
                         <form action="{{ route('effects.update', $effect->id_effect) }}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            <input type="text" name="id" value="{{$effect->id_effect}}" maxlength="100" hidden />
+                            <input type="hidden" name="updated_at" value="{{ $effect->updated_at}}">
                             <label>Author</label>
                             <input type="text" name="author" value="{{ $effect->author }}" maxlength="100" required />
 
                             <label>Effect Name</label>
-                            <input type="text" list="effects_name" name="effect_name" value="{{ $effect->effect_name }}" maxlength="100" required  />
+                            <input type="text" list="effects_name" name="effect_name" value="{{ $effect->effect_name }}" maxlength="100" required />
                             <datalist id="effects_name">
                                 @foreach ($effects_name as $effect_name)
                                 <option value="{{ $effect_name }}">
@@ -79,7 +80,7 @@
                             </datalist>
 
                             <label>Type</label>
-                            <input type="text" list="effect-types" name="type" value="{{ $effect->type }}" maxlength="100" required  />
+                            <input type="text" list="effect-types" name="type" value="{{ $effect->type }}" maxlength="100" required />
                             <datalist id="effect-types">
                                 @foreach ($types as $type)
                                 <option value="{{ $type }}">
@@ -87,19 +88,19 @@
                             </datalist>
 
                             <label>Title</label>
-                            <input type="text" name="title" value="{{ $effect->title }}" maxlength="255" required/>
+                            <input type="text" name="title" value="{{ $effect->title }}" maxlength="255" required />
 
                             <label>Link</label>
-                            <input type="text" name="link" value="{{ $effect->link }}" maxlength="60000"/>
+                            <input type="text" name="link" value="{{ $effect->link }}" maxlength="60000" />
 
                             <label>HTML</label>
-                            <input type="text" name="html" value="{{ $effect->html }}" maxlength="60000"/>
+                            <input type="text" name="html" value="{{ $effect->html }}" maxlength="60000" />
 
                             <label>CSS</label>
-                            <input type="text" name="css" value="{{ $effect->css }}" maxlength="60000"/>
+                            <input type="text" name="css" value="{{ $effect->css }}" maxlength="60000" />
 
                             <label>JS</label>
-                            <input type="text" name="js" value="{{ $effect->js }}" maxlength="60000"/>
+                            <input type="text" name="js" value="{{ $effect->js }}" maxlength="60000" />
 
                             <button type="submit" class="action-btn center-btn">Cập Nhật</button>
                         </form>
@@ -126,11 +127,11 @@
                 @csrf
                 @auth
                 <label>Author</label>
-                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required/>
+                <input type="text" name="author" placeholder="Tên người làm..." value="{{ Auth::user()->name }}" maxlength="100" required />
                 @endauth
 
                 <label>Effect Name</label>
-                <input type="text" name="effect_name" list="effects_name" value="{{ old('effect_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required/>
+                <input type="text" name="effect_name" list="effects_name" value="{{ old('effect_name') }}" placeholder="Tên hiệu ứng..." maxlength="100" required />
                 <datalist id="effects_name">
                     @foreach ($effects_name as $effect_name)
                     <option value="{{ $effect_name }}">
@@ -138,7 +139,7 @@
                 </datalist>
 
                 <label>Type</label>
-                <input type="text" list="effect-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required/>
+                <input type="text" list="effect-types" name="type" value="{{ old('type') }}" placeholder="Hiệu ứng cho ..." maxlength="100" required />
                 <datalist id="effect-types">
                     @foreach ($types as $type)
                     <option value="{{ $type }}">
@@ -146,19 +147,19 @@
                 </datalist>
 
                 <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required/>
+                <input type="text" name="title" value="{{ old('title') }}" placeholder="Mô tả hiệu ứng..." maxlength="255" required />
 
                 <label>Link</label>
-                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000"/>
+                <input type="text" name="link" value="{{ old('link') }}" placeholder="Link CDN(nếu có)" maxlength="60000" />
 
                 <label>HTML</label>
-                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000"/>
+                <input type="text" name="html" value="{{ old('html') }}" placeholder="HTML..." maxlength="60000" />
 
                 <label>CSS</label>
-                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000"/>
+                <input type="text" name="css" value="{{ old('css') }}" placeholder="CSS..." maxlength="60000" />
 
                 <label>JS</label>
-                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000"/>
+                <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
                 <button type="submit" class="action-btn center-btn">Thêm</button>
             </form>

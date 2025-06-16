@@ -23,6 +23,8 @@ class EffectsTableSeeder extends Seeder
                 'html' => '<div>HTML content ' . $i . '</div>',
                 'css' => '.class-' . $i . ' { color: red; }',
                 'js' => 'console.log("Effect ' . $i . ' loaded.");',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }
