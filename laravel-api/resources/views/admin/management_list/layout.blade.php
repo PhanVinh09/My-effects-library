@@ -123,7 +123,7 @@
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
             <h2>Thêm layout mới</h2>
-            <form action="{{ route('layouts.store') }}" method="POST">
+            <form id="addForm" action="{{ route('layouts.store') }}" method="POST">
                 @csrf
                 @auth
                 <label>Author</label>
@@ -161,7 +161,7 @@
                 <label>JS</label>
                 <input type="text" name="js" value="{{ old('js') }}" placeholder="JS..." maxlength="60000" />
 
-                <button type="submit" class="action-btn center-btn">Thêm</button>
+                <button type="submit" id="submitBtn" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>
@@ -196,6 +196,15 @@
             }
             modal.style.display = "none";
         });
+    });
+
+    //ngăn spam
+    const form = document.getElementById('addForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function() {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Đang xử lý...';
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -7,7 +7,7 @@
             <a class="btn-add" href="#">Thêm Người Quản Lý</a>
             <div class="search-bar">
                 <form action="{{ route('admins.index') }}" method="GET">
-                    <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm Name..." maxlength="100"/>
+                    <input type="text" name="search" value="{{request('search')}}" placeholder="Tìm kiếm Name..." maxlength="100" />
                     <button type="submit"><i class="bi bi-search"></i> Tìm</button>
                 </form>
             </div>
@@ -39,7 +39,7 @@
                         <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" class="form-delete" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="code" class="auth-code-input"> 
+                            <input type="hidden" name="code" class="auth-code-input">
                             <button type="submit" class="action-btn btn-delete">
                                 <i class="bi bi-trash3"></i>
                             </button>
@@ -103,7 +103,7 @@
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
             <h2>Thêm người quản lý mới</h2>
-            <form action="{{route('admins.store')}}" method="POST">
+            <form id="addForm" action="{{route('admins.store')}}" method="POST">
                 @csrf
                 <label>Name</label>
                 <input type="text" name="name" placeholder="Nhập tên..." value="{{ old('name')}}" maxlength="100" required />
@@ -126,7 +126,7 @@
                     <option value="VIP">VIP</option>
                 </select>
 
-                <button type="submit" class="action-btn center-btn">Thêm</button>
+                <button type="submit" id="submitBtn" class="action-btn center-btn">Thêm</button>
             </form>
         </div>
     </div>
@@ -162,41 +162,50 @@
             modal.style.display = "none";
         });
     });
+    
+    //ngăn spam
+    const form = document.getElementById('addForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function() {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Đang xử lý...';
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.form-delete').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.form-delete').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            Swal.fire({
-                title: 'Xác nhận xoá',
-                html: `
+                Swal.fire({
+                    title: 'Xác nhận xoá',
+                    html: `
                     <p>Vui lòng nhập mã xác thực:</p>
                     <input style="width: 200px" type="password" id="auth-code" class="swal2-input" placeholder="Nhập mã xác thực">
                 `,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Xoá',
-                cancelButtonText: 'Huỷ',
-                focusConfirm: false,
-                preConfirm: () => {
-                    const code = Swal.getPopup().querySelector('#auth-code').value;
-                    if (!code) {
-                        Swal.showValidationMessage('Bạn phải nhập mã');
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Xoá',
+                    cancelButtonText: 'Huỷ',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        const code = Swal.getPopup().querySelector('#auth-code').value;
+                        if (!code) {
+                            Swal.showValidationMessage('Bạn phải nhập mã');
+                        }
+                        return code;
                     }
-                    return code;
-                }
-            }).then(result => {
-                if (result.isConfirmed) {
-                    const codeInput = form.querySelector('.auth-code-input');
-                    codeInput.value = result.value; 
-                    form.submit();
-                }
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        const codeInput = form.querySelector('.auth-code-input');
+                        codeInput.value = result.value;
+                        form.submit();
+                    }
+                });
             });
         });
     });
-});
 </script>
