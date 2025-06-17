@@ -41,15 +41,6 @@
       <button class="menu-toggle" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
       <ul class="nav-list">
         <li class="nav-item"><a class="nav-link" href="{{route('admin.dashboard')}}">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        <li class="dropdown">
-          <span class="dropdown-title">Dropdown ▾</span>
-          <ul class="dropdown-menu">
-            <li class="dropdown-item"><a class="dropdown-link" href="#">Option 1</a></li>
-            <li class="dropdown-item"><a class="dropdown-link" href="#">Option 2</a></li>
-            <li class="dropdown-item"><a class="dropdown-link" href="#">Option 3</a></li>
-          </ul>
-        </li>
       </ul>
       @auth
       <div class="nav-item" style="color: white;">
