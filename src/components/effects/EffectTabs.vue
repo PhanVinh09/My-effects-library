@@ -1,8 +1,13 @@
 <template>
-  <h1>{{ effect.id }}. {{ effect.title }}</h1>
+  <h1>{{ index + 1 }}. {{ effect.title }}</h1>
   <div>
     <div class="tabs">
-      <button v-for="tab in tabs" :key="tab" @click="activeTab = tab" :class="{ active: activeTab === tab }">
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        @click="activeTab = tab"
+        :class="{ active: activeTab === tab }"
+      >
         {{ tab.toUpperCase() }}
       </button>
       <button class="copy" @click="copyToClipboard">Copy</button>
@@ -31,6 +36,7 @@ import 'highlight.js/styles/github-dark.css'
 export default {
   props: {
     effect: Object,
+    index: Number,
   },
   data() {
     return {
@@ -58,7 +64,7 @@ export default {
                 document.addEventListener('DOMContentLoaded', () => {
                   document.querySelectorAll('a').forEach(a => {
                     a.addEventListener('click', (e) => {
-                      e.preventDefault(); // Ngăn load lại trang
+                      e.preventDefault();
                     });
                   });
                 });
@@ -89,109 +95,75 @@ export default {
       })
     },
     formatCode(code) {
-      // Format CSS/JS với indent và xuống dòng hợp lý
       let indentLevel = 0
       const indentSize = 2
-
-      // Escape HTML để hiển thị đúng trên trang
       const escaped = code
-        .replace(/&/g, '&amp;')  // thêm escape &
+        .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-
-      // Tách thành các phần kết thúc bằng {, }, hoặc ;
       const lines = escaped.match(/[^{};]+[{};]?/g) || []
-
       return lines
         .map((line) => {
           line = line.trim()
-
           if (line.endsWith('}')) indentLevel--
-
           const indentation = ' '.repeat(indentLevel * indentSize)
           const formattedLine = indentation + line
-
           if (line.endsWith('{')) indentLevel++
-
           return formattedLine
         })
         .join('\n')
     },
     formatHtmlCode(code) {
-      // Escape để hiển thị an toàn
       const escaped = code
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-
-      // Cắt chuỗi thành từng thẻ hoặc nội dung giữa thẻ
       const tokens = escaped.split(/(&lt;[^&]+&gt;)/).filter(token => token.trim() !== '')
-
       let indentLevel = 0
       const indentSize = 2
-
       return tokens.map(token => {
         const trimmed = token.trim()
-
-        // Nếu là thẻ đóng (</div>) => giảm indent trước
         if (/^&lt;\/[^>]+&gt;$/.test(trimmed)) indentLevel--
-
         const indentation = ' '.repeat(indentLevel * indentSize)
         const line = indentation + trimmed
-
         if (
           /^&lt;[^\/!][^&]*[^\/]&gt;$/.test(trimmed) &&
           !/^&lt;(input|img|br|hr|meta|link)[^&]*\/?&gt;$/.test(trimmed)
         ) {
           indentLevel++
         }
-
         return line
       }).join('\n')
     },
     formatPlainCode(code) {
       if (this.activeTab === 'html') {
-        // HTML: Format có indent và xuống dòng nhưng KHÔNG escape
         const tokens = code.split(/(<[^>]+>)/).filter(token => token.trim() !== '')
-
         let indentLevel = 0
         const indentSize = 2
-
         return tokens.map(token => {
           const trimmed = token.trim()
-
           if (/^<\/[^>]+>$/.test(trimmed)) indentLevel--
-
           const indentation = ' '.repeat(indentLevel * indentSize)
           const line = indentation + trimmed
-
           if (
             /^<[^/!][^>]*>$/.test(trimmed) &&
             !/^<(input|img|br|hr|meta|link)[^>]*\/?>$/.test(trimmed)
           ) {
             indentLevel++
           }
-
           return line
         }).join('\n')
       } else {
-        // CSS / JS thì giữ nguyên logic cũ
         let indentLevel = 0
         const indentSize = 2
-
         const lines = code.match(/[^{};]+[{};]?/g) || []
-
         return lines
           .map((line) => {
             line = line.trim()
-
             if (line.endsWith('}')) indentLevel--
-
             const indentation = ' '.repeat(indentLevel * indentSize)
             const formattedLine = indentation + line
-
             if (line.endsWith('{')) indentLevel++
-
             return formattedLine
           })
           .join('\n')
@@ -205,7 +177,6 @@ export default {
     },
     copyToClipboard() {
       let content = ''
-
       if (this.activeTab === 'html') {
         content = this.formatPlainCode(this.effect.html)
       } else if (this.activeTab === 'css') {
@@ -230,6 +201,7 @@ export default {
   },
 }
 </script>
+
 
 <style scoped>
 .tabs {

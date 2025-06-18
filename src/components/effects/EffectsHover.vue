@@ -15,33 +15,33 @@
       </ul>
     </div>
 
-    <div v-for="effect in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" style="margin-bottom: 60px;">
-      <EffectTabs :effect="effect" />
+    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" style="margin-bottom: 60px;">
+      <EffectTabs :effect="effect" :index="index"  />
     </div>
   </div>
 </template>
 
 <script>
 import EffectTabs from './EffectTabs.vue';
-import effectsData from '../data/effect.json';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default {
   components: { EffectTabs },
   data() {
     return {
+      effectsData: [],
+      types: [],
       selectedType: '',
       effectRefs: {},
-      sidebarOpen: false 
+      sidebarOpen: false
     };
+  },
+  created() {
+    this.fetchEffects();
   },
   computed: {
     allHoverEffects() {
-      const group = effectsData.find((g) => g.category === 'hover');
-      return group ? group.effects : [];
-    },
-    types() {
-      const typesSet = new Set(this.allHoverEffects.map((e) => e.type));
-      return Array.from(typesSet);
+      return this.effectsData.filter(effect => effect.effect_name === 'Hover');
     }
   },
   watch: {
@@ -56,6 +56,20 @@ export default {
     }
   },
   methods: {
+    async fetchEffects() {
+      try {
+        const res = await fetch(`${backendUrl}/api/effects`);
+        const data = await res.json();
+        this.effectsData = data;
+        this.initTypes();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    initTypes() {
+      const set = new Set(this.effectsData.map(e => e.type));
+      this.types = Array.from(set);
+    },
     setEffectRef(effect) {
       return (el) => {
         if (!el) return;
