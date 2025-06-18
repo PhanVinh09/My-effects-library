@@ -5,7 +5,7 @@
       <button
         v-for="tab in tabs"
         :key="tab"
-        @click="activeTab = tab"
+        @click="handleTabClick(tab)"
         :class="{ active: activeTab === tab }"
       >
         {{ tab.toUpperCase() }}
@@ -24,6 +24,9 @@
     </div>
     <div v-else class="tab-content_result">
       <iframe :srcdoc="generatedPreview" />
+      <div v-if="resultClickCount >= 2" style="margin-top: 10px; font-weight: bold; text-align: right;">
+        Tác giả: {{ effect.author }}
+      </div>
     </div>
   </div>
   <div v-if="toastMessage" class="toast">{{ toastMessage }}</div>
@@ -43,6 +46,7 @@ export default {
       tabs: ['html', 'css', 'js', 'result'],
       activeTab: 'result',
       toastMessage: '',
+      resultClickCount: 0, // thêm biến đếm số lần bấm RESULT
     }
   },
   computed: {
@@ -87,6 +91,18 @@ export default {
     },
   },
   methods: {
+    handleTabClick(tab) {
+      if (tab === 'result') {
+        if (this.activeTab === 'result') {
+          this.resultClickCount++
+        } else {
+          this.resultClickCount = 1
+        }
+      } else {
+        this.resultClickCount = 0
+      }
+      this.activeTab = tab
+    },
     highlightCode() {
       this.$nextTick(() => {
         document.querySelectorAll('pre code').forEach((block) => {
@@ -202,7 +218,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .tabs {
   position: relative;
@@ -248,7 +263,8 @@ export default {
 .tab-content_result {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   background: #f6f6f6;
   border: 1px solid #ccc;
   border-radius: 0 0 6px 6px;
@@ -257,6 +273,7 @@ export default {
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   overflow-x: auto;
+  padding: 10px;
 }
 
 ::-webkit-scrollbar {
