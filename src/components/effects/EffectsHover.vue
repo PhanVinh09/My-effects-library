@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2>Hover Effects</h2>
-     <div class="menu-icon" @click="toggleSidebar">
+    <div class="menu-icon" @click="toggleSidebar">
       ☰
     </div>
     <div class="sidebar" :class="{ open: sidebarOpen }">
@@ -15,8 +15,15 @@
       </ul>
     </div>
 
-    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" style="margin-bottom: 60px;">
-      <EffectTabs :effect="effect" :index="index"  />
+    <!-- Loading text -->
+    <div v-if="loading" style="text-align: center; font-size: 20px; margin-top: 40px;">
+      Đang tải...
+    </div>
+
+    <!-- List effects -->
+    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)"
+      style="margin-bottom: 60px;">
+      <EffectTabs :effect="effect" :index="index" />
     </div>
   </div>
 </template>
@@ -33,7 +40,8 @@ export default {
       types: [],
       selectedType: '',
       effectRefs: {},
-      sidebarOpen: false
+      sidebarOpen: false,
+      loading: true,
     };
   },
   created() {
@@ -58,12 +66,15 @@ export default {
   methods: {
     async fetchEffects() {
       try {
+        this.loading = true;
         const res = await fetch(`${backendUrl}/api/effects`);
         const data = await res.json();
         this.effectsData = data;
         this.initTypes();
       } catch (err) {
         console.error(err);
+      } finally {
+        this.loading = false;
       }
     },
     initTypes() {
@@ -81,7 +92,7 @@ export default {
     },
     setSelectedType(type) {
       this.selectedType = type;
-      this.sidebarOpen = false; 
+      this.sidebarOpen = false;
       if (type === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -183,6 +194,7 @@ h2 {
   background-color: #34495e;
   transform: scale(1.1);
 }
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
