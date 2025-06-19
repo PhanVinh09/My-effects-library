@@ -2,14 +2,15 @@
   <h1>{{ index + 1 }}. {{ effect.title }}</h1>
   <div>
     <div class="tabs">
-      <button
-        v-for="tab in tabs"
-        :key="tab"
-        @click="handleTabClick(tab)"
-        :class="{ active: activeTab === tab }"
-      >
+      <button v-for="tab in tabs" :key="tab" @click="handleTabClick(tab)" :class="{ active: activeTab === tab }">
         {{ tab.toUpperCase() }}
       </button>
+
+      <button v-if="activeTab === 'result'" class="fullscreen" @click="toggleFullscreen"
+        title="Phóng to hoặc thu nhỏ vùng kết quả">
+        {{ isFullscreen ? '➖ Thu nhỏ' : '➕ Phóng to' }}
+      </button>
+
       <button class="copy" @click="copyToClipboard">Copy</button>
     </div>
 
@@ -22,7 +23,7 @@
     <div v-else-if="activeTab === 'js'" class="tab-content">
       <pre><code class="language-js" v-html="formatCode(effect.js)"></code></pre>
     </div>
-    <div v-else class="tab-content_result">
+    <div v-else class="tab-content_result" :class="{ fullscreen: isFullscreen }">
       <iframe :srcdoc="generatedPreview" />
       <div v-if="resultClickCount >= 2" style="margin-top: 10px; font-weight: bold; text-align: right;">
         Tác giả: {{ effect.author }}
@@ -43,10 +44,10 @@ export default {
   },
   data() {
     return {
-      tabs: ['html', 'css', 'js', 'result'],
       activeTab: 'result',
       toastMessage: '',
-      resultClickCount: 0, // thêm biến đếm số lần bấm RESULT
+      resultClickCount: 0,
+      isFullscreen: false,
     }
   },
   computed: {
@@ -64,15 +65,15 @@ export default {
           <head>${this.effect.link ?? ''}<style>${this.effect.css}</style></head>
           <body>
             ${this.effect.html}
-              <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                  document.querySelectorAll('a').forEach(a => {
-                    a.addEventListener('click', (e) => {
-                      e.preventDefault();
-                    });
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('a').forEach(a => {
+                  a.addEventListener('click', (e) => {
+                    e.preventDefault();
                   });
                 });
-             <\/script>
+              });
+            <\/script>
             <script>${this.effect.js}<\/script>
           </body>
         </html>
@@ -91,6 +92,9 @@ export default {
     },
   },
   methods: {
+    toggleFullscreen() {
+      this.isFullscreen = !this.isFullscreen
+    },
     handleTabClick(tab) {
       if (tab === 'result') {
         if (this.activeTab === 'result') {
@@ -242,6 +246,11 @@ export default {
   right: 0;
 }
 
+.tabs .fullscreen {
+  position: absolute;
+  right: 80px;
+}
+
 .tabs button:hover,
 .tabs button.active {
   background: #34495e;
@@ -274,25 +283,16 @@ export default {
   font-size: 14px;
   overflow-x: auto;
   padding: 10px;
+  transition: all 0.3s ease;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+.tab-content_result.fullscreen {
+  min-height: 600px;
+  max-height: 100%;
 }
 
-::-webkit-scrollbar-track {
-  background: #000000;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
+.tab-content_result.fullscreen iframe {
+  height: 540px;
 }
 
 iframe {
