@@ -6,9 +6,9 @@
         {{ tab.toUpperCase() }}
       </button>
 
-      <button v-if="activeTab === 'result'" class="fullscreen" @click="toggleFullscreen"
+      <button v-if="activeTab === 'result'" class="fullscreen" @click="toggleZoomResult"
         title="Phóng to hoặc thu nhỏ vùng kết quả">
-        {{ isFullscreen ? '➖ Thu nhỏ' : '➕ Phóng to' }}
+        {{ isZoomResult ? '➖ Thu nhỏ' : '➕ Phóng to' }}
       </button>
 
       <button class="copy" @click="copyToClipboard">Copy</button>
@@ -23,7 +23,7 @@
     <div v-else-if="activeTab === 'js'" class="tab-content">
       <pre><code class="language-js" v-html="formatCode(effect.js)"></code></pre>
     </div>
-    <div v-else class="tab-content_result" :class="{ fullscreen: isFullscreen }">
+    <div v-else class="tab-content_result" :class="{ zoomResult: isZoomResult }">
       <iframe :srcdoc="generatedPreview" />
       <div v-if="resultClickCount >= 2" style="margin-top: 10px; font-weight: bold; text-align: right;">
         Tác giả: {{ effect.author }}
@@ -47,7 +47,7 @@ export default {
       activeTab: 'result',
       toastMessage: '',
       resultClickCount: 0,
-      isFullscreen: false,
+      isZoomResult: false,
     }
   },
   computed: {
@@ -92,8 +92,8 @@ export default {
     },
   },
   methods: {
-    toggleFullscreen() {
-      this.isFullscreen = !this.isFullscreen
+    toggleZoomResult() {
+      this.isZoomResult = !this.isZoomResult;
     },
     handleTabClick(tab) {
       if (tab === 'result') {
@@ -286,12 +286,12 @@ export default {
   transition: all 0.3s ease;
 }
 
-.tab-content_result.fullscreen {
+.tab-content_result.zoomResult {
   min-height: 600px;
   max-height: 100%;
 }
 
-.tab-content_result.fullscreen iframe {
+.tab-content_result.zoomResult iframe {
   height: 540px;
 }
 
