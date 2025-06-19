@@ -97,7 +97,7 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background: linear-gradient(45deg, black, blue, violet, black);
 }
 
 header {
