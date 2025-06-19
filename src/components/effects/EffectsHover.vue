@@ -21,8 +21,8 @@
     </div>
 
     <!-- List effects -->
-    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)"
-      style="margin-bottom: 60px;">
+    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" class="effect-item"
+      :data-effect-id="effect.id" :data-effect-type="effect.type" :style="{ animationDelay: `${index * 150}ms` }">
       <EffectTabs :effect="effect" :index="index" />
     </div>
   </div>
@@ -207,6 +207,19 @@ h2 {
 
   .menu-icon {
     display: block;
+  }
+}
+
+.effect-item {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
