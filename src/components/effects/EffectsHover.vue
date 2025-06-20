@@ -204,20 +204,7 @@ h2 {
   transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    width: 200px;
-  }
 
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .menu-icon {
-    display: block;
-  }
-}
 
 .effect-item {
   opacity: 0;
@@ -260,5 +247,27 @@ h2 {
   100% {
     background-position: 0%;
   }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 200px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-icon {
+    margin-top: 50px;
+    display: block;
+  }
+  
+  .group-title{
+    margin-top: 50px;
+    font-size: 30px;
+  }
+  
 }
 </style>

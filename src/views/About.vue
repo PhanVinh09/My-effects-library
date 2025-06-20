@@ -1,7 +1,7 @@
 <template>
   <section class="about">
     <div class="container">
-      <h1>🌐 Thư Viện Hiệu Ứng Web - Nơi Học Tập & Chia Sẻ Cảm Hứng Thiết Kế Giao Diện</h1>
+      <h1>🌐 My-Effects-Library - Nơi Học Tập & Chia Sẻ Cảm Hứng Thiết Kế Giao Diện</h1>
 
       <p>Chào mừng bạn đến với <strong>kho tàng hiệu ứng web hiện đại</strong> – nơi mọi hiệu ứng từ đơn giản đến nâng
         cao đều được phân loại, giải thích và minh họa rõ ràng để bạn học hỏi, thực hành và chia sẻ.</p>
@@ -58,9 +58,10 @@
 </script>
 
 <style scoped>
-.about{
+.about {
   padding: 80px 20px;
 }
+
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -106,5 +107,49 @@ blockquote {
 .highlight {
   color: #e67e22;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 40px 10px;
+  }
+
+  .container {
+    padding: 20px 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  p,
+  li {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  ul {
+    padding-left: 15px;
+  }
+
+  blockquote {
+    font-size: 14px;
+    padding: 12px 15px;
+  }
+
+  .highlight {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
 }
 </style>

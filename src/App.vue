@@ -1,11 +1,26 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 const isLayoutOpen = ref(false)
 const isUIOpen = ref(false)
 const isFormOpen = ref(false)
+
+const isMobile = ref(window.innerWidth <= 768)
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
 
 const toggleMenu = (menu) => {
   if (menu === 'layout') isLayoutOpen.value = !isLayoutOpen.value
@@ -18,54 +33,101 @@ const toggleMenu = (menu) => {
   <div class="layout">
     <header>
       <nav>
-        <div class="logo">
-          LOGO
-        </div>
+        <div class="logo">MEL</div>
         <ul class="nav-links">
-          <li><RouterLink to="/">Trang chủ</RouterLink></li>
-          <li><RouterLink to="/about">Giới thiệu</RouterLink></li>
-          <li><a :href="`${backendUrl}/admin`" target="_blank">Admin</a></li>
+          <li>
+            <RouterLink v-if="!isMobile" class="menu-default" to="/">Trang chủ</RouterLink>
+            <RouterLink v-else class="menu-icon" to="/"><i class="bi bi-house"></i></RouterLink>
+          </li>
+          <li>
+            <RouterLink v-if="!isMobile" class="menu-default" to="/about">Giới thiệu</RouterLink>
+            <RouterLink v-else class="menu-icon" to="/about"><i class="bi bi-info-circle"></i></RouterLink>
+          </li>
+          <li>
+            <a v-if="!isMobile" class="menu-default" :href="`${backendUrl}/admin`" target="_blank">Admin</a>
+            <a v-else class="menu-icon" :href="`${backendUrl}/admin`" target="_blank"><i
+                class="bi bi-person-circle"></i></a>
+          </li>
 
           <li class="dropdown">
             <a href="#">Hiệu ứng ▾</a>
             <ul class="dropdown-menu">
-              <li><RouterLink to="/effect/hover">Hover</RouterLink></li>
-              <li><RouterLink to="/effect/animate">Animation</RouterLink></li>
-              <li><RouterLink to="/effect/scroll">Scroll</RouterLink></li>
-              <li><RouterLink to="/effect/3d">3D</RouterLink></li>
+              <li>
+                <RouterLink to="/effect/hover">Hover</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/effect/animate">Animation</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/effect/scroll">Scroll</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/effect/3d">3D</RouterLink>
+              </li>
             </ul>
           </li>
-         <li class="dropdown">
+
+          <li class="dropdown">
             <a href="#">Giao diện ▾</a>
             <ul class="dropdown-menu">
               <li class="dropdown-1">
                 <a href="#" @click.prevent="toggleMenu('layout')">Layout ▾</a>
                 <ul class="dropdown-menu-1" v-show="isLayoutOpen">
-                  <li><RouterLink to="/layouts/header">Header</RouterLink></li>
-                  <li><RouterLink to="">Footer</RouterLink></li>
-                  <li><RouterLink to="">Sidebar</RouterLink></li>
-                  <li><RouterLink to="">HeroBanner</RouterLink></li>
+                  <li>
+                    <RouterLink to="/layouts/header">Header</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">Footer</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">Sidebar</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">HeroBanner</RouterLink>
+                  </li>
                 </ul>
               </li>
               <li class="dropdown-2">
                 <a href="#" @click.prevent="toggleMenu('ui')">UI ▾</a>
                 <ul class="dropdown-menu-2" v-show="isUIOpen">
-                  <li><RouterLink to="">Card</RouterLink></li>
-                  <li><RouterLink to="">Button</RouterLink></li>
-                  <li><RouterLink to="">InputField</RouterLink></li>
-                  <li><RouterLink to="">DropDownMenu</RouterLink></li>
-                  <li><RouterLink to="">SearchBar</RouterLink></li>
-                  <li><RouterLink to="">Pagination</RouterLink></li>
-                  <li><RouterLink to="">Dashboard</RouterLink></li>
-                  <li><RouterLink to="">ErrorPage (404)</RouterLink></li>
+                  <li>
+                    <RouterLink to="">Card</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">Button</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">InputField</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">DropDownMenu</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">SearchBar</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">Pagination</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">Dashboard</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">ErrorPage (404)</RouterLink>
+                  </li>
                 </ul>
               </li>
               <li class="dropdown-3">
                 <a href="#" @click.prevent="toggleMenu('form')">Form ▾</a>
                 <ul class="dropdown-menu-3" v-show="isFormOpen">
-                  <li><RouterLink to="">LoginForm</RouterLink></li>
-                  <li><RouterLink to="">RegisterForm</RouterLink></li>
-                  <li><RouterLink to="">PasswordResetForm</RouterLink></li>
+                  <li>
+                    <RouterLink to="">LoginForm</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">RegisterForm</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="">PasswordResetForm</RouterLink>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -84,7 +146,6 @@ const toggleMenu = (menu) => {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
-
 html,
 body {
   margin: 0;
@@ -95,8 +156,6 @@ body {
 .layout {
   width: 100vw;
   min-height: 100vh;
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
   background: linear-gradient(45deg, black, blue, violet, black);
 }
 
@@ -118,7 +177,7 @@ nav {
   z-index: 1000;
 }
 
-nav .logo {
+.logo {
   font-weight: bold;
   color: white;
   font-size: 24px;
@@ -137,8 +196,8 @@ nav .logo {
   position: relative;
 }
 
-.nav-links li > a,
-.nav-links li > .router-link-active {
+.nav-links li>a,
+.nav-links li>.router-link-active {
   color: white;
   text-decoration: none;
   font-size: 16px;
@@ -158,7 +217,7 @@ nav .logo {
   background-color: #797bea98;
 }
 
-/* Dropdown menu */
+/* Dropdown base */
 .dropdown-menu,
 .dropdown-menu-1,
 .dropdown-menu-2,
@@ -175,21 +234,17 @@ nav .logo {
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   z-index: 999;
-  transition: all 0.3s ease;
   opacity: 0;
   transform: translateY(10px);
   pointer-events: none;
+  transition: all 0.3s ease;
 }
 
-.dropdown:hover > .dropdown-menu {
+.dropdown:hover>.dropdown-menu {
   display: block;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
-}
-
-.dropdown-menu li {
-  width: 100%;
 }
 
 .dropdown-menu li a {
@@ -210,7 +265,7 @@ nav .logo {
   transform: translateX(4px);
 }
 
-.dropdown-menu li > a::after {
+.dropdown-menu li>a::after {
   content: '▸';
   float: right;
   color: #aaa;
@@ -234,7 +289,6 @@ nav .logo {
 .dropdown-menu-1,
 .dropdown-menu-2,
 .dropdown-menu-3 {
-  position: relative;
   display: block;
   opacity: 1;
   transform: none;
@@ -252,15 +306,69 @@ nav .logo {
   font-size: 14px;
 }
 
-ul {
-  list-style: none;
-}
-
 main {
-  padding-top: 50px;
+  padding-top: 60px;
   background-color: #6c4de782;
   color: black;
   height: 100%;
 }
-</style>
 
+@media (max-width: 768px) {
+  nav {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    height: auto;
+  }
+
+  .logo {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .nav-links li {
+    width: auto;
+    text-align: center;
+  }
+
+  .nav-links li>a,
+  .nav-links li>.router-link-active {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .dropdown-menu,
+  .dropdown-menu-1,
+  .dropdown-menu-2,
+  .dropdown-menu-3 {
+    min-width: 100px;
+  }
+
+  .dropdown-menu li a,
+  .dropdown-menu-1 li a,
+  .dropdown-menu-2 li a,
+  .dropdown-menu-3 li a {
+    font-size: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    display: block;
+    text-align: start;
+  }
+
+  main {
+    padding: 80px 10px 20px;
+  }
+}
+</style>

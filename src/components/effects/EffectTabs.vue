@@ -14,7 +14,8 @@
         {{ isZoomResult ? '➖ Thu nhỏ' : '➕ Phóng to' }}
       </button>
 
-      <button class="copy" @click="copyToClipboard">Copy</button>
+      <button v-if="activeTab === 'html' || activeTab === 'css' || activeTab === 'js'" class="copy"
+        @click="copyToClipboard">Copy</button>
     </div>
 
     <div v-if="activeTab === 'html'" class="tab-content">
@@ -260,7 +261,7 @@ export default {
 
 .tabs .fullscreen {
   position: absolute;
-  right: 80px;
+  right: 0;
 }
 
 .tabs button:hover,
@@ -283,7 +284,6 @@ export default {
 
 .tab-content_result {
   position: relative;
-  /* Để định vị nút reload */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -326,7 +326,7 @@ iframe {
   width: 40px;
   height: 40px;
   top: 10px;
-  right: 200px;
+  right: 110px;
   z-index: 2;
   color: #ccc;
   cursor: pointer;
@@ -382,5 +382,22 @@ iframe {
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .tabs button {
+    font-size: 10px;
+  }
+
+  .reload-button {
+    width: 30px;
+    height: 30px;
+    right: 95px;
+  }
+
 }
 </style>
