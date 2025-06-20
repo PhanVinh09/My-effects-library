@@ -5,6 +5,9 @@
       <button v-for="tab in tabs" :key="tab" @click="handleTabClick(tab)" :class="{ active: activeTab === tab }">
         {{ tab.toUpperCase() }}
       </button>
+      <div v-if="activeTab === 'result'" class="reload-button" @click="reloadPreview" title="Tải lại bản xem trước">
+        <i class="bi bi-arrow-clockwise" :class="{ rotate: isRotating }"></i>
+      </div>
 
       <button v-if="activeTab === 'result'" class="fullscreen" @click="toggleZoomResult"
         title="Phóng to hoặc thu nhỏ vùng kết quả">
@@ -24,7 +27,9 @@
       <pre><code class="language-js" v-html="formatCode(effect.js)"></code></pre>
     </div>
     <div v-else class="tab-content_result" :class="{ zoomResult: isZoomResult }">
-      <iframe :srcdoc="generatedPreview" />
+
+      <iframe :key="refreshKey" :srcdoc="generatedPreview" />
+
       <div v-if="resultClickCount >= 2" style="margin-top: 10px; font-weight: bold; text-align: right;">
         Tác giả: {{ effect.author }}
       </div>
@@ -32,7 +37,6 @@
   </div>
   <div v-if="toastMessage" class="toast">{{ toastMessage }}</div>
 </template>
-
 <script>
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
@@ -48,6 +52,8 @@ export default {
       toastMessage: '',
       resultClickCount: 0,
       isZoomResult: false,
+      refreshKey: 0, // Thêm key để force reload iframe
+      isRotating: false, // Điều khiển hiệu ứng xoay
     }
   },
   computed: {
@@ -218,10 +224,16 @@ export default {
           console.error(err)
         })
     },
+    reloadPreview() {
+      this.isRotating = true
+      this.refreshKey++
+      setTimeout(() => {
+        this.isRotating = false
+      }, 500)
+    },
   },
 }
 </script>
-
 <style scoped>
 .tabs {
   position: relative;
@@ -270,6 +282,8 @@ export default {
 }
 
 .tab-content_result {
+  position: relative;
+  /* Để định vị nút reload */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -301,6 +315,38 @@ iframe {
   height: 250px;
   border: none;
   display: block;
+}
+
+/* ✅ Nút reload */
+.reload-button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  right: 200px;
+  z-index: 2;
+  color: #ccc;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.reload-button:hover {
+  background: #34495e;
+  transform: rotate(360deg);
+}
+
+.bi-arrow-clockwise {
+  font-size: 22px;
+  transition: transform 0.6s ease;
+}
+
+.bi-arrow-clockwise.rotate {
+  transform: rotate(360deg);
 }
 
 .toast {
