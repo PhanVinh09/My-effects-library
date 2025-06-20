@@ -21,10 +21,16 @@
     </div>
 
     <!-- List effects -->
-    <div v-for="(effect, index) in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" class="effect-item"
-      :data-effect-id="effect.id" :data-effect-type="effect.type" :style="{ animationDelay: `${index * 150}ms` }">
-      <EffectTabs :effect="effect" :index="index" />
+    <div v-for="type in types" :key="type">
+      <h3 class="group-title">{{ type.toUpperCase() }}</h3>
+
+      <div v-for="(effect, index) in effectsByType(type)" :key="effect.id" :ref="setEffectRef(effect)"
+        class="effect-item" :data-effect-id="effect.id" :data-effect-type="effect.type"
+        :style="{ animationDelay: `${index * 150}ms` }">
+        <EffectTabs :effect="effect" :index="index" />
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -99,6 +105,9 @@ export default {
     },
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
+    },
+    effectsByType(type) {
+      return this.allHoverEffects.filter(effect => effect.type === type);
     }
   }
 };
@@ -220,6 +229,36 @@ h2 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.group-title {
+  margin-top: 100px;
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, rgb(251, 0, 255), red);
+  background-size: 200%;
+  background-position: left;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 0.5s ease;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00ffcc;
+  padding-bottom: 6px;
+  cursor: pointer;
+}
+
+.group-title:hover {
+  animation: moveGradient 1s infinite linear alternate-reverse;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
   }
 }
 </style>
