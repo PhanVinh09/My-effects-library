@@ -64,6 +64,12 @@ const toggleMenu = (menu) => {
               <li>
                 <RouterLink to="/effect/3d">3D</RouterLink>
               </li>
+              <li>
+                <RouterLink to="/effect/click">Click</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/effect/load">Load</RouterLink>
+              </li>
             </ul>
           </li>
 
@@ -120,13 +126,13 @@ const toggleMenu = (menu) => {
                 <a href="#" @click.prevent="toggleMenu('form')">Form ▾</a>
                 <ul class="dropdown-menu-3" v-show="isFormOpen">
                   <li>
-                    <RouterLink to="">LoginForm</RouterLink>
+                    <RouterLink to="/form/login">Login</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">RegisterForm</RouterLink>
+                    <RouterLink to="/form/register">Register</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">PasswordResetForm</RouterLink>
+                    <RouterLink to="/form/passwordReset">PasswordReset</RouterLink>
                   </li>
                 </ul>
               </li>

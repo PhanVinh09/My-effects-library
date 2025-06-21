@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2>Hover Effects</h2>
-     <div class="menu-icon" @click="toggleSidebar">
+    <h2>Animate Effects</h2>
+    <div class="menu-icon" @click="toggleSidebar">
       ☰
     </div>
     <div class="sidebar" :class="{ open: sidebarOpen }">
@@ -15,33 +15,47 @@
       </ul>
     </div>
 
-    <div v-for="effect in allHoverEffects" :key="effect.id" :ref="setEffectRef(effect)" style="margin-bottom: 60px;">
-      <EffectTabs :effect="effect" />
+    <!-- Loading text -->
+    <div v-if="loading" style="text-align: center; font-size: 20px; margin-top: 40px;">
+      Đang tải...
     </div>
+
+    <!-- List effects -->
+    <div v-for="type in types" :key="type">
+      <h3 class="group-title">{{ type.toUpperCase() }}</h3>
+
+      <div v-for="(effect, index) in effectsByType(type)" :key="effect.id" :ref="setEffectRef(effect)"
+        class="effect-item" :data-effect-id="effect.id" :data-effect-type="effect.type"
+        :style="{ animationDelay: `${index * 150}ms` }">
+        <EffectTabs :effect="effect" :index="index" />
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import EffectTabs from './EffectTabs.vue';
-import effectsData from '../data/effect.json';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default {
   components: { EffectTabs },
   data() {
     return {
+      effectsData: [],
+      types: [],
       selectedType: '',
       effectRefs: {},
-      sidebarOpen: false 
+      sidebarOpen: false,
+      loading: true,
     };
+  },
+  created() {
+    this.fetchEffects();
   },
   computed: {
     allHoverEffects() {
-      const group = effectsData.find((g) => g.category === 'hover');
-      return group ? group.effects : [];
-    },
-    types() {
-      const typesSet = new Set(this.allHoverEffects.map((e) => e.type));
-      return Array.from(typesSet);
+      return this.effectsData.filter(effect => effect.effect_name === 'Animate');
     }
   },
   watch: {
@@ -56,6 +70,23 @@ export default {
     }
   },
   methods: {
+    async fetchEffects() {
+      try {
+        this.loading = true;
+        const res = await fetch(`${backendUrl}/api/effects`);
+        const data = await res.json();
+        this.effectsData = data;
+        this.initTypes();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        this.loading = false;
+      }
+    },
+    initTypes() {
+      const set = new Set(this.allHoverEffects.map(e => e.type));
+      this.types = Array.from(set);
+    },
     setEffectRef(effect) {
       return (el) => {
         if (!el) return;
@@ -67,13 +98,16 @@ export default {
     },
     setSelectedType(type) {
       this.selectedType = type;
-      this.sidebarOpen = false; 
+      this.sidebarOpen = false;
       if (type === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     },
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
+    },
+    effectsByType(type) {
+      return this.allHoverEffects.filter(effect => effect.type === type);
     }
   }
 };
@@ -169,6 +203,52 @@ h2 {
   background-color: #34495e;
   transform: scale(1.1);
 }
+
+
+
+.effect-item {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.group-title {
+  margin-top: 100px;
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, rgb(251, 0, 255), red);
+  background-size: 200%;
+  background-position: left;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 0.5s ease;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00ffcc;
+  padding-bottom: 6px;
+  cursor: pointer;
+}
+
+.group-title:hover {
+  animation: moveGradient 1s infinite linear alternate-reverse;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -180,7 +260,14 @@ h2 {
   }
 
   .menu-icon {
+    margin-top: 50px;
     display: block;
   }
+  
+  .group-title{
+    margin-top: 50px;
+    font-size: 30px;
+  }
+  
 }
 </style>

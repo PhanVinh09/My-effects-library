@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Hover Effects</h2>
+    <h2>Click Effects</h2>
     <div class="menu-icon" @click="toggleSidebar">
       ☰
     </div>
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     allHoverEffects() {
-      return this.effectsData.filter(effect => effect.effect_name === 'Hover');
+      return this.effectsData.filter(effect => effect.effect_name === 'Click');
     }
   },
   watch: {
@@ -263,11 +263,11 @@ h2 {
     margin-top: 50px;
     display: block;
   }
-
-  .group-title {
+  
+  .group-title{
     margin-top: 50px;
     font-size: 30px;
   }
-
+  
 }
 </style>
