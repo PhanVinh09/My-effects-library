@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Login Form </h2>
+    <h2>Change Password Form </h2>
     <div class="menu-icon" @click="toggleSidebar">
       ☰
     </div>
@@ -54,8 +54,8 @@ export default {
     this.fetchForms();
   },
   computed: {
-    allHoverForms() {
-      return this.formsData.filter(form => form.form_name === 'Login');
+    allForms() {
+      return this.formsData.filter(form => form.form_name === 'ChangePassword');
     }
   },
   watch: {
@@ -84,7 +84,7 @@ export default {
       }
     },
     initTypes() {
-      const set = new Set(this.allHoverForms.map(e => e.type));
+      const set = new Set(this.allForms.map(e => e.type));
       this.types = Array.from(set);
     },
     setFormRef(form) {
@@ -107,7 +107,7 @@ export default {
       this.sidebarOpen = !this.sidebarOpen;
     },
     formsByType(type) {
-      return this.allHoverForms.filter(form => form.type === type);
+      return this.allForms.filter(form => form.type === type);
     }
   }
 };

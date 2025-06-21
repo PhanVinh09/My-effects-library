@@ -10,7 +10,10 @@ use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
-
+    public function apiIndex()
+    {
+        return response()->json(Form::all());
+    }
     public function index(Request $request)
     {
         $query = Form::query();

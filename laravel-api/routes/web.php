@@ -16,6 +16,7 @@ use App\Http\Middleware\AdminMiddleware;
 
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AdminManagementController;
+use App\Models\Form;
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::view('/admin', 'admin.admin_index')->name('admin.index');
@@ -73,6 +74,7 @@ Route::post('/logout', function () {
 // Hiểu Thị bằng Api
 Route::prefix('api')->group(function () {
     Route::get('/effects', [EffectController::class, 'apiIndex']);
+    Route::get('/forms', [FormController::class, 'apiIndex']);
 });
 
 

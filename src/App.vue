@@ -132,7 +132,13 @@ const toggleMenu = (menu) => {
                     <RouterLink to="/form/register">Register</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/form/passwordReset">PasswordReset</RouterLink>
+                    <RouterLink to="/form/passwordReset">Reset Password</RouterLink>
+                  </li>
+                   <li>
+                    <RouterLink to="/form/changePassword">Change Password</RouterLink>
+                  </li>
+                   <li>
+                    <RouterLink to="/form/profileUpdate">Profile Update</RouterLink>
                   </li>
                 </ul>
               </li>

@@ -15,7 +15,9 @@ import EffectLoad from '@/components/effects/EffectLoad.vue'
 import LoginForm from '@/components/forms/LoginForm.vue'
 import EffectManager from '@/components/admin/EffectManager.vue'
 import RegisterForm from '@/components/forms/RegisterForm.vue'
-import PasswordResetForm from '@/components/forms/PasswordResetForm.vue'
+import PasswordResetForm from '@/components/forms/ResetPasswordForm.vue'
+import ChangePasswordForm from '@/components/forms/ChangePasswordForm.vue'
+import ProfileUpdateForm from '@/components/forms/ProfileUpdateForm.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,6 +35,9 @@ const router = createRouter({
     { path: '/form/login', component: LoginForm },
     { path: '/form/register', component: RegisterForm },
     { path: '/form/passwordReset', component: PasswordResetForm},
+    { path: '/form/changePassword', component: ChangePasswordForm},
+    { path: '/form/profileUpdate', component: ProfileUpdateForm},
+
 
     //Layout
     { path: '/layouts/header', component: LayoutHeader },
