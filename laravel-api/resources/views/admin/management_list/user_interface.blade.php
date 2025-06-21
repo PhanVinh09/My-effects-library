@@ -62,7 +62,7 @@
                 <div id="editModal-{{ $ui->id_UI }}" class="modal">
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{ $ui->id_UI }}">&times;</span>
-                        <h2>Sửa Use Interface</h2>
+                        <h2>Sửa User Interface</h2>
                         <form action="{{ route('userInterfaces.update', $ui->id_UI) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -122,7 +122,7 @@
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
-            <h2>Thêm Use Interface mới</h2>
+            <h2>Thêm User Interface mới</h2>
             <form id="addForm" action="{{ route('userInterfaces.store') }}" method="POST">
                 @csrf
                 @auth
