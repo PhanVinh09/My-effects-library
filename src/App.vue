@@ -94,31 +94,28 @@ const toggleMenu = (menu) => {
                 </ul>
               </li>
               <li class="dropdown-2">
-                <a href="#" @click.prevent="toggleMenu('ui')">UI ▾</a>
+                <a href="#" @click.prevent="toggleMenu('ui')">User Interface ▾</a>
                 <ul class="dropdown-menu-2" v-show="isUIOpen">
                   <li>
-                    <RouterLink to="">Card</RouterLink>
+                    <RouterLink to="/userInterface/card">Card</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">Button</RouterLink>
+                    <RouterLink to="/userInterface/inputField">InputField</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">InputField</RouterLink>
+                    <RouterLink to="/userInterface/dropDownMenu">DropdownMenu</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">DropDownMenu</RouterLink>
+                    <RouterLink to="/userInterface/searchBar">SearchBar</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">SearchBar</RouterLink>
+                    <RouterLink to="/userInterface/pagination">Pagination</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">Pagination</RouterLink>
+                    <RouterLink to="/userInterface/dashboard">Dashboard</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="">Dashboard</RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink to="">ErrorPage (404)</RouterLink>
+                    <RouterLink to="/userInterface/errorPage">ErrorPage (404)</RouterLink>
                   </li>
                 </ul>
               </li>

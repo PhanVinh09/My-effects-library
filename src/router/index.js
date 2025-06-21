@@ -22,6 +22,15 @@ import HeaderLayout from '@/components/layouts/Header.vue'
 import FooterLayout from '@/components/layouts/Footer.vue'
 import SidebarLayout from '@/components/layouts/Sidebar.vue'
 import HeroBannerLayout from '@/components/layouts/HeroBanner.vue'
+
+//User Interface
+import Card from '@/components/ui/Card.vue'
+import InputField from '@/components/ui/InputField.vue'
+import DropDownMenu from '@/components/ui/DropdownMenu.vue'
+import SearchBar from '@/components/ui/SearchBar.vue'
+import Pagination from '@/components/ui/Pagination.vue'
+import Dashboard from '@/components/ui/Dashboard.vue'
+import ErrorPage from '@/components/ui/ErrorPage.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -48,6 +57,15 @@ const router = createRouter({
     { path: '/layout/footer', component: FooterLayout },
     { path: '/layout/sideBar', component: SidebarLayout },
     { path: '/layout/heroBanner', component: HeroBannerLayout },
+
+    //User Interface
+    { path: '/userInterface/card', component: Card },
+    { path: '/userInterface/inputField', component: InputField },
+    { path: '/userInterface/dropDownMenu', component: DropDownMenu },
+    { path: '/userInterface/searchBar', component: SearchBar },
+    { path: '/userInterface/pagination', component: Pagination },
+    { path: '/userInterface/dashboard', component: Dashboard },
+    { path: '/userInterface/errorPage', component: ErrorPage },
 
   ],
   scrollBehavior(to, from, savedPosition) {
