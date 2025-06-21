@@ -90,7 +90,7 @@
             <div class="box-content">
                 <div class="title">Quản Trị Viên</div>
                 <div class="quantity">Số Lượng <span style="color: red;">{{ $managerCount }}</span></div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('admins.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-person-lock"></i>
@@ -120,7 +120,7 @@
             <div class="box-content">
                 <div class="title">Form</div>
                 <div class="quantity">Số Lượng <span style="color: red;">{{ $formCount }}</span></div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('forms.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-input-cursor"></i>
@@ -128,9 +128,9 @@
         </div>
         <div class="box">
             <div class="box-content">
-                <div class="title">Use Interface</div>
+                <div class="title">User Interface</div>
                 <div class="quantity">Số Lượng <span style="color: red;">{{ $uiCount }}</span></div>
-                <div class="detail"><a href="">Chi Tiết »</a></div>
+                <div class="detail"><a href="{{route('userInterfaces.index')}}">Chi Tiết »</a></div>
             </div>
             <div class="box-icon">
                 <i class="bi bi-window"></i>

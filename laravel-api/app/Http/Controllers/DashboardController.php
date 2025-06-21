@@ -8,7 +8,7 @@ use App\Models\admin_Management;
 use App\Models\Effect;
 use App\Models\Form;
 use App\Models\Layout;
-use App\Models\UseInterface;
+use App\Models\UserInterface;
 
 class DashboardController extends Controller
 {
@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $effectCount = Effect::count();
         $layoutCount = Layout::count();
         $formCount = Form::count();
-        $uiCount = UseInterface::count();
+        $uiCount = UserInterface::count();
 
         // 2 hiển thị dữ liệu
         return view(

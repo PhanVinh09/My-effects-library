@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UseInterface extends Model
+class UserInterface extends Model
 {
-    protected $table = 'use_interfaces';
+    protected $table = 'user_interfaces';
     public $timestamps = true;
     protected $primaryKey = 'id_UI';
     protected $fillable = [

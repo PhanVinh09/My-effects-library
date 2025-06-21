@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('use_interfaces', function (Blueprint $table) {
+        Schema::create('user_Interfaces', function (Blueprint $table) {
             $table->id('id_UI');
             $table->string('author', 100);
             $table->string('ui_name', 100);
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('use_interfaces');
+        Schema::dropIfExists('user_Interfaces');
     }
 };

@@ -7,7 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EffectController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\UseInterfaceController;
+use App\Http\Controllers\UserInterfaceController;
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ use App\Http\Middleware\AdminMiddleware;
 
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AdminManagementController;
-use App\Models\Form;
+
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::view('/admin', 'admin.admin_index')->name('admin.index');
@@ -41,10 +41,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::delete('/forms/{id}', [FormController::class, 'destroy'])->name('forms.destroy');
 
     // CRUD cho UI
-    Route::get('/admin/useInterfaces', [UseInterfaceController::class, 'index'])->name('useInterfaces.index');
-    Route::post('/useInterfaces/add', [UseInterfaceController::class, 'store'])->name('useInterfaces.store');
-    Route::put('/useInterfaces/{id}', [UseInterfaceController::class, 'update'])->name('useInterfaces.update');
-    Route::delete('/useInterfaces/{id}', [UseInterfaceController::class, 'destroy'])->name('useInterfaces.destroy');
+    Route::get('/admin/userInterfaces', [UserInterfaceController::class, 'index'])->name('userInterfaces.index');
+    Route::post('/userInterfaces/add', [UserInterfaceController::class, 'store'])->name('userInterfaces.store');
+    Route::put('/userInterfaces/{id}', [UserInterfaceController::class, 'update'])->name('userInterfaces.update');
+    Route::delete('/userInterfaces/{id}', [UserInterfaceController::class, 'destroy'])->name('userInterfaces.destroy');
 
     // CRUD cho User
     Route::get('/admin/user', [UserManagementController::class, 'index'])->name('users.index');
@@ -76,6 +76,7 @@ Route::prefix('api')->group(function () {
     Route::get('/effects', [EffectController::class, 'apiIndex']);
     Route::get('/forms', [FormController::class, 'apiIndex']);
     Route::get('/layouts', [LayoutController::class, 'apiIndex']);
+    Route::get('/userInterfaces', [UserInterfaceController::class, 'apiIndex']);
 });
 
 

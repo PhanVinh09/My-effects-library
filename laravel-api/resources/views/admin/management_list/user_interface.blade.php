@@ -6,10 +6,10 @@
         <div class="table-header">
             <a class="btn-add" href="#">Thêm UI</a>
             <div class="search-bar">
-                <form action="{{ route('useInterfaces.index') }}" method="GET">
-                    <input type="text" list="useInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui name..." maxlength="100" />
+                <form action="{{ route('userInterfaces.index') }}" method="GET">
+                    <input type="text" list="userInterfaces_name" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm ui name..." maxlength="100" />
                     <datalist id="ui_name">
-                        @foreach ($useInterfaces as $ui_name)
+                        @foreach ($userInterfaces as $ui_name)
                         <option value="{{ $ui_name }}">
                             @endforeach
                     </datalist>
@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($useInterfaces as $ui)
+                @foreach ($userInterfaces as $ui)
                 <tr>
                     <td>{{ $ui->id_UI }}</td>
                     <td>{{ $ui->author }}</td>
@@ -47,7 +47,7 @@
                     <td>{{ $ui->js ?: 'Null' }}</td>
                     <td>
                         <!-- Nút Xóa -->
-                        <form action="{{ route('useInterfaces.destroy', $ui->id_UI) }}" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
+                        <form action="{{ route('userInterfaces.destroy', $ui->id_UI) }}" method="POST" style="display:inline;" onsubmit="confirmDelete(event, this)">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="action-btn btn-delete"><i class="bi bi-trash3"></i></button>
@@ -63,7 +63,7 @@
                     <div class="modal-content">
                         <span class="close-btn" data-close="editModal-{{ $ui->id_UI }}">&times;</span>
                         <h2>Sửa Use Interface</h2>
-                        <form action="{{ route('useInterfaces.update', $ui->id_UI) }}" method="POST">
+                        <form action="{{ route('userInterfaces.update', $ui->id_UI) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <input type="text" name="id" value="{{$ui->id_UI}}" maxlength="100" hidden />
@@ -72,7 +72,7 @@
                             <input type="text" name="author" value="{{ $ui->author }}" maxlength="100" required />
 
                             <label>UI Name</label>
-                            <input type="text" list="useInterfaces_name" name="ui_name" value="{{ $ui->ui_name }}" maxlength="100" required />
+                            <input type="text" list="userInterfaces_name" name="ui_name" value="{{ $ui->ui_name }}" maxlength="100" required />
                             <datalist id="uis_name">
                                 @foreach ($uis_name as $ui_name)
                                 <option value="{{ $ui_name }}">
@@ -111,10 +111,10 @@
         </table>
         <!-- PHÂN TRANG -->
         <div>
-            {{ $useInterfaces->appends(request()->query())->links('pagination::bootstrap-5') }}
+            {{ $userInterfaces->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
         <div class="status-summary">
-            <span>Đang hiển thị {{ $useInterfaces->count() }} dữ liệu, tổng cộng {{ $useInterfaces->total() }} dữ liệu</span>
+            <span>Đang hiển thị {{ $userInterfaces->count() }} dữ liệu, tổng cộng {{ $userInterfaces->total() }} dữ liệu</span>
         </div>
 
     </div>
@@ -123,7 +123,7 @@
         <div class="modal-content">
             <span class="close-btn" data-close="addModal">&times;</span>
             <h2>Thêm Use Interface mới</h2>
-            <form id="addForm" action="{{ route('useInterfaces.store') }}" method="POST">
+            <form id="addForm" action="{{ route('userInterfaces.store') }}" method="POST">
                 @csrf
                 @auth
                 <label>Author</label>
@@ -131,8 +131,8 @@
                 @endauth
 
                 <label>UI Name</label>
-                <input type="text" name="ui_name" list="useInterfaces_name" value="{{ old('ui_name') }}" placeholder="Tên UI..." maxlength="100" required />
-                <datalist id="useInterfaces_name">
+                <input type="text" name="ui_name" list="userInterfaces_name" value="{{ old('ui_name') }}" placeholder="Tên UI..." maxlength="100" required />
+                <datalist id="userInterfaces_name">
                     @foreach ($uis_name as $ui_name)
                     <option value="{{ $ui_name }}">
                         @endforeach
