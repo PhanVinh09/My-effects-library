@@ -33,7 +33,7 @@ const toggleMenu = (menu) => {
   <div class="layout">
     <header>
       <nav>
-        <div class="logo">MEL</div>
+        <div class="logo">PTV</div>
         <ul class="nav-links">
           <li>
             <RouterLink v-if="!isMobile" class="menu-default" to="/">Trang chủ</RouterLink>

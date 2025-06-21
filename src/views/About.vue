@@ -1,7 +1,7 @@
 <template>
   <section class="about">
     <div class="container">
-      <h1>🌐 My-Effects-Library - Nơi Học Tập & Chia Sẻ Cảm Hứng Thiết Kế Giao Diện</h1>
+      <h1>🌐 PhanTheVinh-Library ~ Nơi Học Tập & Chia Sẻ Cảm Hứng Thiết Kế Giao Diện</h1>
 
       <p>Chào mừng bạn đến với <strong>kho tàng hiệu ứng web hiện đại</strong> – nơi mọi hiệu ứng từ đơn giản đến nâng
         cao đều được phân loại, giải thích và minh họa rõ ràng để bạn học hỏi, thực hành và chia sẻ.</p>
