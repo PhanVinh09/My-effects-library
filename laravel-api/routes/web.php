@@ -75,6 +75,7 @@ Route::post('/logout', function () {
 Route::prefix('api')->group(function () {
     Route::get('/effects', [EffectController::class, 'apiIndex']);
     Route::get('/forms', [FormController::class, 'apiIndex']);
+    Route::get('/layouts', [LayoutController::class, 'apiIndex']);
 });
 
 

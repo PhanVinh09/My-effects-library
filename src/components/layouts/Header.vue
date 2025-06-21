@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2>Header</h2>
-     <div class="menu-icon" @click="toggleSidebar">
+    <h2>Header Layout</h2>
+    <div class="menu-icon" @click="toggleSidebar">
       ☰
     </div>
     <div class="sidebar" :class="{ open: sidebarOpen }">
@@ -15,33 +15,47 @@
       </ul>
     </div>
 
-    <div v-for="layout in allHoverLayouts" :key="layout.id" :ref="setLayoutRef(layout)" style="margin-bottom: 60px;">
-      <layoutTabs :layout="layout" />
+    <!-- Loading text -->
+    <div v-if="loading" style="text-align: center; font-size: 20px; margin-top: 40px;">
+      Đang tải...
     </div>
+
+    <!-- List Layouts -->
+    <div v-for="type in types" :key="type">
+      <h3 class="group-title">{{ type.toUpperCase() }}</h3>
+
+      <div v-for="(layout, index) in LayoutsByType(type)" :key="layout.id" :ref="setLayoutRef(layout)"
+        class="layout-item" :data-layout-id="layout.id" :data-layout-type="layout.type"
+        :style="{ animationDelay: `${index * 150}ms` }">
+        <LayoutTabs :layout="layout" :index="index" />
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import layoutTabs from './layoutTabs.vue';
-import layoutsData from '../data/layout.json';
+import LayoutTabs from './layoutTabs.vue';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default {
-  components: { layoutTabs },
+  components: { LayoutTabs },
   data() {
     return {
+      LayoutsData: [],
+      types: [],
       selectedType: '',
       layoutRefs: {},
-      sidebarOpen: false 
+      sidebarOpen: false,
+      loading: true,
     };
   },
+  created() {
+    this.fetchLayouts();
+  },
   computed: {
-    allHoverLayouts() {
-      const group = layoutsData.find((g) => g.category === 'Layout_Components');
-      return group ? group.layout : [];
-    },
-    types() {
-      const typesSet = new Set(this.allHoverLayouts.map((e) => e.type));
-      return Array.from(typesSet);
+    allLayouts() {
+      return this.LayoutsData.filter(layout => layout.layout_name === 'Header');
     }
   },
   watch: {
@@ -56,6 +70,23 @@ export default {
     }
   },
   methods: {
+    async fetchLayouts() {
+      try {
+        this.loading = true;
+        const res = await fetch(`${backendUrl}/api/layouts`);
+        const data = await res.json();
+        this.LayoutsData = data;
+        this.initTypes();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        this.loading = false;
+      }
+    },
+    initTypes() {
+      const set = new Set(this.allLayouts.map(e => e.type));
+      this.types = Array.from(set);
+    },
     setLayoutRef(layout) {
       return (el) => {
         if (!el) return;
@@ -67,13 +98,16 @@ export default {
     },
     setSelectedType(type) {
       this.selectedType = type;
-      this.sidebarOpen = false; 
+      this.sidebarOpen = false;
       if (type === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     },
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
+    },
+    LayoutsByType(type) {
+      return this.allLayouts.filter(layout => layout.type === type);
     }
   }
 };
@@ -169,6 +203,52 @@ h2 {
   background-color: #34495e;
   transform: scale(1.1);
 }
+
+
+
+.layout-item {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.group-title {
+  margin-top: 100px;
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, rgb(251, 0, 255), red);
+  background-size: 200%;
+  background-position: left;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 0.5s ease;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00ffcc;
+  padding-bottom: 6px;
+  cursor: pointer;
+}
+
+.group-title:hover {
+  animation: moveGradient 1s infinite linear alternate-reverse;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -180,7 +260,14 @@ h2 {
   }
 
   .menu-icon {
+    margin-top: 50px;
     display: block;
   }
+
+  .group-title {
+    margin-top: 50px;
+    font-size: 30px;
+  }
+
 }
 </style>

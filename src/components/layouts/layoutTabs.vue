@@ -1,11 +1,21 @@
 <template>
-  <h1>{{ layout.id }}. {{ layout.title }}</h1>
+  <h1>{{ index + 1 }}. {{ layout.title }}</h1>
   <div>
     <div class="tabs">
-      <button v-for="tab in tabs" :key="tab" @click="activeTab = tab" :class="{ active: activeTab === tab }">
+      <button v-for="tab in tabs" :key="tab" @click="handleTabClick(tab)" :class="{ active: activeTab === tab }">
         {{ tab.toUpperCase() }}
       </button>
-      <button class="copy" @click="copyToClipboard">Copy</button>
+      <div v-if="activeTab === 'result'" class="reload-button" @click="reloadPreview" title="Tải lại bản xem trước">
+        <i class="bi bi-arrow-clockwise" :class="{ rotate: isRotating }"></i>
+      </div>
+
+      <button v-if="activeTab === 'result'" class="fullscreen" @click="toggleZoomResult"
+        title="Phóng to hoặc thu nhỏ vùng kết quả">
+        {{ isZoomResult ? '➖ Thu nhỏ' : '➕ Phóng to' }}
+      </button>
+
+      <button v-if="activeTab === 'html' || activeTab === 'css' || activeTab === 'js'" class="copy"
+        @click="copyToClipboard">Copy</button>
     </div>
 
     <div v-if="activeTab === 'html'" class="tab-content">
@@ -17,13 +27,17 @@
     <div v-else-if="activeTab === 'js'" class="tab-content">
       <pre><code class="language-js" v-html="formatCode(layout.js)"></code></pre>
     </div>
-    <div v-else class="tab-content_result">
-      <iframe :srcdoc="generatedPreview" />
+    <div v-else class="tab-content_result" :class="{ zoomResult: isZoomResult }">
+
+      <iframe :key="refreshKey" :srcdoc="generatedPreview" />
+
+      <div v-if="resultClickCount >= 2" style="margin-top: 10px; font-weight: bold; text-align: right;">
+        Tác giả: {{ layout.author }}
+      </div>
     </div>
   </div>
   <div v-if="toastMessage" class="toast">{{ toastMessage }}</div>
 </template>
-
 <script>
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
@@ -31,12 +45,16 @@ import 'highlight.js/styles/github-dark.css'
 export default {
   props: {
     layout: Object,
+    index: Number,
   },
   data() {
     return {
-      tabs: ['html', 'css', 'js', 'result'],
       activeTab: 'result',
       toastMessage: '',
+      resultClickCount: 0,
+      isZoomResult: false,
+      refreshKey: 0, // Thêm key để force reload iframe
+      isRotating: false, // Điều khiển hiệu ứng xoay
     }
   },
   computed: {
@@ -54,15 +72,15 @@ export default {
           <head>${this.layout.link ?? ''}<style>${this.layout.css}</style></head>
           <body>
             ${this.layout.html}
-              <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                  document.querySelectorAll('a').forEach(a => {
-                    a.addEventListener('click', (e) => {
-                      e.preventDefault(); // Ngăn load lại trang
-                    });
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('a').forEach(a => {
+                  a.addEventListener('click', (e) => {
+                    e.preventDefault();
                   });
                 });
-             <\/script>
+              });
+            <\/script>
             <script>${this.layout.js}<\/script>
           </body>
         </html>
@@ -81,6 +99,21 @@ export default {
     },
   },
   methods: {
+    toggleZoomResult() {
+      this.isZoomResult = !this.isZoomResult;
+    },
+    handleTabClick(tab) {
+      if (tab === 'result') {
+        if (this.activeTab === 'result') {
+          this.resultClickCount++
+        } else {
+          this.resultClickCount = 1
+        }
+      } else {
+        this.resultClickCount = 0
+      }
+      this.activeTab = tab
+    },
     highlightCode() {
       this.$nextTick(() => {
         document.querySelectorAll('pre code').forEach((block) => {
@@ -89,109 +122,75 @@ export default {
       })
     },
     formatCode(code) {
-      // Format CSS/JS với indent và xuống dòng hợp lý
       let indentLevel = 0
       const indentSize = 2
-
-      // Escape HTML để hiển thị đúng trên trang
       const escaped = code
-        .replace(/&/g, '&amp;')  // thêm escape &
+        .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-
-      // Tách thành các phần kết thúc bằng {, }, hoặc ;
       const lines = escaped.match(/[^{};]+[{};]?/g) || []
-
       return lines
         .map((line) => {
           line = line.trim()
-
           if (line.endsWith('}')) indentLevel--
-
           const indentation = ' '.repeat(indentLevel * indentSize)
           const formattedLine = indentation + line
-
           if (line.endsWith('{')) indentLevel++
-
           return formattedLine
         })
         .join('\n')
     },
     formatHtmlCode(code) {
-      // Escape để hiển thị an toàn
       const escaped = code
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-
-      // Cắt chuỗi thành từng thẻ hoặc nội dung giữa thẻ
       const tokens = escaped.split(/(&lt;[^&]+&gt;)/).filter(token => token.trim() !== '')
-
       let indentLevel = 0
       const indentSize = 2
-
       return tokens.map(token => {
         const trimmed = token.trim()
-
-        // Nếu là thẻ đóng (</div>) => giảm indent trước
         if (/^&lt;\/[^>]+&gt;$/.test(trimmed)) indentLevel--
-
         const indentation = ' '.repeat(indentLevel * indentSize)
         const line = indentation + trimmed
-
         if (
           /^&lt;[^\/!][^&]*[^\/]&gt;$/.test(trimmed) &&
           !/^&lt;(input|img|br|hr|meta|link)[^&]*\/?&gt;$/.test(trimmed)
         ) {
           indentLevel++
         }
-
         return line
       }).join('\n')
     },
     formatPlainCode(code) {
       if (this.activeTab === 'html') {
-        // HTML: Format có indent và xuống dòng nhưng KHÔNG escape
         const tokens = code.split(/(<[^>]+>)/).filter(token => token.trim() !== '')
-
         let indentLevel = 0
         const indentSize = 2
-
         return tokens.map(token => {
           const trimmed = token.trim()
-
           if (/^<\/[^>]+>$/.test(trimmed)) indentLevel--
-
           const indentation = ' '.repeat(indentLevel * indentSize)
           const line = indentation + trimmed
-
           if (
             /^<[^/!][^>]*>$/.test(trimmed) &&
             !/^<(input|img|br|hr|meta|link)[^>]*\/?>$/.test(trimmed)
           ) {
             indentLevel++
           }
-
           return line
         }).join('\n')
       } else {
-        // CSS / JS thì giữ nguyên logic cũ
         let indentLevel = 0
         const indentSize = 2
-
         const lines = code.match(/[^{};]+[{};]?/g) || []
-
         return lines
           .map((line) => {
             line = line.trim()
-
             if (line.endsWith('}')) indentLevel--
-
             const indentation = ' '.repeat(indentLevel * indentSize)
             const formattedLine = indentation + line
-
             if (line.endsWith('{')) indentLevel++
-
             return formattedLine
           })
           .join('\n')
@@ -205,7 +204,6 @@ export default {
     },
     copyToClipboard() {
       let content = ''
-
       if (this.activeTab === 'html') {
         content = this.formatPlainCode(this.layout.html)
       } else if (this.activeTab === 'css') {
@@ -227,10 +225,16 @@ export default {
           console.error(err)
         })
     },
+    reloadPreview() {
+      this.isRotating = true
+      this.refreshKey++
+      setTimeout(() => {
+        this.isRotating = false
+      }, 500)
+    },
   },
 }
 </script>
-
 <style scoped>
 .tabs {
   position: relative;
@@ -255,6 +259,11 @@ export default {
   right: 0;
 }
 
+.tabs .fullscreen {
+  position: absolute;
+  right: 0;
+}
+
 .tabs button:hover,
 .tabs button.active {
   background: #34495e;
@@ -274,9 +283,11 @@ export default {
 }
 
 .tab-content_result {
+  position: relative;
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   background: #f6f6f6;
   border: 1px solid #ccc;
   border-radius: 0 0 6px 6px;
@@ -285,25 +296,17 @@ export default {
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   overflow-x: auto;
+  padding: 10px;
+  transition: all 0.3s ease;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+.tab-content_result.zoomResult {
+  min-height: 600px;
+  max-height: 100%;
 }
 
-::-webkit-scrollbar-track {
-  background: #000000;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
+.tab-content_result.zoomResult iframe {
+  height: 540px;
 }
 
 iframe {
@@ -312,6 +315,38 @@ iframe {
   height: 250px;
   border: none;
   display: block;
+}
+
+/* ✅ Nút reload */
+.reload-button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  right: 110px;
+  z-index: 2;
+  color: #ccc;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.reload-button:hover {
+  background: #34495e;
+  transform: rotate(360deg);
+}
+
+.bi-arrow-clockwise {
+  font-size: 22px;
+  transition: transform 0.6s ease;
+}
+
+.bi-arrow-clockwise.rotate {
+  transform: rotate(360deg);
 }
 
 .toast {
@@ -347,5 +382,22 @@ iframe {
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .tabs button {
+    font-size: 10px;
+  }
+
+  .reload-button {
+    width: 30px;
+    height: 30px;
+    right: 95px;
+  }
+
 }
 </style>
