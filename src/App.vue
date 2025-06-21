@@ -126,13 +126,13 @@ const toggleMenu = (menu) => {
                 <a href="#" @click.prevent="toggleMenu('form')">Form ▾</a>
                 <ul class="dropdown-menu-3" v-show="isFormOpen">
                   <li>
-                    <RouterLink to="/form/login">Login</RouterLink>
+                    <RouterLink to="">Login</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/form/register">Register</RouterLink>
+                    <RouterLink to="">Register</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/form/passwordReset">PasswordReset</RouterLink>
+                    <RouterLink to="">PasswordReset</RouterLink>
                   </li>
                 </ul>
               </li>
