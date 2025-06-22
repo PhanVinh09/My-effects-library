@@ -289,14 +289,14 @@ export default {
   flex-direction: column;
   align-items: stretch;
   background: #f6f6f6;
-  border: 1px solid #ccc;
-  border-radius: 0 0 6px 6px;
   min-height: 300px;
   max-height: 300px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   overflow-x: auto;
   padding: 10px;
+  padding: 0;
+  border: none;
   transition: all 0.3s ease;
 }
 
@@ -311,10 +311,12 @@ export default {
 
 iframe {
   width: 100%;
-  max-width: 900px;
-  height: 250px;
+  max-width: 1000px;
+  height: 300px;
   border: none;
   display: block;
+  padding: 0;
+  margin: 0;
 }
 
 /* ✅ Nút reload */
