@@ -301,7 +301,7 @@ export default {
 }
 
 .tab-content_result.zoomResult {
-  min-height: 600px;
+  min-height: 500px;
   max-height: 100%;
 }
 
